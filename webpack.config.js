@@ -12,7 +12,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = [
   {
     entry: {
-      server: './src/server/server.js',
+      app: './src/server/app.js',
     },
     output: {
       path: path.join(__dirname, 'server'),
@@ -53,7 +53,7 @@ module.exports = [
       new HtmlWebPackPlugin({
         template: './src/server/views/index.html',
         filename: './views/index.html',
-        excludeChunks: [ 'server' ]
+        excludeChunks: [ 'app' ]
       })
     ]
   },
