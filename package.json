@@ -7,7 +7,7 @@
     "build": "webpack --mode production",
     "dev": "webpack --mode development",
     "watch": "webpack --mode development --watch",
-    "start": "node ./server/server.js",
+    "start": "node ./server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Shingo Yamada <uzuranoie@gmail.com> (https://github.com/uzura8)",
