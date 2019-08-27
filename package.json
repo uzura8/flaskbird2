@@ -14,6 +14,7 @@
   "license": "MTI",
   "dependencies": {
     "axios": "^0.19.0",
+    "buefy": "^0.8.2",
     "core-js": "^3.2.1",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
