@@ -1,16 +1,17 @@
-import path from 'path'
 import express from 'express'
+import { RouterSite, RouterThread } from './routers'
 
-const app = express(),
-            DIST_DIR = __dirname,
-            HTML_FILE = path.join(DIST_DIR, 'views/index.html')
+const app = express()
+const DIST_DIR = __dirname
 
 app.use(express.static(DIST_DIR))
 app.use('/assets', express.static('public/assets'));
+app.use('/', RouterSite);
+app.use('/threads', RouterThread);
 
-app.get('*', (req, res) => {
-  res.sendFile(HTML_FILE)
-})
+//app.get('*', (req, res) => {
+//  res.sendFile(HTML_FILE)
+//})
 
 const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
