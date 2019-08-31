@@ -4,7 +4,7 @@ const path = require('path');
 const root = path.join(__dirname, './');
 
 const nodeExternals = require('webpack-node-externals')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+//const HtmlWebPackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -50,11 +50,11 @@ module.exports = [
       ]
     },
     plugins: [
-      new HtmlWebPackPlugin({
-        template: './src/server/views/index.html',
-        filename: './views/index.html',
-        excludeChunks: [ 'app' ]
-      })
+      //new HtmlWebPackPlugin({
+      //  template: './src/server/views/index.html',
+      //  filename: './views/index.html',
+      //  excludeChunks: [ 'app' ]
+      //})
     ]
   },
   {

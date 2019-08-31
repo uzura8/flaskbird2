@@ -16,12 +16,11 @@ export default {
 
   create: (values) => {
     return new Promise((resolve, reject) => {
-      const required_keys = ['name', 'amount', 'date', 'category_id', 'account_code']
-      const params = new URLSearchParams()
+      const params = util.uri.convToPostParams(values, ['name', 'amount', 'date'])
       for (let i = 0, n = required_keys.length; i < n; i++) {
         let key = required_keys[i]
         if (values[key] === null) throw new Error(`No value '${key}'`);
-        if (!values.hasOwnProperty(key)) throw new Error(`No value '${key}'`);
+        if (!Object.hasOwnProperty.call(values, key)) throw new Error(`No value '${key}'`);
         params.append(key, values[key]);
       }
       client.post('examples', params)
@@ -34,11 +33,10 @@ export default {
 
   update: (exampleId, values) => {
     return new Promise((resolve, reject) => {
-      const accept_keys = ['name', 'amount', 'date', 'category_id', 'account_code', 'is_disabled']
-      const params = new URLSearchParams();
+      const params = util.uri.convToPostParams(values, ['name', 'amount', 'date'])
       for (let key in values) {
-        if (!util.inArray(key, accept_keys)) continue
-        if (!values.hasOwnProperty(key)) continue
+        if (!util.arr.inArray(key, accept_keys)) continue
+        if (!Object.hasOwnProperty.call(values, key)) continue
         let value = values[key];
         params.append(key, value);
       }

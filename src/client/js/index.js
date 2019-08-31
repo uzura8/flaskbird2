@@ -26,8 +26,8 @@ Vue.mixin({
   methods: {
     siteUri: config.uri,
     getConfig: config.get,
-    isEmpty: util.isEmpty,
-    inArray: util.inArray,
+    isEmpty: util.common.isEmpty,
+    inArray: util.arr.inArray,
     listen: listener.listen,
     destroyed: listener.destroyed,
   },

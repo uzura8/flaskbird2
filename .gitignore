@@ -16,6 +16,7 @@ tags
 package-lock.json
 /node_modules/*
 
+/src/server/config/config.json
 /src/client/js/config/config.json
 
 /server/*

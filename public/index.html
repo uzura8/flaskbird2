@@ -28,8 +28,11 @@
   <div class="navbar-menu" v-bind:class="{'is-active': isHeaderMenuOpen}">
     <div class="navbar-start">
       <router-link to="/" class="navbar-item">Top</router-link>
-      <router-link to="/about" class="navbar-item">About</router-link>
+      <router-link v-if="!isAuth" to="/signup" class="navbar-item">Sign up</router-link>
+      <router-link v-if="!isAuth" to="/signin" class="navbar-item">Sign in</router-link>
       <router-link v-if="isAuth" to="/member" class="navbar-item">Member top</router-link>
+      <a v-if="isAuth" class="navbar-item u-clickable" @click="signout">Sign out</a>
+      <router-link to="/about" class="navbar-item">About</router-link>
     </div>
   </div>
 </nav>
