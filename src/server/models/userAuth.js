@@ -1,6 +1,4 @@
-import Sequelize from 'sequelize'
-import db from '../db'
-import User from './user'
+import db from './db'
 
 class UserAuth extends db.Sequelize.Model {
   static findByEmail(email) {

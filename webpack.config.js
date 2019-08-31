@@ -49,6 +49,12 @@ module.exports = [
         }
       ]
     },
+    resolve: {
+      extensions: ['.js', '.json'],
+      alias: {
+        '@': path.join(root, 'src/server'),
+      }
+    },
     plugins: [
       //new HtmlWebPackPlugin({
       //  template: './src/server/views/index.html',
@@ -113,8 +119,9 @@ module.exports = [
       ],
       extensions: ['*', '.js', '.vue', '.json'],
       alias: {
+        '@': path.join(root, 'src/client/js'),
         'vue$': 'vue/dist/vue.esm.js',
-        'vue-router$': 'vue-router/dist/vue-router.esm.js'
+        'vue-router$': 'vue-router/dist/vue-router.esm.js',
       }
     },
     plugins: [

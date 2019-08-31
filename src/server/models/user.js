@@ -1,4 +1,4 @@
-import db from '../db'
+import db from './db'
 
 class User extends db.Sequelize.Model {
   static findById(id) {
