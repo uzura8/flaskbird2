@@ -1,3 +1,4 @@
+import db from './db'
 import User from './user'
 import UserAuth from './userAuth'
 
@@ -9,6 +10,7 @@ User.sync().then(() => {
 })
 
 export {
+  db,
   User,
   UserAuth,
 }

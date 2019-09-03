@@ -7,7 +7,11 @@ router.get('/', (req, res) => {
   res.json({ page:'users' })
 })
 
-router.post('/', controller.create)
+router.post(
+  '/',
+  controller.validate('create'),
+  controller.create
+)
 
 export default router
 

@@ -7,9 +7,7 @@ export default {
       const params = util.uri.convToPostParams(values, ['name', 'email', 'password'])
       client.post('users', params)
         .then(res => resolve(res.data))
-        .catch(err => {
-          reject(new Error(err.response.data.message || err.message))
-        })
+        .catch(err => reject(err))
     })
   },
 }

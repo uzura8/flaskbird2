@@ -6,6 +6,9 @@ import './common';
 
 import Buefy from 'buefy'
 Vue.use(Buefy)
+//import { Loading, Toast } from 'buefy'
+//Vue.use(Toast)
+//Vue.use(Loading)
 
 import moment from 'moment'
 import 'moment/locale/ja'
