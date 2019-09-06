@@ -1,8 +1,16 @@
 import db from './db'
+import UserAuth from './userAuth'
 
 class User extends db.Sequelize.Model {
-  static findById(id) {
-    return this.findOne({ where: { id: id }})
+  static findById(id, withAuth=false) {
+    const params = { where: { id: id }}
+    if (withAuth) {
+      params.include = [{
+        model: UserAuth,
+        required: true
+      }]
+    }
+    return this.findOne(params)
   }
 }
 

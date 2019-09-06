@@ -6,5 +6,6 @@ export default axios.create({
     'ContentType': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
   },
-  responseType: 'json'
+  withCredentials: true,
+  responseType: 'json',
 })

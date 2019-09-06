@@ -23,6 +23,7 @@
     "buefy": "^0.8.2",
     "connect-flash": "^0.1.1",
     "connect-history-api-fallback": "^1.6.0",
+    "cookie-parser": "^1.4.4",
     "core-js": "^3.2.1",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",

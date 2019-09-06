@@ -1,29 +1,33 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import history from 'connect-history-api-fallback'
-//import Authenticator from './config/passport'
+import Authenticator from './config/passport'
 import connectFlash from 'connect-flash'
 import bodyParser from 'body-parser'
 import { logErrors, clientErrorHandler, errorHandler } from './config/middlewares/errorHandler'
+import config from './config/config.json'
 import { usersRouter } from './routers'
 
 const app = express()
 
+app.use(cookieParser())
+
 app.use(
   session({
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    secret: 'secret-key',
+    cookie: {
+      maxAge: 1000 * 60 * 60 *  config.session.cookie.maxAgeHours,
+      secure: config.session.cookie.secure,
+    },
+    secret: config.session.secretKey,
     resave: false,
     saveUninitialized: false
   })
 );
 
-// for using req.flash
 app.use(connectFlash());
-//// int passport
-//Authenticator.initialize(app)
-//// for adding auth function
-//Authenticator.setStrategy()
+Authenticator.initialize(app)
+Authenticator.setStrategy()
 
 app.use(bodyParser.urlencoded({
   extended: true

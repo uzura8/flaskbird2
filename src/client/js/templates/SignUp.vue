@@ -57,7 +57,7 @@ import { User } from '../api/'
 import str from '@/util/str'
 
 export default {
-  name: 'Signup',
+  name: 'SignUp',
 
   data () {
     return {
@@ -98,7 +98,7 @@ export default {
           })
           .catch(err => {
             this.setErrors(err.response.data.errors)
-            this.showGlobalError('Signup failed')
+            this.showGlobalError('Sign Up failed')
           })
       }
     },

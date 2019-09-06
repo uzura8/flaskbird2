@@ -1,4 +1,11 @@
 {
+  "session": {
+    "secretKey": "secret-key",
+    "cookie": {
+      "maxAgeHours": 24,
+      "secure": true
+    }
+  },
   "dbs": {
     "mysql": {
       "host": "localhost",

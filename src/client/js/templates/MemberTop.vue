@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { User } from '../api/'
+
 export default{
   data(){
     return {
@@ -13,6 +15,19 @@ export default{
   },
 
   created() {
-  }
+    console.log(this.getUserInfo());//!!!!!!
+  },
+
+  methods: {
+    getUserInfo: function() {
+      User.get()
+        .then((res) => {
+          console.log(res);//!!!!!!
+        })
+        .catch(err => {
+          console.log(err);//!!!!!!
+        })
+    },
+  },
 }
 </script>

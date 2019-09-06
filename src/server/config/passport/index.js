@@ -1,92 +1,73 @@
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import authConfig from './auth.json'
-const Users = require('./userDataGetter');
+import boom from '@hapi/boom'
+import { UserAuth } from '@/models'
 
 class Authenticator {
   static initialize(app) {
-    // passportの初期化
-    app.use(passport.initialize());
-
-    // セッション管理をするための設定
-    app.use(passport.session());
-
-    // ログイン成功後指定されたオブジェクトをシリアライズして保存する際の
-    // シリアライズ処理をフックするもの
-    passport.serializeUser((user, done) => {
-      return done(null, user);
+    app.use(passport.initialize())
+    app.use(passport.session())
+    passport.serializeUser((userInfo, done) => {
+      return done(null, userInfo);
     });
 
-    passport.deserializeUser((serializedUser, done) => {
-      // dynamoDBから指定したユーザIDの情報を取得する
-      Users.get(serializedUser.id)
-        .then(user => {
-          // 認証に成功したら以下のものを返す(今回はユーザIDとユーザ名、権限)
-          return done(null, {
-            id: user.id,
-            user_name: user.name
-          });
-        })
-        .catch(() => {
-          return done(null, false);
-        });
-    });
+    passport.deserializeUser((userInfo, done) => {
+      done(null, userInfo)
+    })
   }
 
   static setStrategy() {
-    // passport.use：ストラテジーの設定
-    // ストラテジー：ユーザIDとパスワードを用いた懸賞やOAuthを用いた権限付与、OpenIDを用いた分散認証を実装する
-    // localStrategy：ユーザIDとパスワードを用いた認証の実装部分
     passport.use(
       new LocalStrategy(
         {
           usernameField: authConfig.usernameField,
           passwordField: authConfig.passwordField,
+          session: true,
           passReqToCallback: true
         },
-        (req, userID, password, done) => {
-          Users.authorize(userID, password)
-            .then(userIdInformation => {
-              // 認証に成功したらユーザ情報を返す
-              return done(null, userIdInformation);
+        (req, userId, password, done) => {
+          UserAuth.authorize(userId, password)
+            .then(userInfo => {
+              if (userInfo) {
+                return done(null, userInfo);
+              } else {
+                req.flash('authenticate_error', 'Password is not correct');
+                return done(null, false);
+              }
             })
             .catch(err => {
-              // 認証に失敗したらfalseを返し、req.flashを使ってエラーメッセージを表示させる
-              req.flash('login_error', err);
+              req.flash('authenticate_error', err);
               return done(null, false);
             });
         }
       )
-    );
+    )
   }
 
   static authenticate(req, res, next) {
-    // 認証情報を参照
-    passport.authenticate(authConfig.strategyName, {
-      // ログインに成功した時のリダイレクト先
-      successRedirect: Authenticator.redirect.success,
-      // ログインに失敗した時のリダイレクト先と表示メッセージ
-      failureRedirect: Authenticator.redirect.failure,
-      failureFlash: 'メールアドレスまたはパスワードに誤りがあります'
+    passport.authenticate(authConfig.strategyName, (err, user, info) => {
+      if (err) { return next(err) }
+      if (!user) {
+        return next(boom.unauthorized('Email or password is not correct'))
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(boom.unauthorized('Email or password is not correct'))
+        }
+        return res.status(200).json(user)
+      })
     })(req, res, next);
   }
 
-  // 認証が完了しているか確認(routes内で使う)
   static isAuthenticated(req, res, next) {
-    // 認証が完了している時は次の処理に進む
-    if(req.isAuthentocated()) {
-      return next();
+    if (req.isAuthenticated()) {
+      return next()
     } else {
-      // 認証が終わっていなかったらログイン画面にリダイレクトする
-      return res.redirect(Authenticator.redirect.failure);
+      return next(boom.unauthorized('Require Sign In'))
     }
   }
 }
 
-module.exports = Authenticator;
+export default Authenticator
 
-Authenticator.redirect = {
-  success: '/',
-  failure: '/login',
-  permission: '/'
-};

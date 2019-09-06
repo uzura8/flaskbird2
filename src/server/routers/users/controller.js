@@ -2,8 +2,17 @@ import boom from '@hapi/boom'
 import { check, validationResult } from 'express-validator'
 import { db, User, UserAuth } from '@/models'
 import str from '@/util/str'
+import Authenticator from '@/config/passport'
 
 export default {
+  authenticate: (req, res, next) => {
+    Authenticator.authenticate(req, res, next)
+  },
+
+  isAuthenticated: (req, res, next) => {
+    Authenticator.isAuthenticated(req, res, next)
+  },
+
   create: (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -59,6 +68,18 @@ export default {
           check('name', 'Your name is required')
             .trim()
             .isLength({ min: 1 }).withMessage('Name is required'),
+        ]
+
+      case 'signin':
+        return [
+          check('email')
+            .isLength({ min: 1 }).withMessage('Email is required')
+            .trim()
+            //.normalizeEmail()
+            .isEmail().withMessage('Email is not valid'),
+          check('password', 'Password is not valid')
+            .trim()
+            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
         ]
     }
   },

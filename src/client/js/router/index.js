@@ -25,14 +25,15 @@ router.beforeEach((to, from, next) => {
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   if (requiresAuth) {
-    if (store.state.auth.state) {
-      next()
-    } else {
-      next({
-        path: '/signin',
-        query: { redirect: to.fullPath }
-      })
-    }
+    next()
+    //if (store.state.auth.state) {
+    //  next()
+    //} else {
+    //  next({
+    //    path: '/signin',
+    //    query: { redirect: to.fullPath }
+    //  })
+    //}
   } else {
     if (to.path === '/signin' && store.state.auth.state) {
       next({ path: '/member' })
