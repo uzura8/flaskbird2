@@ -8,6 +8,28 @@ router.get('/', (req, res) => {
 })
 
 router.get(
+  '/check',
+  controller.isAuthenticated,
+  (req, res) => {
+    res.json(req.user)
+  }
+)
+
+router.post(
+  '/signin',
+  controller.validate('signin'),
+  controller.authenticate
+)
+
+router.get(
+  '/signout',
+  (req, res) => {
+    req.logout()
+    res.json({ message:'/sign out!' })
+  }
+)
+
+router.get(
   '/:userId',
   controller.isAuthenticated,
   (req, res) => {
@@ -19,12 +41,6 @@ router.post(
   '/',
   controller.validate('create'),
   controller.create
-)
-
-router.post(
-  '/signin',
-  controller.validate('signin'),
-  controller.authenticate
 )
 
 export default router

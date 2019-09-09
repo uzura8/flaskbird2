@@ -28,4 +28,20 @@ export default {
         .catch(err => reject(err))
     })
   },
+
+  check: () => {
+    return new Promise((resolve, reject) => {
+      client.get('users/check')
+        .then(res => resolve(res.data))
+        .catch(err => reject(err))
+    })
+  },
+
+  signOut: () => {
+    return new Promise((resolve, reject) => {
+      client.get('users/signout')
+        .then(res => resolve(res.data))
+        .catch(err => reject(err))
+    })
+  },
 }

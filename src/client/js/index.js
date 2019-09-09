@@ -33,6 +33,15 @@ Vue.mixin({
     inArray: util.arr.inArray,
     listen: listener.listen,
     destroyed: listener.destroyed,
+    signOut: function () {
+      store.dispatch('signOut')
+        .then(() => {
+          router.push({ path: '/signin' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
 });
 

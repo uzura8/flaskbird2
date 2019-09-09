@@ -82,8 +82,8 @@ export default {
           email: this.email,
           password: this.password,
         }
-        User.authenticate(vals)
-          .then((res) => {
+        this.$store.dispatch('authenticate', vals)
+          .then(() => {
             this.$router.push({ path: '/member' })
           })
           .catch(err => {

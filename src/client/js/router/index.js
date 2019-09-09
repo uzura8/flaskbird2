@@ -24,23 +24,29 @@ router.beforeEach((to, from, next) => {
   store.dispatch('setHeaderMenuOpen', false)
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  if (requiresAuth) {
-    next()
-    //if (store.state.auth.state) {
-    //  next()
-    //} else {
-    //  next({
-    //    path: '/signin',
-    //    query: { redirect: to.fullPath }
-    //  })
-    //}
-  } else {
-    if (to.path === '/signin' && store.state.auth.state) {
-      next({ path: '/member' })
-    } else {
-      next()
-    }
-  }
+  store.dispatch('checkAuthenticate')
+    .then(() => {
+      store.dispatch('setIsLoading', false)
+      if (requiresAuth) {
+        if (store.state.auth.state) {
+          next()
+        } else {
+          next({
+            path: '/signin',
+            query: { redirect: to.fullPath }
+          })
+        }
+      } else {
+        if (to.path === '/signin' && store.state.auth.state) {
+          next({ path: '/member' })
+        } else {
+          next()
+        }
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 export default router
