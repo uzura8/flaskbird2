@@ -13,8 +13,8 @@ Edit configs for your env
 ```
 cp src/server/config/config.json.sample src/server/config/config.json
 vi src/server/config/config.json
-cp src/client/js/configs/config.json.sample src/client/js/configs/config.json
-vi src/client/js/configs/config.json
+cp src/client/js/config/config.json.sample src/client/js/configs/config.json
+vi src/client/js/config/config.json
 ```
 
 ### 3. Setup ###
