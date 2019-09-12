@@ -9,6 +9,7 @@
     "watch": "webpack --mode development --watch",
     "start": "node ./server/app.js",
     "start-dev": "nodemon ./server/app.js",
+    "start-pm2": "pm2 start  ./server/app.js -n 'expressbird'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Shingo Yamada <uzuranoie@gmail.com> (https://github.com/uzura8)",
