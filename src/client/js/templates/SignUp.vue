@@ -94,7 +94,14 @@ export default {
         }
         User.create(vals)
           .then((res) => {
-            this.$router.push('/member')
+            this.$store.dispatch('authenticate', vals)
+              .then(() => {
+                this.$router.push({ path: '/member' })
+              })
+              .catch(err => {
+                this.setErrors(err.response.data.errors)
+                this.showGlobalError('Sign In failed')
+              })
           })
           .catch(err => {
             this.setErrors(err.response.data.errors)
