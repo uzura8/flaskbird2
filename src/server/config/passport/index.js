@@ -46,7 +46,7 @@ class Authenticator {
   }
 
   static authenticate(req, res, next) {
-    passport.authenticate(authConfig.strategyName, (err, user, info) => {
+    passport.authenticate(authConfig.strategyName, (err, user) => {
       if (err) { return next(err) }
       if (!user) {
         return next(boom.unauthorized('Email or password is not correct'))
@@ -58,6 +58,11 @@ class Authenticator {
         return res.status(200).json(user)
       })
     })(req, res, next);
+  }
+
+  static signOut(req, res) {
+    req.logout()
+    return res.status(200).json({ message:'/sign out!' })
   }
 
   static isAuthenticated(req, res, next) {

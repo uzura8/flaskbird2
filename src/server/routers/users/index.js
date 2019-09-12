@@ -23,10 +23,7 @@ router.post(
 
 router.get(
   '/signout',
-  (req, res) => {
-    req.logout()
-    res.json({ message:'/sign out!' })
-  }
+  controller.signOut
 )
 
 router.get(

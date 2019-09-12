@@ -12,7 +12,7 @@ const state = {
     isHeaderMenuOpen: false,
   },
   auth: {
-    state: false,
+    state: null,
     user: null,
   },
   example: {

@@ -9,6 +9,10 @@ export default {
     Authenticator.authenticate(req, res, next)
   },
 
+  signOut: (req, res, next) => {
+    Authenticator.signOut(req, res, next)
+  },
+
   isAuthenticated: (req, res, next) => {
     Authenticator.isAuthenticated(req, res, next)
   },

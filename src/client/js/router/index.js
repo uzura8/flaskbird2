@@ -23,30 +23,37 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   store.dispatch('setHeaderMenuOpen', false)
 
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  store.dispatch('checkAuthenticate')
-    .then(() => {
-      store.dispatch('setIsLoading', false)
-      if (requiresAuth) {
-        if (store.state.auth.state) {
-          next()
-        } else {
-          next({
-            path: '/signin',
-            query: { redirect: to.fullPath }
-          })
-        }
+  const routeByAuthState = () => {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+    if (requiresAuth) {
+      if (store.state.auth.state) {
+        next()
       } else {
-        if (to.path === '/signin' && store.state.auth.state) {
-          next({ path: '/member' })
-        } else {
-          next()
-        }
+        next({
+          path: '/signin',
+          query: { redirect: to.fullPath }
+        })
       }
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    } else {
+      if (to.path === '/signin' && store.state.auth.state) {
+        next({ path: '/member' })
+      } else {
+        next()
+      }
+    }
+  }
+
+  if (store.state.auth.state === null) {
+    store.dispatch('checkAuthenticate')
+      .then(() => {
+        routeByAuthState()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  } else {
+    routeByAuthState()
+  }
 })
 
 export default router
