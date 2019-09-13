@@ -96,7 +96,7 @@ export default {
           .then((res) => {
             this.$store.dispatch('authenticate', vals)
               .then(() => {
-                this.$router.push({ path: '/member' })
+                this.$router.push({ name:'UserTop' })
               })
               .catch(err => {
                 this.setErrors(err.response.data.errors)

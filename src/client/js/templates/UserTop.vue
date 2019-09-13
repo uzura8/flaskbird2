@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1 class="title">Member Top</h1>
+  <h1 class="title">User Top</h1>
   <p v-if="isAuth">Hi, {{$store.state.auth.user.name}}!</p>
 </div>
 </template>

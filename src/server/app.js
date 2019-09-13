@@ -7,7 +7,7 @@ import connectFlash from 'connect-flash'
 import bodyParser from 'body-parser'
 import { logErrors, clientErrorHandler, errorHandler } from './config/middlewares/errorHandler'
 import config from './config/config.json'
-import { usersRouter } from './routers'
+import { usersRouter, chatsRouter } from './routers'
 
 const app = express()
 
@@ -46,6 +46,7 @@ app.use(staticFileMiddleware);
 //app.use('/', indexRouter)
 //app.use('/threads', threadsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/chats', chatsRouter)
 
 // Error Handler
 app.use(logErrors);

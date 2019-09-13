@@ -3,7 +3,8 @@ import About from '../templates/About';
 import NotFound from '../templates/Notfound';
 import SignUp from '../templates/SignUp'
 import SignIn from '../templates/SignIn'
-import MemberTop from '../templates/MemberTop'
+import UserTop from '../templates/UserTop'
+import Chats from '../templates/Chats'
 
 export default [
   {
@@ -21,10 +22,15 @@ export default [
     component: SignIn
   },
   {
-    path: '/member',
-    name: 'MemberTop',
-    component: MemberTop,
+    path: '/user',
+    name: 'UserTop',
+    component: UserTop,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/chats',
+    name: 'Chats',
+    component: Chats,
   },
   { path: '/about', component: About },
   { path: '/notfound', component: NotFound },

@@ -67,9 +67,6 @@ export default {
   },
 
   created: function() {
-    //if (this.$store.state.auth.state) {
-    //  this.$router.push('/member')
-    //}
   },
 
   methods: {
@@ -84,7 +81,7 @@ export default {
         }
         this.$store.dispatch('authenticate', vals)
           .then(() => {
-            this.$router.push({ path: '/member' })
+            this.$router.push({ name:'UserTop' })
           })
           .catch(err => {
             this.setErrors(err.response.data.errors)

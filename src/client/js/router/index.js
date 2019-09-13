@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
       }
     } else {
       if (to.path === '/signin' && store.state.auth.state) {
-        next({ path: '/member' })
+        next({ name:'UserTop' })
       } else {
         next()
       }
