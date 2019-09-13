@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
 import routes from './routes'
+import arr from '@/util/arr'
 
 Vue.use(Router)
 
@@ -24,6 +25,7 @@ router.beforeEach((to, from, next) => {
   store.dispatch('setHeaderMenuOpen', false)
 
   const routeByAuthState = () => {
+    const forbiddenDispPathsOnAuth = ['/signin', '/signup']
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     if (requiresAuth) {
       if (store.state.auth.state) {
@@ -35,7 +37,7 @@ router.beforeEach((to, from, next) => {
         })
       }
     } else {
-      if (to.path === '/signin' && store.state.auth.state) {
+      if (arr.inArray(to.path, forbiddenDispPathsOnAuth) && store.state.auth.state) {
         next({ name:'UserTop' })
       } else {
         next()
