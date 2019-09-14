@@ -1,8 +1,16 @@
 import db from './db'
+import User from './user'
 
 class ChatComment extends db.Sequelize.Model {
   static findAllByChatId(chatId) {
-    return this.findAll({ where: { chatId: chatId }})
+    return this.findAll({
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: ['name'],
+      }],
+      where: { chatId: chatId },
+    })
   }
 }
 

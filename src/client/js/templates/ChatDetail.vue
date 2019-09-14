@@ -3,31 +3,66 @@
   <div v-if="chat" >
     <h1 class="title">{{ chat.name }}</h1>
     <h2 class="subtitle">{{ chat.body }}</h2>
-    <section v-if="isAuther" class="is-clearfix">
+    <nav v-if="isAuther" class="is-clearfix">
       <router-link
         :to="'/chats/edit/' + chat.id"
         class="button is-pulled-right">
         <b-icon pack="fas" size="is-small" icon="cog"></b-icon>
         <span>Edit</span>
       </router-link>
+    </nav>
+
+    <section class="u-mt3r">
+      <ul v-if="comments">
+        <li v-for="item in comments"
+          :key="item.id"
+          class="columns is-mobile">
+          <div class="notification column is-11"
+            :class="{'is-offset-1':item.userId == authUserId, 'is-info': item.userId == authUserId}">
+            <div>
+              <strong>{{ item.user.name }}</strong>
+              <small class="u-ml05r">{{ item.createdAt | dateFormat('lll') }}</small>
+            </div>
+            <p class="is-size-5">{{ item.body }}</p>
+          </div>
+        </li>
+      </ul>
+      <p v-else>No data</p>
     </section>
+
+    <chat-comment-form
+      v-if="isAuth"
+      :chat="chat">
+    </chat-comment-form>
   </div>
 </div>
 </template>
 
 <script>
 import { Chat } from '../api/'
+import ChatCommentForm from '@/components/ChatCommentForm'
 
-export default{
+export default {
+  nane: 'ChatDetail',
+
+  components: {
+    ChatCommentForm,
+  },
+
   data(){
     return {
-      chat: null
+      chat: null,
+      body: '',
     }
   },
 
   computed: {
     chatId () {
       return this.$route.params.id
+    },
+
+    comments () {
+      return this.$store.state.chatComment.list
     },
 
     isAuther () {
@@ -37,6 +72,7 @@ export default{
 
   created() {
     this.getChat()
+    this.fetchComments()
   },
 
   methods: {
@@ -46,7 +82,17 @@ export default{
           this.chat = res
         })
         .catch(err => {
-          this.showGlobalError('Failed to get data from server', err.response)
+          this.handleApiError(err, 'Failed to get data from server')
+        })
+    },
+
+    fetchComments: function(params={}) {
+      params.chatId = this.chatId
+      this.$store.dispatch('fetchChatComments', params)
+        .catch(err => {
+          this.handleApiError(err, 'Failed to get data from server')
+        })
+        .then(() => {
         })
     },
   },

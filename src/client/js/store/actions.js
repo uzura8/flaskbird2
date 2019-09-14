@@ -1,5 +1,5 @@
 import * as types from './mutation-types'
-import { Example, User } from '@/api'
+import { Example, User, ChatComment } from '@/api'
 
 export default {
   setHeaderMenuOpen: ({ commit }, isOpen) => {
@@ -60,6 +60,27 @@ export default {
 
   setIsLoading: ({ commit }, isLoading) => {
     commit(types.SET_COMMON_LOADING, isLoading)
+  },
+
+  fetchChatComments: ({ commit }, payload) => {
+    commit(types.SET_COMMON_LOADING, true)
+    return ChatComment.fetch(payload.chatId)
+      .then(({ lists }) => {
+        commit(types.FETCH_CHAT_COMMENT_LIST, lists)
+        commit(types.SET_COMMON_LOADING, false)
+      })
+      .catch(err => {
+        commit(types.SET_COMMON_LOADING, false)
+        throw err
+      })
+  },
+
+  createChatComment: ({ commit }, payload) => {
+    return ChatComment.create(payload.chatId, payload.vals)
+      .then((item) => {
+        commit(types.CREATE_CHAT_COMMENT, item)
+      })
+      .catch(err => { throw err })
   },
 
   createExample: ({ commit }, payload) => {

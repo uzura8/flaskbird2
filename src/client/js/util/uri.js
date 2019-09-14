@@ -9,7 +9,7 @@ export default {
       }
     }
 
-    const params = new URLSearchParams()
+    let params = new URLSearchParams()
     const keys = Object.keys(values)
     for (let i = 0, n = keys.length; i < n; i++) {
       let key = keys[i]

@@ -1,6 +1,6 @@
 import boom from '@hapi/boom'
 import { check, validationResult } from 'express-validator'
-import { db, Chat, ChatComment } from '@/models'
+import { db, Chat, ChatComment, User } from '@/models'
 import Authenticator from '@/config/passport'
 
 export default {
@@ -9,7 +9,7 @@ export default {
   },
 
   isAuther: (req, res, next) => {
-    Chat.findById(req.param('id'))
+    Chat.findById(req.params.id)
       .then(chat => {
         if (chat) {
           if (chat.userId == req.user.id) {
@@ -37,7 +37,7 @@ export default {
   },
 
   getChat: (req, res, next) => {
-    Chat.findById(req.param('id'))
+    Chat.findById(req.params.id)
       .then(chat => {
         if (chat) {
           return res.json(chat)
@@ -81,7 +81,7 @@ export default {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
     }
-    const id = req.param('id')
+    const id = req.params.id
     const name = req.body.name
     const body = req.body.body
     try {
@@ -107,9 +107,47 @@ export default {
     }
   },
 
+  getChatComments: (req, res, next) => {
+    ChatComment.findAllByChatId(req.params.id)
+      .then(comments => {
+        return res.json(comments)
+      })
+      .catch(err => {
+        return next(boom.badImplementation(err))
+      })
+  },
+
+  createComment: (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+    const id = req.params.id
+    const body = req.body.body
+    try {
+      const result = db.sequelize.transaction(async (t) => {
+        const chatComment = await ChatComment.create({
+          chatId: id,
+          userId: req.user.id,
+          body: body,
+        })
+        const user = await User.findById(req.user.id)
+        return res.json({
+          id: chatComment.id,
+          chatId: chatComment.chatId,
+          userId: chatComment.userId,
+          body: chatComment.body,
+          user: {name:user.name}
+        })
+      })
+    } catch (err) {
+      return next(boom.badRequest(err))
+    }
+  },
+
   validate: (method) => {
     switch (method) {
-      case 'create':
+      case 'chat':
         return [
           check('name', 'Name is required')
             .trim()
@@ -117,6 +155,13 @@ export default {
           check('body', 'Body is required')
             .trim()
             .isLength({ min: 1 }).withMessage('Body is required'),
+        ]
+
+      case 'comment':
+        return [
+          check('body', 'Comment is required')
+            .trim()
+            .isLength({ min: 1 }).withMessage('Comment is required'),
         ]
     }
   },

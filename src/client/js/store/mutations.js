@@ -25,6 +25,24 @@ export default {
     state.common.isHeaderMenuOpen = isOpen
   },
 
+  [types.FETCH_CHAT_COMMENT_LIST] (state, payload) {
+    state.chatComment.list = payload
+  },
+
+  [types.CREATE_CHAT_COMMENT] (state, payload) {
+    state.chatComment.list.push(payload)
+  },
+
+  [types.DELETE_CHAT_COMMENT] (state, payload) {
+    const id = payload.chatCommentId
+    for (let i = 0, n = state.chatComment.list.length; i < n; i++) {
+      const chatComment = state.chatComment.list[i]
+      if (chatComment.id !== id) continue
+      state.chatComment.list.splice(i, 1)
+      break
+    }
+  },
+
   [types.FETCH_EXAMPLES_LIST] (state, payload) {
     state.example.list = payload
   },

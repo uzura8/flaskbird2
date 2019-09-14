@@ -10,7 +10,7 @@ User.sync().then(() => {
   UserAuth.sync()
   Chat.belongsTo(User, { foreignKey: 'userId' });
   Chat.sync()
-  ChatComment.belongsTo(User, { foreignKey: 'userId' });
+  ChatComment.belongsTo(User, { as:'user', foreignKey: 'userId' });
   ChatComment.sync()
 })
 Chat.sync().then(() => {

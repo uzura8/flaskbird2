@@ -9,7 +9,12 @@ export default {
     isAuth: function () {
       return this.$store.state.auth.state
     },
+
+    authUserId: function () {
+      return this.$store.state.auth.state ? this.$store.state.auth.user.id : 0
+    },
   },
+
   methods: {
     siteUri: config.uri,
     getConfig: config.get,
@@ -28,7 +33,7 @@ export default {
     },
 
     handleApiError: function(err, defaultMsg='') {
-      if (err.response != null && err.response.status == 401) {
+      if (err != null && err.response != null && err.response.status == 401) {
         store.dispatch('resetAuth')
         this.$router.push({
           path: '/signin',
@@ -36,10 +41,12 @@ export default {
         })
       }
       if (typeof this.setErrors == 'function'
+        && !this.isEmpty(err)
         && !this.isEmpty(err.response.data.errors)) {
         this.setErrors(err.response.data.errors)
       }
-      if (err.response.data.message != null) {
+      if (err.response != null
+        && err.response.data.message != null) {
         this.showGlobalError(err.response.data.message)
       } else if (defaultMsg) {
         this.showGlobalError(defaultMsg)
