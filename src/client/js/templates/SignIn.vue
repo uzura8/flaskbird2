@@ -81,22 +81,19 @@ export default {
         }
         this.$store.dispatch('authenticate', vals)
           .then(() => {
-            this.$router.push({ name:'UserTop' })
+            if (!this.isEmpty(this.$route.query.redirect)) {
+              this.$router.push({ path:this.$route.query.redirect })
+            } else {
+              this.$router.push({ name:'UserTop' })
+            }
           })
           .catch(err => {
-            this.setErrors(err.response.data.errors)
+            if (!this.isEmpty(err.response)) {
+              this.setErrors(err.response.data.errors)
+            }
             this.showGlobalError('Sign In failed')
           })
       }
-    },
-
-    showGlobalError: function(msg) {
-      this.$buefy.toast.open({
-        message: msg,
-        type: 'is-danger',
-        duration: 5000,
-        position: 'is-bottom',
-      })
     },
 
     setErrors: function(errors) {

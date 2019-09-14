@@ -1,10 +1,13 @@
-import Top from '../templates/Top';
-import About from '../templates/About';
-import NotFound from '../templates/Notfound';
-import SignUp from '../templates/SignUp'
-import SignIn from '../templates/SignIn'
-import UserTop from '../templates/UserTop'
-import Chats from '../templates/Chats'
+import Top from '@/templates/Top';
+import About from '@/templates/About';
+import NotFound from '@/templates/Notfound';
+import SignUp from '@/templates/SignUp'
+import SignIn from '@/templates/SignIn'
+import UserTop from '@/templates/UserTop'
+import Chats from '@/templates/Chats'
+import ChatkDetail from '@/templates/ChatDetail'
+import ChatCreate from '@/templates/ChatCreate'
+import ChatEdit from '@/templates/ChatEdit'
 
 export default [
   {
@@ -31,6 +34,23 @@ export default [
     path: '/chats',
     name: 'Chats',
     component: Chats,
+  },
+  {
+    path: '/chats/create',
+    name: 'ChatCreate',
+    component: ChatCreate,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/chats/edit/:id',
+    name: 'ChatEdit',
+    component: ChatEdit,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/chats/:id',
+    name: 'chatkDetail',
+    component: ChatkDetail,
   },
   { path: '/about', component: About },
   { path: '/notfound', component: NotFound },

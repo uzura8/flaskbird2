@@ -15,6 +15,10 @@ Chat.init(
       autoIncrement: true,
       allowNull: false
     },
+    userId: {
+      type: db.Sequelize.INTEGER,
+      allowNull: false
+    },
     name: {
       type: db.Sequelize.STRING,
       allowNull: false

@@ -12,7 +12,7 @@ Vue.use(Buefy)
 
 import moment from 'moment'
 import 'moment/locale/ja'
-moment.locale('ja');
+moment.locale('en');
 Vue.filter('dateFormat', function (date, format='LLL') {
   return moment(date).format(format);
 });
@@ -33,13 +33,41 @@ Vue.mixin({
     inArray: util.arr.inArray,
     listen: listener.listen,
     destroyed: listener.destroyed,
+    showGlobalError: function(msg) {
+      this.$buefy.toast.open({
+        message: msg,
+        type: 'is-danger',
+        duration: 5000,
+        position: 'is-bottom',
+      })
+    },
+    handleApiError: function(err, defaultMsg='') {
+      if (err.response != null && err.response.status == 401) {
+        store.dispatch('resetAuth')
+        this.$router.push({
+          path: '/signin',
+          query: { redirect: this.$route.fullPath }
+        })
+      }
+      if (typeof this.setErrors == 'function'
+        && !this.isEmpty(err.response.data.errors)) {
+        this.setErrors(err.response.data.errors)
+      }
+      if (err.response.data.message != null) {
+        this.showGlobalError(err.response.data.message)
+      } else if (defaultMsg) {
+        this.showGlobalError(defaultMsg)
+      } else {
+        this.showGlobalError('Server error')
+      }
+    },
     signOut: function () {
       store.dispatch('signOut')
         .then(() => {
           router.push({ path: '/signin' })
         })
         .catch(err => {
-          console.log(err)
+          this.handleApiError(err, 'Sign Out failed')
         })
     },
   },

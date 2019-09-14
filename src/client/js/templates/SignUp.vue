@@ -30,8 +30,7 @@
   <b-field label="Name"
     :type="isEmpty(errors.name) ? '' : 'is-danger'"
     :message="isEmpty(errors.name) ? 'Used for display name' : errors.name[0]">
-    <b-input type="name"
-      v-model="name"
+    <b-input v-model="name"
       @blur="validate('name')"
       placeholder="Name">
     </b-input>
@@ -104,19 +103,9 @@ export default {
               })
           })
           .catch(err => {
-            this.setErrors(err.response.data.errors)
-            this.showGlobalError('Sign Up failed')
+            this.handleApiError(err, 'Sign Up failed')
           })
       }
-    },
-
-    showGlobalError: function(msg) {
-      this.$buefy.toast.open({
-        message: msg,
-        type: 'is-danger',
-        duration: 5000,
-        position: 'is-bottom',
-      })
     },
 
     setErrors: function(errors) {

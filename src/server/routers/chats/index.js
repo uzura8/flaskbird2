@@ -3,9 +3,10 @@ import controller from './controller'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.json({ page:'chats' })
-})
+router.get(
+  '/',
+  controller.getChats
+)
 
 router.post(
   '/',
@@ -15,10 +16,16 @@ router.post(
 )
 
 router.get(
-  '/:chatId',
-  (req, res) => {
-    res.json({ params:req.params })
-  }
+  '/:id',
+  controller.getChat
+)
+
+router.post(
+  '/:id',
+  controller.isAuthenticated,
+  controller.isAuther,
+  controller.validate('create'),
+  controller.edit
 )
 
 export default router

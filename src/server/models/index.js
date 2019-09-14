@@ -8,10 +8,13 @@ import ChatComment from './chatComment'
 User.sync().then(() => {
   UserAuth.belongsTo(User, { foreignKey: 'userId' });
   UserAuth.sync()
-  //UserTmp.sync()
+  Chat.belongsTo(User, { foreignKey: 'userId' });
+  Chat.sync()
+  ChatComment.belongsTo(User, { foreignKey: 'userId' });
+  ChatComment.sync()
 })
 Chat.sync().then(() => {
-  ChatComment.belongsTo(Chat, { foreignKey: 'userId' });
+  ChatComment.belongsTo(Chat, { foreignKey: 'chatId' });
   ChatComment.sync()
 })
 

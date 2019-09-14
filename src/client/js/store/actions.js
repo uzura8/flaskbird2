@@ -1,5 +1,5 @@
 import * as types from './mutation-types'
-import { Example, User } from '../api'
+import { Example, User } from '@/api'
 
 export default {
   setHeaderMenuOpen: ({ commit }, isOpen) => {
@@ -50,6 +50,12 @@ export default {
       .catch(error => {
         commit(types.AUTH_SET_ERROR, error.message)
       })
+  },
+
+  resetAuth: ({ commit }) => {
+    commit(types.AUTH_SET_USER, null)
+    commit(types.AUTH_UPDATE_STATE, false)
+    commit(types.AUTH_SET_ERROR, null)
   },
 
   setIsLoading: ({ commit }, isLoading) => {

@@ -1,10 +1,10 @@
 import client from './client'
-import util from '../util'
+import uri from '@/util/uri'
 
 export default {
   create: (values) => {
     return new Promise((resolve, reject) => {
-      const params = util.uri.convToPostParams(values, ['name', 'email', 'password'])
+      const params = uri.convToPostParams(values, ['name', 'email', 'password'])
       client.post('users', params)
         .then(res => resolve(res.data))
         .catch(err => reject(err))
@@ -22,7 +22,7 @@ export default {
 
   authenticate: (values) => {
     return new Promise((resolve, reject) => {
-      const params = util.uri.convToPostParams(values, ['email', 'password'])
+      const params = uri.convToPostParams(values, ['email', 'password'])
       client.post('users/signin', params)
         .then(res => resolve(res.data))
         .catch(err => reject(err))
