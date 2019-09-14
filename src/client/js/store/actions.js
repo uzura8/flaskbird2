@@ -62,9 +62,18 @@ export default {
     commit(types.SET_COMMON_LOADING, isLoading)
   },
 
+  setChatCommentChatId: ({ commit }, chatId) => {
+    commit(types.SET_CHAT_COMMENT_CHAT_ID, chatId)
+  },
+
+  resetChatCommentList: ({ commit }, chatId) => {
+    commit(types.SET_CHAT_COMMENT_CHAT_ID, chatId)
+    commit(types.RESET_CHAT_COMMENT_LIST)
+  },
+
   fetchChatComments: ({ commit }, payload) => {
     commit(types.SET_COMMON_LOADING, true)
-    return ChatComment.fetch(payload.chatId)
+    return ChatComment.fetch(payload.chatId, payload.params)
       .then(({ lists }) => {
         commit(types.FETCH_CHAT_COMMENT_LIST, lists)
         commit(types.SET_COMMON_LOADING, false)

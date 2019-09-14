@@ -2,14 +2,28 @@ import db from './db'
 import User from './user'
 
 class ChatComment extends db.Sequelize.Model {
-  static findAllByChatId(chatId) {
+  static findAllByChatId(chatId, count=10, maxId=null, sinceId=null) {
+    let conds = { chatId: chatId }
+    if (maxId || sinceId) {
+      const Op = db.Sequelize.Op
+      let condsId = {}
+      if (maxId !== null) {
+        condsId = Object.assign(condsId, { [Op.lt]: maxId })
+      }
+      if (sinceId !== null) {
+        condsId = Object.assign(condsId, { [Op.gt]: sinceId })
+      }
+      conds.id = condsId
+    }
     return this.findAll({
       include: [{
         model: User,
         as: 'user',
         attributes: ['name'],
       }],
-      where: { chatId: chatId },
+      where: conds,
+      order: [['id', 'desc']],
+      limit: count,
     })
   }
 }

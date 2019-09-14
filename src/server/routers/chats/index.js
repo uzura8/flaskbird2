@@ -17,6 +17,7 @@ router.post(
 
 router.get(
   '/:id/comments',
+  controller.validate('getComments'),
   controller.getChatComments
 )
 

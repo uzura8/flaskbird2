@@ -12,8 +12,11 @@
       </router-link>
     </nav>
 
-    <section class="u-mt3r">
-      <ul v-if="comments">
+    <section v-if="comments" class="u-mt3r">
+      <nav v-if="minId">
+        <a class="u-clickable" @click="fetchComments({ maxId:minId })">More</a>
+      </nav>
+      <ul>
         <li v-for="item in comments"
           :key="item.id"
           class="columns is-mobile">
@@ -27,8 +30,8 @@
           </div>
         </li>
       </ul>
-      <p v-else>No data</p>
     </section>
+    <p v-else>No data</p>
 
     <chat-comment-form
       v-if="isAuth"
@@ -68,11 +71,18 @@ export default {
     isAuther () {
       return this.isAuth && this.chat.userId == this.$store.state.auth.user.id
     },
+
+    minId () {
+      return !this.isEmpty(this.comments) ? this.comments[0].id : 0
+    },
   },
 
   created() {
     this.getChat()
-    this.fetchComments()
+    if (this.chatId != this.$store.state.chatComment.chatId) {
+      this.$store.dispatch('resetChatCommentList', this.chatId)
+      this.fetchComments()
+    }
   },
 
   methods: {
@@ -87,8 +97,11 @@ export default {
     },
 
     fetchComments: function(params={}) {
-      params.chatId = this.chatId
-      this.$store.dispatch('fetchChatComments', params)
+      const payload = {
+        chatId: this.chatId,
+        params: params,
+      }
+      this.$store.dispatch('fetchChatComments', payload)
         .catch(err => {
           this.handleApiError(err, 'Failed to get data from server')
         })

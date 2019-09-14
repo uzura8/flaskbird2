@@ -25,8 +25,18 @@ export default {
     state.common.isHeaderMenuOpen = isOpen
   },
 
+  [types.SET_CHAT_COMMENT_CHAT_ID] (state, payload) {
+    state.chatComment.chatId = payload
+  },
+
+  [types.RESET_CHAT_COMMENT_LIST] (state) {
+    state.chatComment.list = []
+  },
+
   [types.FETCH_CHAT_COMMENT_LIST] (state, payload) {
-    state.chatComment.list = payload
+    payload.map(item => {
+      state.chatComment.list.unshift(item)
+    })
   },
 
   [types.CREATE_CHAT_COMMENT] (state, payload) {
