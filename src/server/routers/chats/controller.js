@@ -109,7 +109,7 @@ export default {
 
   getChatComments: (req, res, next) => {
     const chatId = req.params.id
-    const count = req.query.count ? req.query.count : 3
+    const count = req.query.count ? req.query.count : 10
     const maxId = req.query.maxId ? req.query.maxId : null
     const sinceId = req.query.sinceId ? req.query.sinceId : null
     ChatComment.findAllByChatId(chatId, count, maxId, sinceId)
