@@ -1,34 +1,43 @@
 import express from 'express'
+import cors from 'cors'
+import http from 'http'
+import socketIO from 'socket.io'
 import cookieParser from 'cookie-parser'
-import session from 'express-session'
+import Session from 'express-session'
 import history from 'connect-history-api-fallback'
-import Authenticator from './config/passport'
 import connectFlash from 'connect-flash'
 import bodyParser from 'body-parser'
-import { logErrors, clientErrorHandler, errorHandler } from './config/middlewares/errorHandler'
+
 import config from './config/config.json'
+import { logErrors, clientErrorHandler, errorHandler } from './config/middlewares/errorHandler'
+import Authenticator from './config/passport'
 import { usersRouter, chatsRouter } from './routers'
 
 const app = express()
+const PORT = process.env.PORT || config.port
+app.set('port', PORT)
+const server = http.Server(app)
+const io = socketIO(server, { serveClient: false })
 
+app.use(cors())
 app.use(cookieParser())
-
-app.use(
-  session({
-    cookie: {
-      maxAge: 1000 * 60 * 60 *  config.session.cookie.maxAgeHours,
-      secure: config.session.cookie.secure,
-    },
-    secret: config.session.secretKey,
-    resave: false,
-    saveUninitialized: false
-  })
-);
-
+const session = Session({
+  secret: config.session.secretKey,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 *  config.session.cookie.maxAgeHours,
+    secure: config.session.cookie.secure,
+  }
+})
 app.use(connectFlash());
+app.use(session)
 Authenticator.initialize(app)
 Authenticator.setStrategy()
-
+app.use((req, res, next) => {
+  res.io = io
+  next()
+})
 app.use(bodyParser.urlencoded({
   extended: true
 }))
@@ -44,7 +53,6 @@ app.use(history({
 app.use(staticFileMiddleware);
 
 //app.use('/', indexRouter)
-//app.use('/threads', threadsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/chats', chatsRouter)
 
@@ -53,8 +61,7 @@ app.use(logErrors);
 app.use('/api', clientErrorHandler);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 8080
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App listening to ${PORT}....`)
   console.log('Press Ctrl+C to quit.')
 })

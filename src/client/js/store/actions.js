@@ -92,6 +92,10 @@ export default {
       .catch(err => { throw err })
   },
 
+  addChatComment: ({ commit }, payload) => {
+    commit(types.ADD_CHAT_COMMENT, payload)
+  },
+
   createExample: ({ commit }, payload) => {
     return Example.create(payload)
       .then((item) => {

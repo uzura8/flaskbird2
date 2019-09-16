@@ -40,6 +40,13 @@ export default {
   },
 
   [types.CREATE_CHAT_COMMENT] (state, payload) {
+    //state.chatComment.list.push(payload)
+  },
+
+  [types.ADD_CHAT_COMMENT] (state, payload) {
+    if (state.chatComment.chatId != payload.chatId) return
+    const index = state.chatComment.list.findIndex(item => item.id === payload.id)
+    if (index > -1) return
     state.chatComment.list.push(payload)
   },
 

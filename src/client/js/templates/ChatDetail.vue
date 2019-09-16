@@ -42,8 +42,10 @@
 </template>
 
 <script>
-import { Chat } from '../api/'
+import io from 'socket.io-client'
+import { Chat } from '@/api/'
 import ChatCommentForm from '@/components/ChatCommentForm'
+import config from '@/config/config'
 
 export default {
   nane: 'ChatDetail',
@@ -54,6 +56,7 @@ export default {
 
   data(){
     return {
+      socket: io(`${config.DOMAIN}:${config.PORT}`),
       chat: null,
       body: '',
     }
@@ -83,6 +86,9 @@ export default {
       this.$store.dispatch('resetChatCommentList', this.chatId)
       this.fetchComments()
     }
+    this.socket.on('CHAT_COMMENT', (comment) => {
+      this.$store.dispatch('addChatComment', comment)
+    })
   },
 
   methods: {

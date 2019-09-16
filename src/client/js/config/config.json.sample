@@ -1,4 +1,6 @@
 {
+  "DOMAIN": "localhost",
+  "PORT": 8080,
   "BASE_URL": "/",
   "SITE_NAME": "Sample Site"
 }

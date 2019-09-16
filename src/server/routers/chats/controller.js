@@ -125,7 +125,7 @@ export default {
     const maxId = req.query.maxId
   },
 
-  createComment: (req, res, next) => {
+  createComment: async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
@@ -135,18 +135,20 @@ export default {
     try {
       const result = db.sequelize.transaction(async (t) => {
         const chatComment = await ChatComment.create({
-          chatId: id,
+          chatId: req.params.id,
           userId: req.user.id,
-          body: body,
+          body: req.body.body,
         })
         const user = await User.findById(req.user.id)
-        return res.json({
+        const result = {
           id: chatComment.id,
           chatId: chatComment.chatId,
           userId: chatComment.userId,
           body: chatComment.body,
-          user: {name:user.name}
-        })
+          user: { name:user.name }
+        }
+        res.io.emit('CHAT_COMMENT', result)
+        res.json(result)
       })
     } catch (err) {
       return next(boom.badRequest(err))
