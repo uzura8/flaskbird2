@@ -86,7 +86,7 @@ export default {
       this.$store.dispatch('resetChatCommentList', this.chatId)
       this.fetchComments()
     }
-    this.socket.on('CHAT_COMMENT', (comment) => {
+    this.socket.on(`CHAT_COMMENT_${this.chatId}`, (comment) => {
       this.$store.dispatch('addChatComment', comment)
     })
   },

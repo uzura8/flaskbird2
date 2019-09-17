@@ -147,7 +147,7 @@ export default {
           body: chatComment.body,
           user: { name:user.name }
         }
-        res.io.emit('CHAT_COMMENT', result)
+        res.io.emit(`CHAT_COMMENT_${chatComment.chatId}`, result)
         res.json(result)
       })
     } catch (err) {
