@@ -9,8 +9,8 @@ import connectFlash from 'connect-flash'
 import bodyParser from 'body-parser'
 
 import config from './config/config.json'
-import { logErrors, clientErrorHandler, errorHandler } from './config/middlewares/errorHandler'
-import Authenticator from './config/passport'
+import { logErrors, clientErrorHandler, errorHandler } from './middlewares/errorHandler'
+import Authenticator from './middlewares/passport'
 import { usersRouter, chatsRouter } from './routers'
 
 const app = express()

@@ -1,7 +1,7 @@
 import boom from '@hapi/boom'
 import { check, query, validationResult } from 'express-validator'
 import { db, Chat, ChatComment, User } from '@/models'
-import Authenticator from '@/config/passport'
+import Authenticator from '@/middlewares/passport'
 
 export default {
   isAuthenticated: (req, res, next) => {

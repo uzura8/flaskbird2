@@ -2,7 +2,7 @@ import boom from '@hapi/boom'
 import { check, validationResult } from 'express-validator'
 import { db, User, UserAuth } from '@/models'
 import str from '@/util/str'
-import Authenticator from '@/config/passport'
+import Authenticator from '@/middlewares/passport'
 
 export default {
   authenticate: (req, res, next) => {
