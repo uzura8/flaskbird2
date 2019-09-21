@@ -67,7 +67,7 @@ export default {
       this.validate()
       if (this.hasError) {
         this.$store.dispatch('setIsLoading', false)
-        this.showGlobalError(this.error)
+        this.showGlobalMessage(this.error)
         return
       }
 

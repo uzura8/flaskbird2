@@ -73,7 +73,7 @@ export default {
     signIn: function() {
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalError('Correct inputs')
+        this.showGlobalMessage('Correct inputs')
       } else {
         const vals = {
           email: this.email,
@@ -91,7 +91,7 @@ export default {
             if (!this.isEmpty(err.response)) {
               this.setErrors(err.response.data.errors)
             }
-            this.showGlobalError('Sign In failed')
+            this.showGlobalMessage('Sign In failed')
           })
       }
     },

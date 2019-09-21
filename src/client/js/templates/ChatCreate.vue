@@ -65,7 +65,7 @@ export default {
     create: function() {
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalError('Correct inputs')
+        this.showGlobalMessage('Correct inputs')
       } else {
         const vals = {
           name: this.name,

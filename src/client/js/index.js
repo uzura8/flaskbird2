@@ -15,7 +15,7 @@ Vue.filter('dateFormat', function (date, format='LLL') {
   return moment(date).format(format);
 });
 
-import mixin from './mixin'
+import mixin from './mixins/site'
 Vue.mixin(mixin);
 
 import * as filters from './filters';

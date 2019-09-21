@@ -84,7 +84,7 @@ export default {
     signUp: function() {
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalError('Correct inputs')
+        this.showGlobalMessage('Correct inputs')
       } else {
         const vals = {
           name: this.name,
@@ -99,7 +99,7 @@ export default {
               })
               .catch(err => {
                 this.setErrors(err.response.data.errors)
-                this.showGlobalError('Sign In failed')
+                this.showGlobalMessage('Sign In failed')
               })
           })
           .catch(err => {

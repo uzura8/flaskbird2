@@ -66,14 +66,6 @@ export default {
   },
 
   computed: {
-    isAuth: function () {
-      return this.$store.state.auth.state
-    },
-
-    authUserId: function () {
-      return this.$store.state.auth.state ? this.$store.state.auth.user.id : 0
-    },
-
     comments () {
       return this.$store.state.chatComment.list
     },
@@ -123,13 +115,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../../node_modules/bulma/sass/utilities/initial-variables";
-@import "../../../../node_modules/bulma/sass/utilities/functions";
-@import "../../../../node_modules/bulma";
-@import "../../../../node_modules/buefy/src/scss/buefy.scss";
-@import "../../../../node_modules/buefy/src/scss/components/_icon";
-@import "../../../../node_modules/buefy/src/scss/components/_loading";
+@import "bulma/sass/utilities/initial-variables";
+@import "bulma/sass/utilities/functions";
+@import "bulma";
+@import "buefy/src/scss/buefy.scss";
+@import "buefy/src/scss/components/_icon";
+@import "buefy/src/scss/components/_loading";
 
 @import "customize.scss";
 [v-cloak] { display: none !important; }
 </style>
+

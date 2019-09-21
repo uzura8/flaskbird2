@@ -101,13 +101,13 @@ export default {
 
     edit: function() {
       if (!this.isUpdated) {
-        this.showGlobalError('Values not updated')
+        this.showGlobalMessage('Values not updated')
         return
       }
 
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalError('Correct inputs')
+        this.showGlobalMessage('Correct inputs')
         return
       }
 

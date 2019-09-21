@@ -1,7 +1,6 @@
-import store from './store'
-import router from './router'
-import listener from './listener'
-import util from './util'
+import store from '@/store'
+import listener from '@/listener'
+import util from '@/util'
 
 export default {
   computed: {
@@ -21,22 +20,19 @@ export default {
     listen: listener.listen,
     destroyed: listener.destroyed,
 
-    showGlobalError: function(msg) {
+    showGlobalMessage: function(msg, type='is-danger', pos='is-bottom', duration=5000) {
       this.$buefy.toast.open({
         message: msg,
-        type: 'is-danger',
-        duration: 5000,
-        position: 'is-bottom',
+        type: type,
+        duration: duration,
+        position: pos,
       })
     },
 
     handleApiError: function(err, defaultMsg='') {
       if (err != null && err.response != null && err.response.status == 401) {
         store.dispatch('resetAuth')
-        this.$router.push({
-          path: '/signin',
-          query: { redirect: this.$route.fullPath }
-        })
+        this.showGlobalMessage('Required to auth')
       }
       if (typeof this.setErrors == 'function'
         && !this.isEmpty(err)
@@ -45,18 +41,18 @@ export default {
       }
       if (err.response != null
         && err.response.data.message != null) {
-        this.showGlobalError(err.response.data.message)
+        this.showGlobalMessage(err.response.data.message)
       } else if (defaultMsg) {
-        this.showGlobalError(defaultMsg)
+        this.showGlobalMessage(defaultMsg)
       } else {
-        this.showGlobalError('Server error')
+        this.showGlobalMessage('Server error')
       }
     },
 
     signOut: function () {
       store.dispatch('signOut')
         .then(() => {
-          router.push({ path: '/signin' })
+          this.showGlobalMessage('Signed out', 'is-success')
         })
         .catch(err => {
           this.handleApiError(err, 'Sign Out failed')

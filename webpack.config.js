@@ -126,7 +126,10 @@ module.exports = [
             {
               loader: 'sass-loader',
               options: {
-                includePaths: [path.join(root, 'src/client/scss/')],
+                includePaths: [
+                  path.join(root, 'src/client/scss/'),
+                  path.join(root, 'node_modules/'),
+                ],
               },
             },
           ],

@@ -4,7 +4,7 @@ import config from '@/config/config'
 import App from './AppIncluded'
 import store from './store'
 
-import mixin from './mixin'
+import mixin from './mixins/include'
 Vue.mixin(mixin);
 
 import moment from 'moment'
