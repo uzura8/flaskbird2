@@ -19,7 +19,7 @@ app.set('port', PORT)
 const server = http.Server(app)
 const io = socketIO(server, { serveClient: false })
 
-app.use(cors())
+if (config.cors.isEnabled) app.use(cors(config.cors.options))
 app.use(cookieParser())
 const session = Session({
   secret: config.session.secretKey,

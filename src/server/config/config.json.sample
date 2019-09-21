@@ -16,5 +16,12 @@
       "database": "db-name",
       "logging": false
     }
+  },
+  "cors": {
+    "isEnabled": true,
+    "options": {
+      "origin": ["http://test.loopback.jp"],
+      "credentials": true
+    }
   }
 }

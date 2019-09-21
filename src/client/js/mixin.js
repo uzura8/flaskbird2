@@ -1,7 +1,6 @@
 import store from './store'
 import router from './router'
 import listener from './listener'
-import config from './config'
 import util from './util'
 
 export default {
@@ -16,8 +15,7 @@ export default {
   },
 
   methods: {
-    siteUri: config.uri,
-    getConfig: config.get,
+    siteUri: util.site.uri,
     isEmpty: util.common.isEmpty,
     inArray: util.arr.inArray,
     listen: listener.listen,

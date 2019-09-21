@@ -66,7 +66,8 @@ module.exports = [
   {
     devtool: 'source-map',
     entry: {
-      index: path.join(root, 'src/client/js/index.js')
+      index: path.join(root, 'src/client/js/index.js'),
+      include: path.join(root, 'src/client/js/include.js')
     },
     output: {
       path: path.join(root, 'public/assets/js'),
@@ -104,12 +105,32 @@ module.exports = [
           ]
         },
         {
-          test: /\.css$/,
+          test: /\.(sa|sc|c)ss$/,
           use: [
             'style-loader',
-            {loader: 'css-loader', options: {url: false}}
+            {loader: 'css-loader', options: {url: false}},
+            {
+              loader: 'postcss-loader',// Setting for PostCSS
+              options: {
+                plugins: (loader) => [
+                  // Enable Autoprefixer
+                  // Add vendor prefix
+                  require('autoprefixer')({
+                    grid: true, // use CSS Grid Layout
+                    //browsers: ['Android >= 4.4', "IE 11"],
+                  })
+                ],
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [path.join(root, 'src/client/scss/')],
+              },
+            },
           ],
-        }
+        },
       ]
     },
     resolve: {

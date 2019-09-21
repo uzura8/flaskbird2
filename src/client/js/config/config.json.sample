@@ -1,6 +1,8 @@
 {
-  "DOMAIN": "localhost",
-  "PORT": 8080,
-  "BASE_URL": "/",
-  "SITE_NAME": "Sample Site"
+  "domain": "localhost",
+  "port": 8080,
+  "baseUrl": "/",
+  "isSSL": false,
+  "siteName": "Sample Site",
+  "chatBoxId": "eb-chat-include-container"
 }
