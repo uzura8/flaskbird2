@@ -81,7 +81,7 @@ export default {
 }
 .chat-widget-container {
   background-color: #fff;
-  padding: 55px 1rem 65px;
+  padding: 55px 1rem 0.5rem;
 }
 .chat-widget-header {
   position: fixed;
