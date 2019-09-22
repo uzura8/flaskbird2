@@ -1,13 +1,18 @@
 <template>
-<div class="chatCommentForm columns is-1">
-  <div class="column">
-    <textarea class="textarea"
-      v-model="body"
-      :rows="body.split(/\n/).length"
-      placeholder="Add a comment..."></textarea>
-  </div>
-  <div class="column is-2">
-    <button class="button is-primary" @click="create">Submit</button>
+<div class="chatCommentForm widefull-box">
+  <div class="container">
+    <div class="c-form-group">
+      <div class="c-form-group_item c-form-group__item--main">
+        <textarea class="textarea"
+          style="margin:0 auto;"
+          v-model="body"
+          :rows="body.split(/\n/).length"
+          placeholder="Add a comment..."></textarea>
+      </div>
+      <div class="c-form-group__item c-form-group__item--end">
+        <button class="button is-primary" @click="create">Send</button>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -17,9 +22,6 @@ import { Chat } from '../api/'
 
 export default {
   nane: 'ChatCommentForm',
-
-  components: {
-  },
 
   props: {
     chat: {
@@ -90,3 +92,37 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.widefull-box {
+  max-width: 960px;
+  text-align: center;
+  margin: 0 -1.5rem;
+  width: 100%;
+  padding: 0;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  height: 100px;
+  display: block;
+}
+.c-form-group {
+  padding: 0.5rem 1.5rem;
+  display: flex;
+
+  &__item {
+    display: flex;
+
+    &--main {
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    &--end {
+      justify-content: flex-end;
+      width: 70px;
+    }
+  }
+}
+</style>

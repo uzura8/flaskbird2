@@ -1,23 +1,19 @@
 <template>
-<section class="chatDetail">
-  <header v-if="chat" >
-    <h1 class="title">{{ chat.name }}</h1>
-    <h2 class="subtitle">{{ chat.body }}</h2>
-    <nav v-if="isAuther" class="is-clearfix">
-      <router-link
-        :to="'/chats/edit/' + chat.id"
-        class="button is-pulled-right">
-        <b-icon pack="fas" size="is-small" icon="cog"></b-icon>
-        <span>Edit</span>
-      </router-link>
-    </nav>
-  </header>
-  <div>
-    <eb-chat
-      :chatId="chatId"
-      @loaded-chat="setChat"></eb-chat>
-  </div>
-</section>
+<div class="chatDetail">
+  <h1 v-if="chat" class="title is-clearfix sticky-box">
+    {{ chat.name }}
+    <router-link
+      v-if="isAuther"
+      :to="'/chats/edit/' + chat.id"
+      class="button is-pulled-right">
+      <b-icon pack="fas" size="is-small" icon="cog"></b-icon>
+    </router-link>
+  </h1>
+  <h2 v-if="chat" class="subtitle">{{ chat.body }}</h2>
+  <eb-chat
+    :chatId="chatId"
+    @loaded-chat="setChat"></eb-chat>
+</div>
 </template>
 
 <script>
@@ -57,3 +53,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.sticky-box {
+  position:sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #fff;
+  padding: 0.5rem 0;
+}
+</style>

@@ -75,6 +75,10 @@ a:not([href]) {
 .u-clickable {cursor: pointer;}
 .u-minw100 { min-width: 100%; }
 
+.u-bg-tr { background-color: transparent !important; }
+
+.u-fw-nml { font-weight: normal !important; }
+
 .table-responsive {
   overflow-x: auto;
 }

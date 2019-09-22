@@ -27,12 +27,10 @@
       </div>
     </div>
   </nav>
-  <section class="section">
-  <div class="container">
+  <main class="section">
     <b-loading :active.sync="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
     <router-view></router-view>
-  </div>
-  </section>
+  </main>
 </div>
 </template>
 

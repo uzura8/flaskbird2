@@ -1,25 +1,27 @@
 <template>
 <div class="ebChat">
-  <section v-if="comments" class="u-mt3r">
-    <nav v-if="minId">
-      <a class="u-clickable" @click="fetchComments({ maxId:minId })">More</a>
-    </nav>
-    <ul>
-      <li v-for="item in comments"
-        :key="item.id"
-        class="">
-        <div class="notification u-mt10"
-          :class="{'is-info': item.userId == authUserId}">
-          <div>
-            <strong>{{ item.user.name }}</strong>
-            <small class="u-ml05r">{{ item.createdAt | dateFormat('lll') }}</small>
+  <section class="comments-box" :class="{'is-auth': isAuth}">
+    <div v-if="comments">
+      <nav v-if="minId">
+        <a class="u-clickable" @click="fetchComments({ maxId:minId })">More</a>
+      </nav>
+      <ul>
+        <li v-for="item in comments"
+          :key="item.id"
+          class="">
+          <div class="notification u-mt10"
+            :class="{'is-info': item.userId == authUserId}">
+            <div>
+              <strong>{{ item.user.name }}</strong>
+              <small class="u-ml05r">{{ item.createdAt | dateFormat('lll') }}</small>
+            </div>
+            <p class="is-size-5">{{ item.body }}</p>
           </div>
-          <p class="is-size-5">{{ item.body }}</p>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
+    <p v-else>No data</p>
   </section>
-  <p v-else>No data</p>
 
   <eb-chat-comment-form
     v-if="isAuth"
@@ -86,6 +88,10 @@ export default {
     })
   },
 
+  updated() {
+    this.scrollToEnd()
+  },
+
   methods: {
     getChat: function() {
       Chat.get(this.chatId)
@@ -110,19 +116,25 @@ export default {
         .then(() => {
         })
     },
+
+    scrollToEnd() {
+      this.$nextTick(() => {
+        window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+      })
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@import "bulma/sass/utilities/initial-variables";
-@import "bulma/sass/utilities/functions";
-@import "bulma";
-@import "buefy/src/scss/buefy.scss";
-@import "buefy/src/scss/components/_icon";
-@import "buefy/src/scss/components/_loading";
+.comments-box {
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
 
-@import "customize.scss";
-[v-cloak] { display: none !important; }
+  &.is-auth {
+    padding-bottom: 80px;
+  }
+}
 </style>
 

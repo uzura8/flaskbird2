@@ -88,7 +88,38 @@ module.exports = [
           test: /\.vue$/,
           use: [
             {
-              loader: 'vue-loader'
+              loader: 'vue-loader',
+              options: {
+                loaders: {
+                  scss: [
+                    'vue-style-loader',
+                    {loader: 'css-loader', options: {url: false}},
+                    {
+                      loader: 'postcss-loader',// Setting for PostCSS
+                      options: {
+                        plugins: (loader) => [
+                          // Enable Autoprefixer
+                          // Add vendor prefix
+                          require('autoprefixer')({
+                            grid: true, // use CSS Grid Layout
+                            //browsers: ['Android >= 4.4', "IE 11"],
+                          })
+                        ],
+                        sourceMap: true
+                      }
+                    },
+                    {
+                      loader: 'sass-loader',
+                      options: {
+                        includePaths: [
+                          path.join(root, 'src/client/scss/'),
+                          path.join(root, 'node_modules/'),
+                        ],
+                      },
+                    },
+                  ],
+                }
+              }
             }
           ]
         },
@@ -157,7 +188,8 @@ module.exports = [
   {
     devtool: 'source-map',
     entry: {
-      style: path.join(root, 'src/client/scss/style.scss')
+      style: path.join(root, 'src/client/scss/style.scss'),
+      include: path.join(root, 'src/client/scss/include.scss'),
     },
     output: {
       path: path.join(root, 'public/assets/css'),
