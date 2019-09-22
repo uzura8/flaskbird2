@@ -10,7 +10,7 @@
           placeholder="Add a comment..."></textarea>
       </div>
       <div class="c-form-group__item c-form-group__item--end">
-        <button class="button is-primary" @click="create">Send</button>
+        <button class="button is-primary is-small" @click="create">Send</button>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@ export default {
   background-color: #fff;
   position: fixed;
   bottom: 0;
-  height: 100px;
+  height: 65px;
   display: block;
 }
 .c-form-group {

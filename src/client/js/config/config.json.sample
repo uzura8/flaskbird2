@@ -4,5 +4,5 @@
   "baseUrl": "/",
   "isSSL": false,
   "siteName": "Sample Site",
-  "chatBoxId": "eb-chat-include-container"
+  "chatContainerId": "eb-chat-widget-container"
 }

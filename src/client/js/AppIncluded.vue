@@ -1,14 +1,22 @@
 <template>
-  <div v-cloak>
-    <div v-if="isActive">
-      <a @click="isActive = !isActive"
-        class="button is-white is-large btn-chat-window btn-chat-window u-bg-tr">
-        <i class="fas fa-times"></i>
-      </a>
-      <eb-chat
-        :isInclude="true"
-        :chatId="chatId"
-        @loaded-chat="setChat"></eb-chat>
+  <div ref="appContainer" class="u-bg-tr" v-cloak>
+    <div v-if="isActive" class="chat-widget">
+      <div class="chat-widget-container">
+        <header class="chat-widget-header">
+          <div class="container"></div>
+          <h3 v-if="chat" class="title is-4 is-clearfix">
+            {{ chat.name }}
+            <a @click="isActive = !isActive"
+              class="button is-white u-bg-tr is-pulled-right">
+              <i class="fas fa-times"></i>
+            </a>
+          </h3>
+        </header>
+        <eb-chat
+          :isInclude="true"
+          :chatId="chatId"
+          @loaded-chat="setChat"></eb-chat>
+      </div>
     </div>
     <button v-else
       @click="isActive = !isActive"
@@ -21,12 +29,14 @@
 </template>
 
 <script>
+import site from '@/util/site'
 import EbChat from '@/components/EbChat'
 export default {
-  name: 'App',
+  name: 'AppiIncluded',
   components: {
     EbChat,
   },
+
   data(){
     return {
       isActive: false,
@@ -34,9 +44,28 @@ export default {
       chat: null,
     }
   },
+
+  computed: {
+    appContainerSize () {
+      return {
+        width: this.$refs.appContainer.clientWidth,
+        height: this.$refs.appContainer.clientHeight,
+      }
+    },
+  },
+
+  watch: {
+    isActive: function (val) {
+      if (typeof window.parent.postMessage === undefined) return
+      //const origin = site.baseUri('origin')
+      window.parent.postMessage({ chatActive: val }, '*');
+    }
+  },
+
   created() {
     this.$store.dispatch('checkAuthenticate')
   },
+
   methods: {
     setChat: function(chat) {
       this.chat = chat
@@ -46,11 +75,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn-chat-window {
+.chat-widget {
+  background-color: transparent;
+  padding: 1rem;
+}
+.chat-widget-container {
+  background-color: #fff;
+  padding: 55px 1rem 65px;
+}
+.chat-widget-header {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 1rem;
+  right: 1rem;
   z-index: 1;
+  width: calc(100% - 2rem);
+  background-color: #fff;
+  padding: 1rem 1rem 1rem;
 }
 </style>
 

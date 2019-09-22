@@ -67,7 +67,8 @@ module.exports = [
     devtool: 'source-map',
     entry: {
       index: path.join(root, 'src/client/js/index.js'),
-      include: path.join(root, 'src/client/js/include.js')
+      include: path.join(root, 'src/client/js/include.js'),
+      chat_frame: path.join(root, 'src/client/js/chat_frame.js'),
     },
     output: {
       path: path.join(root, 'public/assets/js'),
