@@ -2,7 +2,11 @@ import 'es6-promise/auto'
 import Vue from 'vue'
 import router from './router'
 import store from './store'
+import config from './config/config'
 import './common';
+
+import Firebase from './firebase'
+if (config.firebase.isEnabled) Firebase.init()
 
 import Buefy from 'buefy'
 Vue.use(Buefy)

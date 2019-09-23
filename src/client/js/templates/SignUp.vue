@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { User } from '../api/'
+import { User, Firebase } from '@/api'
+import config from '@/config/config'
 import str from '@/util/str'
 
 export default {
@@ -91,21 +92,57 @@ export default {
           email: this.email,
           password: this.password,
         }
-        User.create(vals)
-          .then((res) => {
-            this.$store.dispatch('authenticate', vals)
-              .then(() => {
-                this.$router.push({ name:'UserTop' })
-              })
-              .catch(err => {
-                this.setErrors(err.response.data.errors)
-                this.showGlobalError('Sign In failed')
-              })
-          })
-          .catch(err => {
-            this.handleApiError(err, 'Sign Up failed')
-          })
+        const func = config.firebase.isEnabled ? this.firebaseCreateUser : this.createUser
+        func(vals)
       }
+    },
+
+    createUser: function(vals) {
+      this.$store.dispatch('setIsLoading', true)
+      User.create(vals)
+        .then((res) => {
+          this.$store.dispatch('authenticate', vals)
+            .then(() => {
+              this.$store.dispatch('setIsLoading', false)
+              this.$router.push({ name:'UserTop' })
+            })
+            .catch(err => {
+              this.$store.dispatch('setIsLoading', false)
+              this.setErrors(err.response.data.errors)
+              this.showGlobalError('Sign In failed')
+            })
+        })
+        .catch(err => {
+          this.$store.dispatch('setIsLoading', false)
+          this.handleApiError(err, 'Sign Up failed')
+        })
+    },
+
+    firebaseCreateUser: function(vals) {
+      this.$store.dispatch('setIsLoading', true)
+      Firebase.createUser(vals)
+        .then((res) => {
+          Firebase.updateUserProfile(res.user, {displayName: vals.name})
+            .then((res) => {
+              this.$store.dispatch('authenticate', vals)
+                .then(() => {
+                  this.$store.dispatch('setIsLoading', false)
+                  this.$router.push({ name:'UserTop' })
+                })
+                .catch(err => {
+                  this.$store.dispatch('setIsLoading', false)
+                  this.showGlobalError('Sign In failed')
+                })
+            })
+            .catch(err => {
+              this.$store.dispatch('setIsLoading', false)
+              this.handleApiError(err, 'Update user profile failed')
+            })
+        })
+        .catch(err => {
+          this.$store.dispatch('setIsLoading', false)
+          this.handleApiError(err, 'Sign Up failed')
+        })
     },
 
     setErrors: function(errors) {

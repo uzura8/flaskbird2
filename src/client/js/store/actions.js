@@ -1,5 +1,10 @@
 import * as types from './mutation-types'
-import { Example, User, ChatComment } from '@/api'
+import { Example, User, ChatComment, Firebase } from '@/api'
+import firebase from 'firebase/app'
+import 'firebase/app';
+import 'firebase/auth'
+import config from '@/config/config'
+const isEnabledFB = config.firebase.isEnabled
 
 export default {
   setHeaderMenuOpen: ({ commit }, isOpen) => {
@@ -8,34 +13,80 @@ export default {
 
   authenticate: ({ commit }, payload) => {
     commit(types.SET_COMMON_LOADING, true)
-    return User.authenticate(payload)
-      .then(user => {
-        commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_SET_USER, user)
-        commit(types.AUTH_UPDATE_STATE, true)
-        commit(types.AUTH_SET_ERROR, null)
-      })
-      .catch(error => {
-        commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_UPDATE_STATE, false)
-        commit(types.AUTH_SET_ERROR, error.message)
-      })
+    if (isEnabledFB) {
+      return Firebase.authenticate(payload)
+        .then(fbuser => {
+          const user = {
+            id: fbuser.uid,
+            uid: fbuser.uid,
+            email: fbuser.email,
+            name: fbuser.displayName
+          }
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, user)
+          commit(types.AUTH_UPDATE_STATE, true)
+          commit(types.AUTH_SET_ERROR, null)
+        })
+        .catch(error => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.AUTH_SET_ERROR, error.message)
+          throw error
+        })
+    } else {
+      return User.authenticate(payload)
+        .then(user => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, user)
+          commit(types.AUTH_UPDATE_STATE, true)
+          commit(types.AUTH_SET_ERROR, null)
+        })
+        .catch(error => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.AUTH_SET_ERROR, error.message)
+          throw error
+        })
+    }
   },
 
-  checkAuthenticate: ({ commit }, payload) => {
+  checkAuthenticate: ({ commit }) => {
     commit(types.SET_COMMON_LOADING, true)
-    return User.check(payload)
-      .then(user => {
-        commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_SET_USER, user)
-        commit(types.AUTH_UPDATE_STATE, true)
-        commit(types.AUTH_SET_ERROR, null)
-      })
-      .catch(error => {
-        commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_UPDATE_STATE, false)
-        commit(types.AUTH_SET_ERROR, error.message)
-      })
+    if (isEnabledFB) {
+      return Firebase.checkAuth()
+        .then(fbuser => {
+          const user = {
+            id: fbuser.uid,
+            uid: fbuser.uid,
+            email: fbuser.email,
+            name: fbuser.displayName
+          }
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, user)
+          commit(types.AUTH_UPDATE_STATE, true)
+          commit(types.AUTH_SET_ERROR, null)
+        })
+        .catch(error => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.AUTH_SET_ERROR, error.message)
+          throw error
+        })
+    } else {
+      return User.check()
+        .then(user => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, user)
+          commit(types.AUTH_UPDATE_STATE, true)
+          commit(types.AUTH_SET_ERROR, null)
+        })
+        .catch(error => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.AUTH_SET_ERROR, error.message)
+          throw error
+        })
+    }
   },
 
   signOut: ({ commit }, payload) => {
@@ -49,6 +100,7 @@ export default {
       })
       .catch(error => {
         commit(types.AUTH_SET_ERROR, error.message)
+        throw error
       })
   },
 
