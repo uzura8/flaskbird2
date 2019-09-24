@@ -27,6 +27,11 @@
     v-if="isAuth"
     :chat="chat">
   </eb-chat-comment-form>
+  <nav v-else-if="isEnabledFB"
+    class="u-mt1r">
+    <a @click="signInAnonymously"
+      class="button is-text">Comment as anonymous user</a>
+  </nav>
 </div>
 </template>
 
@@ -75,6 +80,10 @@ export default {
     minId () {
       return !this.isEmpty(this.comments) ? this.comments[0].id : 0
     },
+
+    isEnabledFB () {
+      return config.firebase.isEnabled
+    },
   },
 
   created() {
@@ -114,6 +123,17 @@ export default {
           this.handleApiError(err, 'Failed to get data from server')
         })
         .then(() => {
+        })
+    },
+
+    signInAnonymously: function() {
+      this.$store.dispatch('authenticateAnonymously')
+        .then(() => {
+          this.$store.dispatch('resetChatCommentList', this.chatId)
+          this.fetchComments()
+        })
+        .catch(err => {
+          this.showGlobalMessage('Sign Anonymously is failed')
         })
     },
 

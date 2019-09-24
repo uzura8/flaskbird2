@@ -19,6 +19,14 @@ export default {
     })
   },
 
+  authenticateAnonymously: () => {
+    return new Promise((resolve, reject) => {
+      firebase.auth().signInAnonymously()
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    })
+  },
+
   checkAuth: () => {
     return new Promise((resolve, reject) => {
       try {
