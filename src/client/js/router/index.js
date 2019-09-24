@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import store from '../store'
 import routes from './routes'
 import arr from '@/util/arr'
+import firebase from 'firebase/app'
+import 'firebase/app';
+import 'firebase/auth'
 
 Vue.use(Router)
 

@@ -3,7 +3,11 @@ import Vue from 'vue'
 import router from './router'
 import store from './store'
 import App from './App'
+import config from './config/config'
 import './common';
+
+import Firebase from './firebase'
+if (config.firebase.isEnabled) Firebase.init()
 
 import Buefy from 'buefy'
 Vue.use(Buefy)

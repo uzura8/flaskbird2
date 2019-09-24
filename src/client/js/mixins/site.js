@@ -2,6 +2,7 @@ import store from '@/store'
 import router from '@/router'
 import listener from '@/listener'
 import util from '@/util'
+import config from '@/config/config'
 
 export default {
   computed: {
@@ -10,7 +11,9 @@ export default {
     },
 
     authUserId: function () {
-      return this.$store.state.auth.state ? this.$store.state.auth.user.id : 0
+      if (!this.$store.state.auth.state) return null
+      const idKey = config.firebase.isEnabled ? 'uid' : 'id'
+      return this.$store.state.auth.user[idKey]
     },
   },
 
@@ -40,10 +43,13 @@ export default {
       }
       if (typeof this.setErrors == 'function'
         && !this.isEmpty(err)
-        && !this.isEmpty(err.response.data.errors)) {
+        && err.response != null
+        && err.response.data != null
+        && err.response.data.errors != null) {
         this.setErrors(err.response.data.errors)
       }
       if (err.response != null
+        && err.response.data != null
         && err.response.data.message != null) {
         this.showGlobalMessage(err.response.data.message)
       } else if (defaultMsg) {
