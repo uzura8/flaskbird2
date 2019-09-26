@@ -109,7 +109,7 @@ export default {
             .catch(err => {
               this.$store.dispatch('setIsLoading', false)
               this.setErrors(err.response.data.errors)
-              this.showGlobalError('Sign In failed')
+              this.showGlobalMessage('Sign In failed')
             })
         })
         .catch(err => {
@@ -122,16 +122,24 @@ export default {
       this.$store.dispatch('setIsLoading', true)
       Firebase.createUser(vals)
         .then((res) => {
+          const uid = res.user.uid
           Firebase.updateUserProfile(res.user, {displayName: vals.name})
             .then((res) => {
-              this.$store.dispatch('authenticate', vals)
-                .then(() => {
+              User.createServiceUser('firebase', uid, vals)
+                .then((res) => {
+                  const user = {
+                    id: res.userId,
+                    uid: res.serviceUserId,
+                    email: res.email,
+                    name: res.displayName
+                  }
                   this.$store.dispatch('setIsLoading', false)
+                  this.$store.dispatch('setAuth', user)
                   this.$router.push({ name:'UserTop' })
                 })
                 .catch(err => {
                   this.$store.dispatch('setIsLoading', false)
-                  this.showGlobalError('Sign In failed')
+                  this.showGlobalMessage('Create user failed')
                 })
             })
             .catch(err => {

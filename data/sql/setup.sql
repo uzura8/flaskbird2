@@ -1,6 +1,6 @@
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
+  `name` varchar(64) NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:active, 1:deleted',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -19,6 +19,19 @@ CREATE TABLE `user_auth` (
   UNIQUE KEY `user_id_UNIQUE_idx` (`user_id`),
   UNIQUE KEY `email_UNIQUE_idx` (`email`),
   CONSTRAINT `user_auth_user_id_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `service_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_code` varchar(64) NOT NULL,
+  `service_user_id` varchar(128) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id_UNIQUE_idx` (`user_id`),
+  UNIQUE KEY `service_code_service_user_id_UNIQUE_idx` (`service_code`, `service_user_id`),
+  CONSTRAINT `service_user_user_id_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `chat` (

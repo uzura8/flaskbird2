@@ -11,6 +11,17 @@ export default {
     })
   },
 
+  createServiceUser: (serviceCode, serviceUserId, vals) => {
+    let postVals = Object.assign({}, vals);
+    postVals.uid = serviceUserId
+    return new Promise((resolve, reject) => {
+      const params = uri.convToPostParams(postVals, ['name', 'uid'])
+      client.post(`users/services/${serviceCode}`, params)
+        .then(res => resolve(res.data))
+        .catch(err => reject(err))
+    })
+  },
+
   get: (userId = '') => {
     return new Promise((resolve, reject) => {
       if (!userId) userId = 'me'

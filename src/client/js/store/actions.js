@@ -8,16 +8,22 @@ export default {
     commit(types.SET_COMMON_HEADER_MENU_OPEN, isOpen)
   },
 
+  setAuth: ({ commit }, user) => {
+    commit(types.AUTH_SET_USER, user)
+    commit(types.AUTH_UPDATE_STATE, true)
+    commit(types.AUTH_SET_ERROR, null)
+  },
+
   authenticate: ({ commit }, payload) => {
     commit(types.SET_COMMON_LOADING, true)
     if (isEnabledFB) {
       return Firebase.authenticate(payload)
-        .then(fbuser => {
+        .then(res => {
           const user = {
-            id: fbuser.uid,
-            uid: fbuser.uid,
-            email: fbuser.email,
-            name: fbuser.displayName
+            id: res.user.uid,
+            uid: res.user.uid,
+            email: res.user.email,
+            name: res.user.displayName
           }
           commit(types.SET_COMMON_LOADING, false)
           commit(types.AUTH_SET_USER, user)
@@ -51,12 +57,12 @@ export default {
     commit(types.SET_COMMON_LOADING, true)
     if (isEnabledFB) {
       return Firebase.authenticateAnonymously(payload)
-        .then(fbuser => {
+        .then(res => {
           const user = {
-            id: fbuser.uid,
-            uid: fbuser.uid,
-            email: fbuser.email,
-            name: fbuser.displayName
+            id: res.user.uid,
+            uid: res.user.uid,
+            email: res.user.email,
+            name: res.user.displayName
           }
           commit(types.SET_COMMON_LOADING, false)
           commit(types.AUTH_SET_USER, user)
@@ -79,16 +85,23 @@ export default {
     if (isEnabledFB) {
       return Firebase.checkAuth()
         .then(fbuser => {
-          const user = {
-            id: fbuser.uid,
-            uid: fbuser.uid,
-            email: fbuser.email,
-            name: fbuser.displayName
+          if (fbuser) {
+            const user = {
+              id: fbuser.uid,
+              uid: fbuser.uid,
+              email: fbuser.email,
+              name: fbuser.displayName
+            }
+            commit(types.SET_COMMON_LOADING, false)
+            commit(types.AUTH_SET_USER, user)
+            commit(types.AUTH_UPDATE_STATE, true)
+            commit(types.AUTH_SET_ERROR, null)
+          } else {
+            commit(types.SET_COMMON_LOADING, false)
+            commit(types.AUTH_SET_USER, null)
+            commit(types.AUTH_UPDATE_STATE, false)
+            commit(types.AUTH_SET_ERROR, null)
           }
-          commit(types.SET_COMMON_LOADING, false)
-          commit(types.AUTH_SET_USER, user)
-          commit(types.AUTH_UPDATE_STATE, true)
-          commit(types.AUTH_SET_ERROR, null)
         })
         .catch(error => {
           commit(types.SET_COMMON_LOADING, false)
@@ -113,19 +126,33 @@ export default {
     }
   },
 
-  signOut: ({ commit }, payload) => {
+  signOut: ({ commit }) => {
     commit(types.SET_COMMON_LOADING, true)
-    return User.signOut(payload)
-      .then(() => {
-        commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_SET_USER, null)
-        commit(types.AUTH_UPDATE_STATE, false)
-        commit(types.AUTH_SET_ERROR, null)
-      })
-      .catch(error => {
-        commit(types.AUTH_SET_ERROR, error.message)
-        throw error
-      })
+    if (isEnabledFB) {
+      return Firebase.signOut()
+        .then(() => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, null)
+          commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.AUTH_SET_ERROR, null)
+        })
+        .catch(error => {
+          commit(types.AUTH_SET_ERROR, error.message)
+          throw error
+        })
+    } else {
+      return User.signOut()
+        .then(() => {
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, null)
+          commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.AUTH_SET_ERROR, null)
+        })
+        .catch(error => {
+          commit(types.AUTH_SET_ERROR, error.message)
+          throw error
+        })
+    }
   },
 
   resetAuth: ({ commit }) => {

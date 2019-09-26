@@ -1,6 +1,7 @@
 import db from './db'
 import User from './user'
 import UserAuth from './userAuth'
+import ServiceUser from './serviceUser'
 import Chat from './chat'
 import ChatComment from './chatComment'
 
@@ -8,6 +9,8 @@ import ChatComment from './chatComment'
 User.sync().then(() => {
   UserAuth.belongsTo(User, { foreignKey: 'userId' });
   UserAuth.sync()
+  ServiceUser.belongsTo(User, { foreignKey: 'userId' });
+  ServiceUser.sync()
   Chat.belongsTo(User, { foreignKey: 'userId' });
   Chat.sync()
   ChatComment.belongsTo(User, { as:'user', foreignKey: 'userId' });
@@ -22,6 +25,7 @@ export {
   db,
   User,
   UserAuth,
+  ServiceUser,
   Chat,
   ChatComment,
 }

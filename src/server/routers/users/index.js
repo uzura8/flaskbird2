@@ -26,6 +26,12 @@ router.get(
   controller.signOut
 )
 
+router.post(
+  '/services/:serviceCode',
+  controller.validate('createServiceUser'),
+  controller.createServiceUser
+)
+
 router.get(
   '/:userId',
   controller.isAuthenticated,

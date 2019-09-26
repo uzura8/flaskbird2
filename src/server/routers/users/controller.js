@@ -1,6 +1,6 @@
 import boom from '@hapi/boom'
-import { check, validationResult } from 'express-validator'
-import { db, User, UserAuth } from '@/models'
+import { check, param, validationResult } from 'express-validator'
+import { db, User, UserAuth, ServiceUser } from '@/models'
 import str from '@/util/str'
 import Authenticator from '@/middlewares/passport'
 
@@ -48,6 +48,39 @@ export default {
     }
   },
 
+  createServiceUser: (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+    const serviceCode = req.params.serviceCode
+    const serviceUserId = req.body.uid
+    const name = req.body.name
+    try {
+      const result = db.sequelize.transaction(async (t) => {
+        const user = await User.create({
+          name: name.length > 0 ? name: null,
+          isDeleted: false,
+        })
+        const serviceUser = await ServiceUser.create({
+          serviceCode: serviceCode,
+          serviceUserId: serviceUserId,
+          userId: user.id,
+        })
+        return res.json({
+          id: serviceUser.id,
+          serviceCode: serviceCode,
+          serviceUserId: serviceUserId,
+          userId: user.id,
+          userName: user.name,
+          email: user.email,
+        })
+      })
+    } catch (err) {
+      return next(boom.badRequest(err))
+    }
+  },
+
   validate: (method) => {
     switch (method) {
       case 'create':
@@ -72,6 +105,17 @@ export default {
           check('name', 'Your name is required')
             .trim()
             .isLength({ min: 1 }).withMessage('Name is required'),
+        ]
+
+      case 'createServiceUser':
+        return [
+          param('serviceCode')
+            .trim()
+            .isLength({ min: 1 }).withMessage('ServiceCode is required'),
+          check('uid')
+            .trim()
+            .isLength({ min: 1 }).withMessage('uid is required'),
+          check('name').trim(),
         ]
 
       case 'signin':
