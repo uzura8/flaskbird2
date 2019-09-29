@@ -18,6 +18,7 @@ package-lock.json
 
 /src/server/config/config.json
 /src/client/js/config/config.json
+/src/server/config/firebase-admin-credentials.json
 
 /server/*
 /public/assets/js/*

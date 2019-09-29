@@ -15,7 +15,7 @@ export default {
     let postVals = Object.assign({}, vals);
     postVals.uid = serviceUserId
     return new Promise((resolve, reject) => {
-      const params = uri.convToPostParams(postVals, ['name', 'uid'])
+      const params = uri.convToPostParams(postVals, ['uid'])
       client.post(`users/services/${serviceCode}`, params)
         .then(res => resolve(res.data))
         .catch(err => reject(err))

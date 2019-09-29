@@ -14,6 +14,7 @@ const state = {
   auth: {
     state: null,
     user: null,
+    token: null,
   },
   chatComment: {
     chatId: null,

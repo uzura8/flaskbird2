@@ -97,60 +97,40 @@ export default {
       }
     },
 
-    createUser: function(vals) {
+    createUser: async function(vals) {
       this.$store.dispatch('setIsLoading', true)
-      User.create(vals)
-        .then((res) => {
-          this.$store.dispatch('authenticate', vals)
-            .then(() => {
-              this.$store.dispatch('setIsLoading', false)
-              this.$router.push({ name:'UserTop' })
-            })
-            .catch(err => {
-              this.$store.dispatch('setIsLoading', false)
-              this.setErrors(err.response.data.errors)
-              this.showGlobalMessage('Sign In failed')
-            })
-        })
-        .catch(err => {
-          this.$store.dispatch('setIsLoading', false)
-          this.handleApiError(err, 'Sign Up failed')
-        })
+      try {
+        await User.create(vals)
+        await this.$store.dispatch('authenticate', vals)
+        this.$store.dispatch('setIsLoading', false)
+        this.$router.push({ name:'UserTop' })
+      } catch (err) {
+        this.$store.dispatch('setIsLoading', false)
+        this.setErrors(err.response.data.errors)
+        this.handleApiError(err, 'Sign Up failed')
+      }
     },
 
-    firebaseCreateUser: function(vals) {
+    firebaseCreateUser: async function(vals) {
       this.$store.dispatch('setIsLoading', true)
-      Firebase.createUser(vals)
-        .then((res) => {
-          const uid = res.user.uid
-          Firebase.updateUserProfile(res.user, {displayName: vals.name})
-            .then((res) => {
-              User.createServiceUser('firebase', uid, vals)
-                .then((res) => {
-                  const user = {
-                    id: res.userId,
-                    uid: res.serviceUserId,
-                    email: res.email,
-                    name: res.displayName
-                  }
-                  this.$store.dispatch('setIsLoading', false)
-                  this.$store.dispatch('setAuth', user)
-                  this.$router.push({ name:'UserTop' })
-                })
-                .catch(err => {
-                  this.$store.dispatch('setIsLoading', false)
-                  this.showGlobalMessage('Create user failed')
-                })
-            })
-            .catch(err => {
-              this.$store.dispatch('setIsLoading', false)
-              this.handleApiError(err, 'Update user profile failed')
-            })
-        })
-        .catch(err => {
-          this.$store.dispatch('setIsLoading', false)
-          this.handleApiError(err, 'Sign Up failed')
-        })
+      try {
+        let res = await Firebase.createUser(vals)
+        const uid = res.user.uid
+        res = await Firebase.updateUserProfile(res.user, {displayName: vals.name})
+        res = User.createServiceUser('firebase', uid, vals)
+        const user = {
+          id: res.userId,
+          uid: res.serviceUserId,
+          email: res.email,
+          name: res.userName
+        }
+        this.$store.dispatch('setIsLoading', false)
+        this.$store.dispatch('setAuth', user)
+        this.$router.push({ name:'UserTop' })
+      } catch (err) {
+        this.$store.dispatch('setIsLoading', false)
+        this.handleApiError(err, 'Sign Up failed')
+      }
     },
 
     setErrors: function(errors) {

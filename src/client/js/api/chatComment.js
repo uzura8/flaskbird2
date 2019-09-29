@@ -1,3 +1,4 @@
+import store from '@/store'
 import client from './client'
 import uri from '@/util/uri'
 
@@ -18,7 +19,11 @@ export default {
     return new Promise((resolve, reject) => {
       const params = uri.convToPostParams(values, ['body'])
       const reqUri = `chats/${chatId}/comments`;
-      client.post(reqUri, params)
+      let options = {}
+      if (store.state.auth.token) {
+        options.headers = { Authorization: store.state.auth.token }
+      }
+      client.post(reqUri, params, options)
         .then(res => resolve(res.data))
         .catch(err => {
           reject(new Error(err.response.data.message || err.message))

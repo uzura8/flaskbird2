@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '../store'
+import store from '@/store'
 import routes from './routes'
 import arr from '@/util/arr'
 import firebase from 'firebase/app'
@@ -48,13 +48,14 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  if (store.state.auth.state === null) {
+  if (store.state.auth.state === null
+    || store.state.auth.state && !store.state.auth.token) {
     store.dispatch('checkAuthenticate')
       .then(() => {
         routeByAuthState()
       })
       .catch(err => {
-        console.log(err)
+        routeByAuthState()
       })
   } else {
     routeByAuthState()

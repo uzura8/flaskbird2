@@ -39,6 +39,14 @@ export default {
     });
   },
 
+  getToken: (fbUser) => {
+    return new Promise((resolve, reject) => {
+      fbUser.getIdToken(true)
+        .then(res => resolve(res))
+        .catch(err => reject(err))
+    });
+  },
+
   updateUserProfile: (fbUser, vals) => {
     return new Promise((resolve, reject) => {
       fbUser.updateProfile(vals)

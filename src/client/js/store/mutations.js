@@ -9,16 +9,12 @@ export default {
     state.auth.user = payload
   },
 
-  [types.AUTH_REMOVE_USER] (state) {
-    state.auth.user = null
+  [types.AUTH_SET_TOKEN] (state, payload) {
+    state.auth.token = payload
   },
 
   [types.AUTH_UPDATE_STATE] (state, payload) {
     state.auth.state = payload
-  },
-
-  [types.AUTH_SET_ERROR] (state, payload) {
-    state.auth.error = payload
   },
 
   [types.SET_COMMON_HEADER_MENU_OPEN] (state, isOpen) {

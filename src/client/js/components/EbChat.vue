@@ -12,7 +12,8 @@
           <div class="notification u-mt10"
             :class="{'is-info': item.userId == authUserId}">
             <div>
-              <strong>{{ item.user.name }}</strong>
+              <strong v-if="item.user.name && item.user.name != 'null'">{{ item.user.name }}</strong>
+              <strong v-else>GuestUser</strong>
               <small class="u-ml05r">{{ item.createdAt | dateFormat('lll') }}</small>
             </div>
             <p class="is-size-5">{{ item.body }}</p>

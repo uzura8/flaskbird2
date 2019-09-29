@@ -1,9 +1,12 @@
-//import bcrypt from 'bcryptjs'
 import db from './db'
+import User from './user'
 
 class ServiceUser extends db.Sequelize.Model {
   static findByserviceUserId(serviceCode, serviceUserId) {
     return this.findOne({
+      include: [{
+        model: User,
+      }],
       where: {
         serviceCode: serviceCode,
         serviceUserId: serviceUserId,

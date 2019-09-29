@@ -5,7 +5,12 @@ import str from '@/util/str'
 
 class UserAuth extends db.Sequelize.Model {
   static findByEmail(email) {
-    return this.findOne({ where: { email: email }})
+    return this.findOne({
+      include: [{
+        model: User,
+      }],
+      where: { email: email },
+    })
   }
 
   //verifyPassword(password) {

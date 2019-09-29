@@ -58,22 +58,29 @@ export default {
     const name = req.body.name
     try {
       const result = db.sequelize.transaction(async (t) => {
-        const user = await User.create({
-          name: name.length > 0 ? name: null,
-          isDeleted: false,
-        })
-        const serviceUser = await ServiceUser.create({
-          serviceCode: serviceCode,
-          serviceUserId: serviceUserId,
-          userId: user.id,
-        })
+        const serviceUser = await ServiceUser.findByserviceUserId(serviceCode, serviceUserId)
+        let userName
+        if (serviceUser) {
+          userName = serviceUser.User.name
+        } else {
+          const user = await User.create({
+            name: name.length > 0 ? name: null,
+            isDeleted: false,
+          })
+          const serviceUser = await ServiceUser.create({
+            serviceCode: serviceCode,
+            serviceUserId: serviceUserId,
+            userId: user.id,
+          })
+          userName = user.name
+        }
         return res.json({
           id: serviceUser.id,
           serviceCode: serviceCode,
           serviceUserId: serviceUserId,
-          userId: user.id,
-          userName: user.name,
-          email: user.email,
+          userId: serviceUser.userId,
+          userName: userName,
+          //email: user.email,
         })
       })
     } catch (err) {

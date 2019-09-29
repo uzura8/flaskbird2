@@ -2,10 +2,17 @@ import boom from '@hapi/boom'
 import { check, query, validationResult } from 'express-validator'
 import { db, Chat, ChatComment, User } from '@/models'
 import Authenticator from '@/middlewares/passport'
+import FirebaseAuth from '@/middlewares/firebase/auth'
+import config from '@/config/config'
+const isFBEnabled = config.auth.firebase.isEnabled
 
 export default {
   isAuthenticated: (req, res, next) => {
-    Authenticator.isAuthenticated(req, res, next)
+    if (isFBEnabled) {
+      FirebaseAuth.verifyToken(req, res, next)
+    } else {
+      Authenticator.isAuthenticated(req, res, next)
+    }
   },
 
   isAuther: (req, res, next) => {

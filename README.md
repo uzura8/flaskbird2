@@ -12,8 +12,8 @@ Edit configs for your env
 
 ```
 cp src/server/config/config.json.sample src/server/config/config.json
-vi src/server/config/config.json
 cp src/client/js/config/config.json.sample src/client/js/config/config.json
+vi src/server/config/config.json
 vi src/client/js/config/config.json
 ```
 
@@ -35,3 +35,20 @@ npm run build
 ```
 npm run start
 ```
+
+### Optional settings ###
+#### If authenticate by Firebase
+
+1. Put firebase-admin credential file to src/server/config/firebase-admin-credentials.json
+2. Edit config
+
+```
+vi src/server/config/config.json
+
+  "auth": {
+    "firebase": {
+      "isEnabled": true
+    }
+  }
+```
+
