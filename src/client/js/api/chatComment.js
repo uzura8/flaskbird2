@@ -1,4 +1,3 @@
-import store from '@/store'
 import client from './client'
 import uri from '@/util/uri'
 
@@ -15,14 +14,12 @@ export default {
     })
   },
 
-  create: (chatId, values) => {
+  create: (chatId, values, token = null) => {
     return new Promise((resolve, reject) => {
       const params = uri.convToPostParams(values, ['body'])
       const reqUri = `chats/${chatId}/comments`;
       let options = {}
-      if (store.state.auth.token) {
-        options.headers = { Authorization: store.state.auth.token }
-      }
+      if (token) options.headers = { Authorization: token }
       client.post(reqUri, params, options)
         .then(res => resolve(res.data))
         .catch(err => {

@@ -3,10 +3,17 @@ import { check, param, validationResult } from 'express-validator'
 import { db, User, UserAuth, ServiceUser } from '@/models'
 import str from '@/util/str'
 import Authenticator from '@/middlewares/passport'
+import FirebaseAuth from '@/middlewares/firebase/auth'
+import config from '@/config/config'
+const isFBEnabled = config.auth.firebase.isEnabled
 
 export default {
   authenticate: (req, res, next) => {
-    Authenticator.authenticate(req, res, next)
+    if (isFBEnabled) {
+      FirebaseAuth.verifyToken(req, res, next)
+    } else {
+      Authenticator.isAuthenticated(req, res, next)
+    }
   },
 
   signOut: (req, res, next) => {
@@ -14,7 +21,11 @@ export default {
   },
 
   isAuthenticated: (req, res, next) => {
-    Authenticator.isAuthenticated(req, res, next)
+    if (isFBEnabled) {
+      FirebaseAuth.verifyToken(req, res, next)
+    } else {
+      Authenticator.isAuthenticated(req, res, next)
+    }
   },
 
   create: (req, res, next) => {
@@ -30,6 +41,7 @@ export default {
       const result = db.sequelize.transaction(async (t) => {
         const user = await User.create({
           name: name,
+          type: 'normal',
           isDeleted: false,
         })
         const userAuth = await UserAuth.create({
@@ -41,6 +53,9 @@ export default {
           id: user.id,
           email: userAuth.email,
           name: user.name,
+          type: user.type,
+          uid: null,
+          serviceCode: null,
         })
       })
     } catch (err) {
@@ -56,32 +71,56 @@ export default {
     const serviceCode = req.params.serviceCode
     const serviceUserId = req.body.uid
     const name = req.body.name
+    const type = req.body.type
     try {
       const result = db.sequelize.transaction(async (t) => {
         const serviceUser = await ServiceUser.findByserviceUserId(serviceCode, serviceUserId)
-        let userName
+        let userName, userId
         if (serviceUser) {
+          userId = serviceUser.userId
           userName = serviceUser.User.name
         } else {
           const user = await User.create({
             name: name.length > 0 ? name: null,
+            type: type,
             isDeleted: false,
           })
-          const serviceUser = await ServiceUser.create({
+          await ServiceUser.create({
             serviceCode: serviceCode,
             serviceUserId: serviceUserId,
             userId: user.id,
           })
+          userId = user.id
           userName = user.name
         }
         return res.json({
-          id: serviceUser.id,
+          id: userId,
+          name: userName,
+          type: type,
+          uid: serviceUserId,
           serviceCode: serviceCode,
-          serviceUserId: serviceUserId,
-          userId: serviceUser.userId,
-          userName: userName,
-          //email: user.email,
         })
+      })
+    } catch (err) {
+      return next(boom.badRequest(err))
+    }
+  },
+
+  getServiceUser: async (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+    const serviceCode = req.params.serviceCode
+    const serviceUserId = req.params.serviceUserId
+    try {
+      const serviceUser = await ServiceUser.findByserviceUserId(serviceCode, serviceUserId)
+      return res.json({
+        id: serviceUser.userId,
+        name: serviceUser.User.name,
+        type: serviceUser.type,
+        uid: serviceUserId,
+        serviceCode: serviceCode,
       })
     } catch (err) {
       return next(boom.badRequest(err))
@@ -114,6 +153,16 @@ export default {
             .isLength({ min: 1 }).withMessage('Name is required'),
         ]
 
+      case 'getServiceUser':
+        return [
+          param('serviceCode')
+            .trim()
+            .isLength({ min: 1 }).withMessage('ServiceCode is required'),
+          param('serviceUserId')
+            .trim()
+            .isLength({ min: 1 }).withMessage('uid is required'),
+        ]
+
       case 'createServiceUser':
         return [
           param('serviceCode')
@@ -123,6 +172,14 @@ export default {
             .trim()
             .isLength({ min: 1 }).withMessage('uid is required'),
           check('name').trim(),
+          check('type')
+            .customSanitizer(value => {
+              const defaut = 'normal'
+              const accepts = ['normal', 'anonymous']
+              if (!value) return defaut
+              if (!accepts.includes(value)) return defaut
+              return value
+            }),
         ]
 
       case 'signin':

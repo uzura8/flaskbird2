@@ -6,8 +6,16 @@ import config from '@/config/config'
 
 export default {
   computed: {
+    isFirebaseEnabled: function () {
+      return config.firebase.isEnabled
+    },
+
     isAuth: function () {
       return this.$store.state.auth.state
+    },
+
+    isAnonymous: function () {
+      return this.$store.state.auth.user.type == 'anonymous'
     },
 
     authUserId: function () {

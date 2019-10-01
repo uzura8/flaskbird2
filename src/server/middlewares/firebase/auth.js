@@ -14,11 +14,15 @@ export default {
       const serviceUser = await ServiceUser.findByserviceUserId('firebase', uid)
       req.user = {
         id: serviceUser.userId,
-        email: decodeToken.email,
         name: decodeToken.name,
+        email: decodeToken.email,
+        type: serviceUser.User.type,
+        uid: uid,
+        serviceCode: 'firebase',
       }
       return next()
     } catch (err) {
+      //console.log(err)
       return next(boom.unauthorized('Your are not authorized'))
     }
   }

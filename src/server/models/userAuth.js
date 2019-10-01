@@ -34,7 +34,10 @@ class UserAuth extends db.Sequelize.Model {
         return {
           id: userAuth.userId,
           name: userAuth.User.name,
-          email: userAuth.email
+          email: userAuth.email,
+          type: userAuth.User.type,
+          uid: null,
+          serviceCode: null,
         }
       })
       .catch(err => {

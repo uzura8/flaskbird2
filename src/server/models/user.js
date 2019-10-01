@@ -26,6 +26,11 @@ User.init(
       type: db.Sequelize.STRING,
       allowNull: false
     },
+    type: {
+      type:   db.Sequelize.ENUM,
+      values: ['normal', 'anonymous', 'admin'],
+      allowNull: false
+    },
     isDeleted: {
       type: db.Sequelize.BOOLEAN,
       allowNull: false,

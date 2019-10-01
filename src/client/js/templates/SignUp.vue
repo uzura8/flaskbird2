@@ -92,44 +92,14 @@ export default {
           email: this.email,
           password: this.password,
         }
-        const func = config.firebase.isEnabled ? this.firebaseCreateUser : this.createUser
-        func(vals)
-      }
-    },
-
-    createUser: async function(vals) {
-      this.$store.dispatch('setIsLoading', true)
-      try {
-        await User.create(vals)
-        await this.$store.dispatch('authenticate', vals)
-        this.$store.dispatch('setIsLoading', false)
-        this.$router.push({ name:'UserTop' })
-      } catch (err) {
-        this.$store.dispatch('setIsLoading', false)
-        this.setErrors(err.response.data.errors)
-        this.handleApiError(err, 'Sign Up failed')
-      }
-    },
-
-    firebaseCreateUser: async function(vals) {
-      this.$store.dispatch('setIsLoading', true)
-      try {
-        let res = await Firebase.createUser(vals)
-        const uid = res.user.uid
-        res = await Firebase.updateUserProfile(res.user, {displayName: vals.name})
-        res = User.createServiceUser('firebase', uid, vals)
-        const user = {
-          id: res.userId,
-          uid: res.serviceUserId,
-          email: res.email,
-          name: res.userName
-        }
-        this.$store.dispatch('setIsLoading', false)
-        this.$store.dispatch('setAuth', user)
-        this.$router.push({ name:'UserTop' })
-      } catch (err) {
-        this.$store.dispatch('setIsLoading', false)
-        this.handleApiError(err, 'Sign Up failed')
+        this.$store.dispatch('createUser', vals)
+          .then(() => {
+            this.$router.push({ name:'UserTop' })
+          })
+          .catch((err) => {
+            //console.log(err);
+            this.showGlobalMessage('Sign Up Failed')
+          })
       }
     },
 

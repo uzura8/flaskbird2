@@ -18,33 +18,38 @@ export default {
     if (isEnabledFB) {
       try {
         const res = await Firebase.authenticate(payload)
-        const user = {
-          id: res.user.uid,
-          uid: res.user.uid,
-          email: res.user.email,
-          name: res.user.displayName
-        }
         const idToken = await Firebase.getToken(res.user)
-        commit(types.SET_COMMON_LOADING, false)
+        const serviceUser = await User.getServiceUser('firebase', res.user.uid, idToken)
+        const user = {
+          id: serviceUser.userId,
+          uid: res.user.uid,
+          name: res.user.displayName,
+          type: res.user.isAnonymous ? 'anonymous' : 'normal',
+          email: res.user.email,
+          serviceCode: 'firebase',
+        }
         commit(types.AUTH_SET_USER, user)
         commit(types.AUTH_SET_TOKEN, idToken)
         commit(types.AUTH_UPDATE_STATE, true)
-      } catch (error) {
         commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_UPDATE_STATE, false)
+      } catch (error) {
         commit(types.AUTH_SET_USER, null)
         commit(types.AUTH_SET_TOKEN, null)
+        commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
         throw error
       }
     } else {
       try {
         const user = User.authenticate(payload)
-        commit(types.SET_COMMON_LOADING, false)
         commit(types.AUTH_SET_USER, user)
         commit(types.AUTH_UPDATE_STATE, true)
-      } catch (error) {
         commit(types.SET_COMMON_LOADING, false)
+      } catch (error) {
+        commit(types.AUTH_SET_USER, null)
+        commit(types.AUTH_SET_TOKEN, null)
         commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
         throw error
       }
     }
@@ -55,19 +60,29 @@ export default {
     if (isEnabledFB) {
       try {
         const res = await Firebase.authenticateAnonymously(payload)
-        User.createServiceUser('firebase', res.user.uid, { name:res.user.displayName })
-        const user = {
-          id: res.user.uid,
-          uid: res.user.uid,
-          email: res.user.email,
-          name: res.user.displayName
+        const vals = {
+          name: res.user.displayName,
+          type: 'anonymous',
         }
-        commit(types.SET_COMMON_LOADING, false)
+        const idToken = await Firebase.getToken(res.user)
+        const serviceUser = User.createServiceUser('firebase', res.user.uid, vals)
+        const user = {
+          id: serviceUser.id,
+          email: res.user.email,
+          name: res.user.displayName,
+          type: 'anonymous',
+          uid: res.user.uid,
+          serviceCode: 'firebase',
+        }
         commit(types.AUTH_SET_USER, user)
+        commit(types.AUTH_SET_TOKEN, idToken)
         commit(types.AUTH_UPDATE_STATE, true)
-      } catch (error) {
         commit(types.SET_COMMON_LOADING, false)
+      } catch (error) {
+        commit(types.AUTH_SET_USER, null)
+        commit(types.AUTH_SET_TOKEN, null)
         commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
         throw error
       }
     } else {
@@ -83,34 +98,82 @@ export default {
         if (!fbuser) {
           throw new Error('Auth error')
         }
-        const user = {
-          id: fbuser.uid,
-          uid: fbuser.uid,
-          email: fbuser.email,
-          name: fbuser.displayName
-        }
         const idToken = await Firebase.getToken(fbuser)
+        const serviceUser = await User.getServiceUser('firebase', fbuser.uid, idToken)
+        const user = {
+          id: serviceUser.id,
+          email: fbuser.email,
+          name: fbuser.displayName,
+          uid: fbuser.uid,
+          serviceCode: 'firebase',
+        }
         commit(types.SET_COMMON_LOADING, false)
         commit(types.AUTH_SET_USER, user)
         commit(types.AUTH_SET_TOKEN, idToken)
         commit(types.AUTH_UPDATE_STATE, true)
       } catch (error) {
-        commit(types.SET_COMMON_LOADING, false)
         commit(types.AUTH_SET_USER, null)
         commit(types.AUTH_SET_TOKEN, null)
         commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
         throw error
       }
     } else {
       try {
-        const user = await  User.check()
-        commit(types.SET_COMMON_LOADING, false)
+        const user = await User.check()
         commit(types.AUTH_SET_USER, user)
         commit(types.AUTH_UPDATE_STATE, true)
-      } catch (error) {
         commit(types.SET_COMMON_LOADING, false)
+      } catch (error) {
+        commit(types.AUTH_SET_USER, null)
+        commit(types.AUTH_SET_TOKEN, null)
         commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
         throw error
+      }
+    }
+  },
+
+  createUser: async ({ commit }, vals) => {
+    commit(types.SET_COMMON_LOADING, true)
+    if (isEnabledFB) {
+      try {
+        let res = await Firebase.createUser(vals)
+        const uid = res.user.uid
+        await Firebase.updateUserProfile(res.user, {displayName: vals.name})
+        const idToken = await Firebase.getToken(res.user)
+        const serviceUserVal = { uid:uid, name:vals.name }
+        const serviceUser = await User.createServiceUser('firebase', uid, serviceUserVal, idToken)
+        const user = {
+          id: serviceUser.id,
+          name: serviceUser.name,
+          email: res.user.email,
+          uid: uid,
+          serviceCode: 'firebase',
+        }
+        commit(types.AUTH_SET_USER, user)
+        commit(types.AUTH_SET_TOKEN, idToken)
+        commit(types.AUTH_UPDATE_STATE, true)
+        commit(types.SET_COMMON_LOADING, false)
+      } catch (err) {
+        commit(types.AUTH_SET_USER, null)
+        commit(types.AUTH_SET_TOKEN, null)
+        commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
+        throw err
+      }
+    } else {
+      try {
+        const user = await User.create(vals)
+        commit(types.AUTH_SET_USER, user)
+        commit(types.AUTH_UPDATE_STATE, true)
+        commit(types.SET_COMMON_LOADING, false)
+      } catch (err) {
+        commit(types.AUTH_SET_USER, null)
+        commit(types.AUTH_SET_TOKEN, null)
+        commit(types.AUTH_UPDATE_STATE, false)
+        commit(types.SET_COMMON_LOADING, false)
+        throw err
       }
     }
   },
@@ -120,21 +183,25 @@ export default {
     if (isEnabledFB) {
       return Firebase.signOut()
         .then(() => {
-          commit(types.SET_COMMON_LOADING, false)
           commit(types.AUTH_SET_USER, null)
+          commit(types.AUTH_SET_TOKEN, null)
           commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.SET_COMMON_LOADING, false)
         })
-        .catch(error => {
-          throw error
+        .catch(err => {
+          commit(types.SET_COMMON_LOADING, false)
+          throw err
         })
     } else {
       return User.signOut()
         .then(() => {
-          commit(types.SET_COMMON_LOADING, false)
           commit(types.AUTH_SET_USER, null)
+          commit(types.AUTH_SET_TOKEN, null)
           commit(types.AUTH_UPDATE_STATE, false)
+          commit(types.SET_COMMON_LOADING, false)
         })
         .catch(error => {
+          commit(types.SET_COMMON_LOADING, false)
           throw error
         })
     }
@@ -142,6 +209,7 @@ export default {
 
   resetAuth: ({ commit }) => {
     commit(types.AUTH_SET_USER, null)
+    commit(types.AUTH_SET_TOKEN, null)
     commit(types.AUTH_UPDATE_STATE, false)
   },
 
@@ -172,7 +240,7 @@ export default {
   },
 
   createChatComment: ({ commit }, payload) => {
-    return ChatComment.create(payload.chatId, payload.vals)
+    return ChatComment.create(payload.chatId, payload.vals, payload.token)
       .then((item) => {
         commit(types.CREATE_CHAT_COMMENT, item)
       })

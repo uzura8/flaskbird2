@@ -77,7 +77,8 @@ export default {
         chatId: this.chat.id,
         vals: {
           body: this.body,
-        }
+        },
+        token: this.isFirebaseEnabled ? this.$store.state.auth.token : null
       }
       this.$store.dispatch('createChatComment', payload)
         .catch(err => {

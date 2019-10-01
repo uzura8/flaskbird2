@@ -71,7 +71,8 @@ export default {
           name: this.name,
           body: this.body,
         }
-        Chat.create(vals)
+        const token = this.isFirebaseEnabled ? this.$store.state.auth.token : null
+        Chat.create(vals, token)
           .then((res) => {
             this.$router.push({ name:'Chats' })
           })

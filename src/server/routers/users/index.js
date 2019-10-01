@@ -33,6 +33,13 @@ router.post(
 )
 
 router.get(
+  '/services/:serviceCode/:serviceUserId',
+  controller.validate('getServiceUser'),
+  controller.isAuthenticated,
+  controller.getServiceUser
+)
+
+router.get(
   '/:userId',
   controller.isAuthenticated,
   (req, res) => {

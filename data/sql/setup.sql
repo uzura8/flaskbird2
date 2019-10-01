@@ -1,11 +1,11 @@
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NULL,
+  `type` enum('normal', 'anonymous', 'admin') NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:active, 1:deleted',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE_idx` (`name`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_auth` (

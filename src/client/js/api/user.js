@@ -31,6 +31,16 @@ export default {
     })
   },
 
+  getServiceUser: (serviceCode, serviceUserId, token = null) => {
+    let options = {}
+    if (token) options.headers = { Authorization: token }
+    return new Promise((resolve, reject) => {
+      client.get(`users/services/${serviceCode}/${serviceUserId}`, options)
+        .then(res => resolve(res.data))
+        .catch(err => reject(err))
+    })
+  },
+
   authenticate: (values) => {
     return new Promise((resolve, reject) => {
       const params = uri.convToPostParams(values, ['email', 'password'])
