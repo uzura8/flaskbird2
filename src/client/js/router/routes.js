@@ -8,6 +8,8 @@ import Chats from '@/templates/Chats'
 import ChatkDetail from '@/templates/ChatDetail'
 import ChatCreate from '@/templates/ChatCreate'
 import ChatEdit from '@/templates/ChatEdit'
+import AdminTop from '@/templates/AdminTop'
+import AdminSignIn from '@/templates/AdminSignIn'
 
 export default [
   {
@@ -51,6 +53,17 @@ export default [
     path: '/chats/:id',
     name: 'chatkDetail',
     component: ChatkDetail,
+  },
+  {
+    path: '/admin/signin',
+    name: 'AdminSignIn',
+    component: AdminSignIn
+  },
+  {
+    path: '/admin',
+    name: 'AdminTop',
+    component: AdminTop,
+    meta: { requiresAuth: true }
   },
   { path: '/about', component: About },
   { path: '/notfound', component: NotFound },

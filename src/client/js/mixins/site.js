@@ -15,7 +15,15 @@ export default {
     },
 
     isAnonymous: function () {
-      return this.$store.state.auth.user.type == 'anonymous'
+      return this.$store.getters.checkUserType('anonymous')
+    },
+
+    isAdmin: function () {
+      return this.$store.getters.checkUserType('admin')
+    },
+
+    isAdminPath: function () {
+      return this.$route.path.startsWith('/admin')
     },
 
     authUserId: function () {

@@ -24,7 +24,7 @@ export default {
           id: serviceUser.userId,
           uid: res.user.uid,
           name: res.user.displayName,
-          type: res.user.isAnonymous ? 'anonymous' : 'normal',
+          type: serviceUser.type,
           email: res.user.email,
           serviceCode: 'firebase',
         }

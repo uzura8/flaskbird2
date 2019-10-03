@@ -28,20 +28,25 @@ router.beforeEach((to, from, next) => {
   store.dispatch('setHeaderMenuOpen', false)
 
   const routeByAuthState = () => {
-    const forbiddenDispPathsOnAuth = ['/signin', '/signup']
+    const isAdminPath = to.path.startsWith('/admin')
+    const forbiddenDispPathsOnAuth = ['/signin', '/signup', '/admin/signin']
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     if (requiresAuth) {
       if (store.state.auth.state) {
-        next()
+        if (isAdminPath && !store.getters.checkUserType('admin')) {
+          next({ name:'UserTop' })
+        } else {
+          next()
+        }
       } else {
         next({
-          path: '/signin',
+          path: isAdminPath ? '/admin/signin' :  '/signin',
           query: { redirect: to.fullPath }
         })
       }
     } else {
       if (arr.inArray(to.path, forbiddenDispPathsOnAuth) && store.state.auth.state) {
-        next({ name:'UserTop' })
+        next(isAdminPath ? { name:'UserTop' } : { name:'AdminTop' })
       } else {
         next()
       }

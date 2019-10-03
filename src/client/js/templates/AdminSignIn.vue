@@ -1,12 +1,9 @@
 <template>
 <div class="signIn">
-  <h1 class="title">Sign In</h1>
+  <h1 class="title">Admin Sign In</h1>
 
-  <eb-sign-in-form></eb-sign-in-form>
+  <eb-sign-in-form :is-use-admin="true"></eb-sign-in-form>
 
-  <p>You don't have an account? 
-    <router-link to="/signup">create account now!!</router-link>
-  </p>
 </div>
 </template>
 
@@ -14,7 +11,7 @@
 import EbSignInForm from '@/components/molecules/EbSignInForm'
 
 export default {
-  name: 'SignIn',
+  name: 'AdminSignIn',
 
   components: {
     EbSignInForm,
