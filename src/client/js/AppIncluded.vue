@@ -1,31 +1,32 @@
 <template>
-  <div ref="appContainer" class="u-bg-tr" v-cloak>
-    <div v-if="isActive" class="chat-widget">
-      <div class="chat-widget-container">
-        <header class="chat-widget-header">
-          <div class="container"></div>
-          <h3 v-if="chat" class="title is-4 is-clearfix">
-            {{ chat.name }}
-            <a @click="isActive = !isActive"
-              class="button is-white u-bg-tr is-pulled-right">
-              <i class="fas fa-times"></i>
-            </a>
-          </h3>
-        </header>
-        <eb-chat
-          :isInclude="true"
-          :chatId="chatId"
-          @loaded-chat="setChat"></eb-chat>
-      </div>
+<div ref="appContainer" class="u-bg-tr" v-cloak>
+  <b-loading :active.sync="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
+  <div v-if="isActive" class="chat-widget">
+    <div class="chat-widget-container">
+      <header class="chat-widget-header">
+        <div class="container"></div>
+        <h3 v-if="chat" class="title is-4 is-clearfix">
+          {{ chat.name }}
+          <a @click="isActive = !isActive"
+            class="button is-white u-bg-tr is-pulled-right">
+            <i class="fas fa-times"></i>
+          </a>
+        </h3>
+      </header>
+      <eb-chat
+        :isInclude="true"
+        :chatId="chatId"
+        @loaded-chat="setChat"></eb-chat>
     </div>
-    <button v-else
-      @click="isActive = !isActive"
-      class="button is-primary is-medium is-rounded btn-chat-window">
-      <span class="icon is-large">
-        <i class="fas fa-comment"></i>
-      </span>
-    </button>
   </div>
+  <button v-else
+    @click="isActive = !isActive"
+    class="button is-primary is-medium is-rounded btn-chat-window">
+    <span class="icon is-large">
+      <i class="fas fa-comment"></i>
+    </span>
+  </button>
+</div>
 </template>
 
 <script>
@@ -46,6 +47,10 @@ export default {
   },
 
   computed: {
+    isLoading () {
+      return this.$store.state.common.isLoading
+    },
+
     appContainerSize () {
       return {
         width: this.$refs.appContainer.clientWidth,

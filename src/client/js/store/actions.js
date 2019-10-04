@@ -95,22 +95,24 @@ export default {
     if (isEnabledFB) {
       try {
         const fbuser = await Firebase.checkAuth()
-        if (!fbuser) {
-          throw new Error('Auth error')
+        if (fbuser) {
+          const idToken = await Firebase.getToken(fbuser)
+          const serviceUser = await User.getServiceUser('firebase', fbuser.uid, idToken)
+          const user = {
+            id: serviceUser.id,
+            email: fbuser.email,
+            name: fbuser.displayName,
+            type: serviceUser.type,
+            uid: fbuser.uid,
+            serviceCode: 'firebase',
+          }
+          commit(types.SET_COMMON_LOADING, false)
+          commit(types.AUTH_SET_USER, user)
+          commit(types.AUTH_SET_TOKEN, idToken)
+          commit(types.AUTH_UPDATE_STATE, true)
+        } else {
+          commit(types.SET_COMMON_LOADING, false)
         }
-        const idToken = await Firebase.getToken(fbuser)
-        const serviceUser = await User.getServiceUser('firebase', fbuser.uid, idToken)
-        const user = {
-          id: serviceUser.id,
-          email: fbuser.email,
-          name: fbuser.displayName,
-          uid: fbuser.uid,
-          serviceCode: 'firebase',
-        }
-        commit(types.SET_COMMON_LOADING, false)
-        commit(types.AUTH_SET_USER, user)
-        commit(types.AUTH_SET_TOKEN, idToken)
-        commit(types.AUTH_UPDATE_STATE, true)
       } catch (error) {
         commit(types.AUTH_SET_USER, null)
         commit(types.AUTH_SET_TOKEN, null)
@@ -148,6 +150,7 @@ export default {
           id: serviceUser.id,
           name: serviceUser.name,
           email: res.user.email,
+          type: serviceUser.type,
           uid: uid,
           serviceCode: 'firebase',
         }

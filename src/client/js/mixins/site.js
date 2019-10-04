@@ -27,9 +27,7 @@ export default {
     },
 
     authUserId: function () {
-      if (!this.$store.state.auth.state) return null
-      const idKey = config.firebase.isEnabled ? 'uid' : 'id'
-      return this.$store.state.auth.user[idKey]
+      return this.$store.state.auth.state ? this.$store.state.auth.user.id : 0
     },
   },
 

@@ -10,10 +10,13 @@ const chatFlameStyles = {
   inActive: str.convObjToStr({
     border: 'none',
     display: 'block',
-    width: '55px',
-    height: '45px',
+    width: '55px !important',
+    height: '45px !important',
     position: 'fixed',
-    inset: 'auto 24px 24px auto',
+    top: 'auto',
+    left: 'auto',
+    right: '24px',
+    bottom: '24px',
     visibility: 'visible',
     'z-index': 10001,
     'max-width': '100vh',
@@ -24,10 +27,13 @@ const chatFlameStyles = {
   active: str.convObjToStr({
     border: 'medium none',
     display: 'block',
-    width: '400px',
-    height: '80%',
+    width: '400px !important',
+    height: '80% !important',
     position: 'fixed',
-    inset: 'auto 0px 0px auto',
+    top: 'auto',
+    left: 'auto',
+    right: 0,
+    bottom: 0,
     visibility: 'visible',
     'z-index': 10001,
     'max-width': '100vh',
@@ -49,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatContainer.setAttribute('id', chatContainerId)
     const containerStyleObj = {
       position: 'absolute',
-      'z-index': 10000,
+      'z-index': 90000,
     }
     chatContainer.setAttribute('style', str.convObjToStr(containerStyleObj, ';'))
     chatContainer.appendChild(chatFrame)
