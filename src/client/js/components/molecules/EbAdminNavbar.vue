@@ -17,6 +17,7 @@
   <div  class="navbar-menu" v-bind:class="{'is-active': isHeaderMenuOpen}">
     <div class="navbar-start">
       <router-link to="/admin" class="navbar-item">Admin Top</router-link>
+      <router-link to="/admin/chats" class="navbar-item">Chat Rooms</router-link>
       <a v-if="isAuth" class="navbar-item u-clickable" @click="signOut">Sign out</a>
       <router-link to="/" class="navbar-item">Site top</router-link>
     </div>

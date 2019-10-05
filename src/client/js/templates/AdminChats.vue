@@ -1,16 +1,16 @@
 <template>
 <div class="chats">
   <h1 class="title">Chat Rooms</h1>
-  <section v-if="isAuth" class="is-clearfix">
+  <section class="is-clearfix">
     <router-link
-      to="/chats/create"
+      to="/admin/chats/create"
       class="button is-link is-pulled-right">
         <b-icon pack="fas" size="is-small" icon="plus"></b-icon>
         <span>Create Room</span>
     </router-link>
   </section>
 
-  <eb-chats :is-use-admin="false" />
+  <eb-chats :is-use-admin="true" />
 
 </div>
 </template>
