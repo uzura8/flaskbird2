@@ -1,7 +1,7 @@
 <template>
 <div class="chatCreate">
   <h1 class="title">Create Chat Room</h1>
-  <eb-chat-create-form />
+  <eb-chat-create-form :is-use-admin="true" />
 </div>
 </template>
 
@@ -33,4 +33,3 @@ export default {
 
 <style scoped>
 </style>
-
