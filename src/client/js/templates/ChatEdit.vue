@@ -115,7 +115,8 @@ export default {
         name: this.name,
         body: this.body,
       }
-      Chat.edit(this.chatId, vals)
+      const token = this.isFirebaseEnabled ? this.$store.state.auth.token : null
+      Chat.edit(this.chatId, vals, token)
         .then((res) => {
           this.$router.push({ path:'/chats/' + this.chatId })
         })

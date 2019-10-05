@@ -14,11 +14,13 @@ export default {
     })
   },
 
-  edit: (id, values) => {
+  edit: (id, values, token = null) => {
     return new Promise((resolve, reject) => {
       if (common.isEmpty(values)) throw new Error('No value')
       const params = uri.convToPostParams(values, ['name', 'body'])
-      client.post('chats/' + id, params)
+      let options = {}
+      if (token) options.headers = { Authorization: token }
+      client.post(`chats/${id}`, params, options)
         .then(res => resolve(res.data))
         .catch(err => reject(err))
     })
