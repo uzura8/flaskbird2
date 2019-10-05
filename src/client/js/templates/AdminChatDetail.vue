@@ -4,7 +4,7 @@
     {{ chat.name }}
     <router-link
       v-if="isAuther"
-      :to="'/chats/edit/' + chat.id"
+      :to="'/admin/chats/' + chat.id + '/edit'"
       class="button is-pulled-right">
       <b-icon pack="fas" size="is-small" icon="cog"></b-icon>
     </router-link>

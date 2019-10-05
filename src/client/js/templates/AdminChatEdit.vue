@@ -3,6 +3,7 @@
   <h1 class="title">Edit: {{ chat.name }}</h1>
   <eb-chat-create-form
     :chat-id="chatId"
+    :is-use-admin="true"
     @loaded-chat="setChat" />
 </div>
 </template>

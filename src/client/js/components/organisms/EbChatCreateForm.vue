@@ -25,7 +25,7 @@
       <button
         class="button is-link"
         :disabled="hasErrors"
-        @click="create">Create</button>
+        @click="save" v-text="isEdit ? 'Edit' : 'Create'"></button>
     </div>
   </div>
 </div>
@@ -39,6 +39,11 @@ export default {
   nane: 'EbChatCreateForm',
 
   props: {
+    chatId: {
+      type: [String, Number],
+      default: 0,
+    },
+
     isUseAdmin: {
       type: Boolean,
       default: false,
@@ -48,12 +53,36 @@ export default {
   data(){
     return {
       errors: {},
+      chat: {},
       name: '',
       body: '',
     }
   },
 
   computed: {
+    updatedValues () {
+      const keys = ['name', 'body']
+      let isUpdated = false
+      let values = {}
+      for (let i = 0, n = keys.length; i < n; i++) {
+        let key = keys[i]
+        if (this.chat[key] != this[key]) {
+          values[key] = this[key]
+          isUpdated = true
+        }
+      }
+      if (!isUpdated) return false
+      return values
+    },
+
+    isEdit: function() {
+      return Boolean(this.chatId)
+    },
+
+    isUpdated: function() {
+      return !this.isEmpty(this.updatedValues)
+    },
+
     hasErrors: function() {
       let hasError = false
       Object.keys(this.errors).map(field => {
@@ -64,19 +93,54 @@ export default {
   },
 
   created() {
+    this.setChat()
   },
 
   methods: {
-    create: function() {
+    setChat: function() {
+      if (!this.isEdit) return
+      Chat.get(this.chatId)
+        .then(res => {
+          this.chat = res
+          this.name = res.name
+          this.body = res.body
+          this.$emit('loaded-chat', res)
+        })
+        .catch(err => {
+          this.handleApiError(err, 'Failed to get data from server')
+        })
+    },
+
+    save: function() {
+      if (this.isEdit && !this.isUpdated) {
+        this.showGlobalMessage('Values not updated')
+        return
+      }
+
       this.validateAll()
       if (this.hasErrors) {
         this.showGlobalMessage('Correct inputs')
+        return
+      }
+
+      const vals = {
+        name: this.name,
+        body: this.body,
+      }
+      const token = this.isFirebaseEnabled ? this.$store.state.auth.token : null
+      if (this.isEdit) {
+        Chat.edit(this.chatId, vals, token)
+          .then((res) => {
+            if (this.isUseAdmin && this.isAdmin) {
+              this.$router.push({ path:'/admin/chats/' + this.chatId })
+            } else {
+              this.$router.push({ path:'/chats/' + this.chatId })
+            }
+          })
+          .catch(err => {
+            this.handleApiError(err, 'Edit failed')
+          })
       } else {
-        const vals = {
-          name: this.name,
-          body: this.body,
-        }
-        const token = this.isFirebaseEnabled ? this.$store.state.auth.token : null
         Chat.create(vals, token)
           .then((res) => {
             if (this.isUseAdmin && this.isAdmin) {

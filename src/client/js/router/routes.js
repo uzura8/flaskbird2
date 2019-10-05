@@ -11,6 +11,7 @@ import ChatEdit from '@/templates/ChatEdit'
 import AdminTop from '@/templates/AdminTop'
 import AdminChats from '@/templates/AdminChats'
 import AdminChatCreate from '@/templates/AdminChatCreate'
+import AdminChatEdit from '@/templates/AdminChatEdit'
 import AdminChatDetail from '@/templates/AdminChatDetail'
 import AdminSignIn from '@/templates/AdminSignIn'
 
@@ -47,7 +48,7 @@ export default [
     meta: { requiresAuth: true }
   },
   {
-    path: '/chats/edit/:id',
+    path: '/chats/:id/edit',
     name: 'ChatEdit',
     component: ChatEdit,
     meta: { requiresAuth: true }
@@ -66,6 +67,12 @@ export default [
     path: '/admin/chats/create',
     name: 'AdminChatCreate',
     component: AdminChatCreate,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/chats/:id/edit',
+    name: 'AdminChatEdit',
+    component: AdminChatEdit,
     meta: { requiresAuth: true }
   },
   {
