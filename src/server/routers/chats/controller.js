@@ -62,17 +62,20 @@ export default {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
     }
+    const type = req.body.type
     const name = req.body.name
     const body = req.body.body
     try {
-      const result = db.sequelize.transaction(async (t) => {
+      db.sequelize.transaction(async (t) => {
         const chat = await Chat.create({
+          type: type,
           userId: req.user.id,
           name: name,
           body: body,
         })
         return res.json({
           id: chat.id,
+          type: chat.type,
           userId: chat.userId,
           name: chat.name,
           body: chat.body,
@@ -164,7 +167,25 @@ export default {
 
   validate: (method) => {
     switch (method) {
-      case 'chat':
+      case 'createChat':
+        return [
+          check('type')
+            .customSanitizer(value => {
+              const defaut = 'public'
+              const accepts = ['public', 'private']
+              if (!value) return defaut
+              if (!accepts.includes(value)) return defaut
+              return value
+            }),
+          check('name', 'Name is required')
+            .trim()
+            .isLength({ min: 1 }).withMessage('Name is required'),
+          check('body', 'Body is required')
+            .trim()
+            .isLength({ min: 1 }).withMessage('Body is required'),
+        ]
+
+      case 'editChat':
         return [
           check('name', 'Name is required')
             .trim()

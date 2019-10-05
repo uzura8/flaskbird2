@@ -27,9 +27,10 @@ User.init(
       allowNull: false
     },
     type: {
-      type:   db.Sequelize.ENUM,
+      type: db.Sequelize.ENUM,
       values: ['normal', 'anonymous', 'admin'],
-      allowNull: false
+      allowNull: false,
+      defaultValue: 'normal',
     },
     isDeleted: {
       type: db.Sequelize.BOOLEAN,

@@ -11,7 +11,7 @@ router.get(
 router.post(
   '/',
   controller.isAuthenticated,
-  controller.validate('chat'),
+  controller.validate('createChat'),
   controller.create
 )
 
@@ -37,7 +37,7 @@ router.post(
   '/:id',
   controller.isAuthenticated,
   controller.isAuther,
-  controller.validate('chat'),
+  controller.validate('editChat'),
   controller.edit
 )
 

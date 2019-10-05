@@ -15,6 +15,12 @@ Chat.init(
       autoIncrement: true,
       allowNull: false
     },
+    type: {
+      type: db.Sequelize.ENUM,
+      values: ['private', 'public'],
+      allowNull: false,
+      defaultValue: 'private',
+    },
     userId: {
       type: db.Sequelize.INTEGER,
       allowNull: false

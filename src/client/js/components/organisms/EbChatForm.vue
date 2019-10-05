@@ -123,7 +123,7 @@ export default {
         return
       }
 
-      const vals = {
+      let vals = {
         name: this.name,
         body: this.body,
       }
@@ -141,6 +141,7 @@ export default {
             this.handleApiError(err, 'Edit failed')
           })
       } else {
+        vals.type = 'public'
         Chat.create(vals, token)
           .then((res) => {
             if (this.isUseAdmin && this.isAdmin) {

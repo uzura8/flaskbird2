@@ -21,7 +21,7 @@ export default {
         const idToken = await Firebase.getToken(res.user)
         const serviceUser = await User.getServiceUser('firebase', res.user.uid, idToken)
         const user = {
-          id: serviceUser.userId,
+          id: serviceUser.id,
           uid: res.user.uid,
           name: res.user.displayName,
           type: serviceUser.type,

@@ -1,7 +1,7 @@
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NULL,
-  `type` enum('normal', 'anonymous', 'admin') NOT NULL,
+  `type` enum('normal', 'anonymous', 'admin') NOT NULL DEFAULT 'normal',
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:active, 1:deleted',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -36,6 +36,7 @@ CREATE TABLE `service_user` (
 
 CREATE TABLE `chat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` enum('public', 'private') NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
