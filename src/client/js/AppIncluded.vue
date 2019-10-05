@@ -31,7 +31,7 @@
 
 <script>
 import site from '@/util/site'
-import EbChat from '@/components/EbChat'
+import EbChat from '@/components/organisms/EbChat'
 export default {
   name: 'AppiIncluded',
   components: {

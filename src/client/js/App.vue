@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import EbNavbar from '@/components/molecules/EbNavbar'
-import EbAdminNavbar from '@/components/molecules/EbAdminNavbar'
+import EbNavbar from '@/components/organisms/EbNavbar'
+import EbAdminNavbar from '@/components/organisms/EbAdminNavbar'
 
 export default {
   name: 'App',

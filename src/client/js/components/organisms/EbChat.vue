@@ -44,7 +44,7 @@ Vue.use(Loading)
 
 import io from 'socket.io-client'
 import { Chat } from '@/api/'
-import EbChatCommentForm from '@/components/EbChatCommentForm'
+import EbChatCommentForm from '@/components/molecules/EbChatCommentForm'
 import config from '@/config/config'
 
 export default {

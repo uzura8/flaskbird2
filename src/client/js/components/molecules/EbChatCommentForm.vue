@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { Chat } from '../api/'
+import { Chat } from '@/api/'
 
 export default {
   nane: 'ChatCommentForm',

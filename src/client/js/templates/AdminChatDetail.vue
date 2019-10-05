@@ -18,7 +18,7 @@
 
 <script>
 import { Chat } from '@/api/'
-import EbChat from '@/components/EbChat'
+import EbChat from '@/components/organisms/EbChat'
 
 export default {
   nane: 'ChatDetail',
