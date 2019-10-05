@@ -1,7 +1,7 @@
 <template>
 <div class="chatEdit">
   <h1 class="title">Edit: {{ chat.name }}</h1>
-  <eb-chat-create-form
+  <eb-chat-form
     :chat-id="chatId"
     :is-use-admin="true"
     @loaded-chat="setChat" />
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import EbChatCreateForm from '@/components/organisms/EbChatCreateForm'
+import EbChatForm from '@/components/organisms/EbChatForm'
 
 export default {
   name: 'ChatEdit',
 
   components: {
-    EbChatCreateForm,
+    EbChatForm,
   },
 
   data () {

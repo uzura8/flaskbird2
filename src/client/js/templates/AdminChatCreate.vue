@@ -1,18 +1,18 @@
 <template>
 <div class="chatCreate">
   <h1 class="title">Create Chat Room</h1>
-  <eb-chat-create-form :is-use-admin="true" />
+  <eb-chat-form :is-use-admin="true" />
 </div>
 </template>
 
 <script>
-import EbChatCreateForm from '@/components/organisms/EbChatCreateForm'
+import EbChatForm from '@/components/organisms/EbChatForm'
 
 export default {
   name: 'ChatCreate',
 
   components: {
-    EbChatCreateForm,
+    EbChatForm,
   },
 
   data () {

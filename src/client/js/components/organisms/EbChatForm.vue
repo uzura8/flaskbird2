@@ -1,5 +1,5 @@
 <template>
-<div class="EbChatCreateForm">
+<div class="EbChatForm">
   <b-field label="Room Name"
     :type="isEmpty(errors.name) ? '' : 'is-danger'"
     :message="isEmpty(errors.name) ? 'Used for display name' : errors.name[0]">
@@ -36,7 +36,7 @@ import { Chat } from '@/api/'
 import str from '@/util/str'
 
 export default {
-  nane: 'EbChatCreateForm',
+  nane: 'EbChatForm',
 
   props: {
     chatId: {
