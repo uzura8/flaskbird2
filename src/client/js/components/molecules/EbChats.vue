@@ -8,7 +8,7 @@
             <p>
               <strong>
                 <router-link
-                  :to="'/chats/' + item.id">
+                  :to="isUseAdmin ? '/admin/chats/' + item.id : '/chats/' + item.id">
                     {{ item.name }}
                 </router-link>
               </strong>
