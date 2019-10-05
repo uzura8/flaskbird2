@@ -118,7 +118,7 @@ export default {
       return res.json({
         id: serviceUser.userId,
         name: serviceUser.User.name,
-        type: serviceUser.type,
+        type: serviceUser.User.type,
         uid: serviceUserId,
         serviceCode: serviceCode,
       })
