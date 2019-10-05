@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import EbSignInForm from '@/components/molecules/EbSignInForm'
+import EbSignInForm from '@/components/organisms/EbSignInForm'
 
 export default {
   name: 'AdminSignIn',
