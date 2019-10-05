@@ -1,5 +1,5 @@
 <template>
-<div ref="appContainer" class="u-bg-tr" v-cloak>
+<div ref="appContainer" class="chat-container u-bg-tr" v-cloak>
   <b-loading :active.sync="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
   <div v-if="isActive" class="chat-widget">
     <div class="chat-widget-container">
@@ -80,13 +80,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chat-container {
+  background-color: transparent;
+  height: 100%;
+}
 .chat-widget {
   background-color: transparent;
   padding: 1rem;
+  height: 100%;
 }
 .chat-widget-container {
   background-color: #fff;
   padding: 55px 1rem 0.5rem;
+  height: 100%;
 }
 .chat-widget-header {
   position: fixed;
