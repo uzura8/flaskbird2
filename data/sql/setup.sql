@@ -36,7 +36,7 @@ CREATE TABLE `service_user` (
 
 CREATE TABLE `chat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `type` enum('public', 'private') NOT NULL,
+  `type` enum('public', 'private', 'support') NOT NULL DEFAULT 'public',
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,

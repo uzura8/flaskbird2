@@ -26,13 +26,15 @@
 
   <eb-chat-comment-form
     v-if="isAuth"
-    :chat="chat">
-  </eb-chat-comment-form>
-  <nav v-else-if="isEnabledFB"
+    :chat-id="chatId" />
+
+  <nav
+    v-else-if="isEnabledFB"
     class="u-mt1r">
     <a @click="signInAnonymously"
       class="button is-text">Comment as anonymous user</a>
   </nav>
+
 </div>
 </template>
 
@@ -43,7 +45,6 @@ Vue.use(Toast)
 Vue.use(Loading)
 
 import io from 'socket.io-client'
-import { Chat } from '@/api/'
 import EbChatCommentForm from '@/components/molecules/EbChatCommentForm'
 import config from '@/config/config'
 
@@ -69,7 +70,6 @@ export default {
   data(){
     return {
       socket: io(`${config.domain}:${config.port}`),
-      chat: null,
     }
   },
 
@@ -88,7 +88,6 @@ export default {
   },
 
   created() {
-    this.getChat()
     if (this.chatId != this.$store.state.chatComment.chatId) {
       this.$store.dispatch('resetChatCommentList', this.chatId)
       this.fetchComments()
@@ -103,17 +102,6 @@ export default {
   },
 
   methods: {
-    getChat: function() {
-      Chat.get(this.chatId)
-        .then(res => {
-          this.chat = res
-          this.$emit('loaded-chat', res)
-        })
-        .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
-        })
-    },
-
     fetchComments: function(params={}) {
       const payload = {
         chatId: this.chatId,
@@ -122,8 +110,6 @@ export default {
       this.$store.dispatch('fetchChatComments', payload)
         .catch(err => {
           this.handleApiError(err, 'Failed to get data from server')
-        })
-        .then(() => {
         })
     },
 

@@ -1,5 +1,5 @@
 import boom from '@hapi/boom'
-import { check, query, validationResult } from 'express-validator'
+import { check, query, param, validationResult } from 'express-validator'
 import { db, Chat, ChatComment, User } from '@/models'
 import Authenticator from '@/middlewares/passport'
 import FirebaseAuth from '@/middlewares/firebase/auth'
@@ -22,7 +22,7 @@ export default {
           if (chat.userId == req.user.id) {
             return next()
           } else {
-            return next(boom.forbidden('You do not have edit permission'))
+            return next(boom.forbidden('You have no permission'))
           }
         } else {
           return next(boom.notFound('Requested id is invalid'))
@@ -31,6 +31,14 @@ export default {
       .catch(err => {
         return next(boom.badImplementation(err))
       })
+  },
+
+  isSelf: (req, res, next) => {
+    if (req.params.userId == req.user.id) {
+      return next()
+    } else {
+      return next(boom.forbidden('You have no permission'))
+    }
   },
 
   getChats: (req, res, next) => {
@@ -43,7 +51,25 @@ export default {
       })
   },
 
+  getChatByUserId: (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+    Chat.getChatByUserId(req.params.userId, req.params.type)
+      .then(chats => {
+        return res.json(chats)
+      })
+      .catch(err => {
+        return next(boom.badImplementation(err))
+      })
+  },
+
   getChat: (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
     Chat.findById(req.params.id)
       .then(chat => {
         if (chat) {
@@ -117,6 +143,46 @@ export default {
     }
   },
 
+  assignSupportChat: (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+    const userId = req.params.userId
+    const adminUserId = config.greatefulChat.support.adminUserId
+    try {
+      db.sequelize.transaction(async (t) => {
+        const chats = await Chat.getChatByUserId(userId, 'support')
+        if (chats.length > 0) return res.json(chats)
+
+        const user = await User.findById(userId)
+        const userAdmin = await User.findById(adminUserId)
+        const chat = await Chat.create({
+          type: 'support',
+          userId: userId,
+          name: config.greatefulChat.support.chat.namePrefix + user.name,
+          body: config.greatefulChat.support.chat.body,
+        })
+        const chatComment = await ChatComment.create({
+          chatId: chat.id,
+          userId: config.greatefulChat.support.adminUserId,
+          body: config.greatefulChat.support.comment.first,
+        })
+        const resChatComment = {
+          id: chatComment.id,
+          chatId: chatComment.chatId,
+          userId: chatComment.userId,
+          body: chatComment.body,
+          user: { name:userAdmin.name }
+        }
+        res.io.emit(`CHAT_COMMENT_${chatComment.chatId}`, resChatComment)
+        return res.json([chat])
+      })
+    } catch (err) {
+      return next(boom.badRequest(err))
+    }
+  },
+
   getChatComments: (req, res, next) => {
     const chatId = req.params.id
     const count = req.query.count ? req.query.count : 10
@@ -172,7 +238,7 @@ export default {
           check('type')
             .customSanitizer(value => {
               const defaut = 'public'
-              const accepts = ['public', 'private']
+              const accepts = ['public', 'private', 'support']
               if (!value) return defaut
               if (!accepts.includes(value)) return defaut
               return value
@@ -210,6 +276,27 @@ export default {
             .isInt({ min: 0 }).withMessage('maxId is accept positive integer'),
           query('sinceId')
             .isInt({ min: 0 }).withMessage('sinceId is accept positive integer'),
+        ]
+
+      case 'userId':
+        return [
+          param('userId')
+            .isInt({ min: 1 }).withMessage('userId is accept integer more tha 1'),
+        ]
+
+      case 'getChatByUserId':
+        return [
+          param('userId')
+            .isInt({ min: 1 }).withMessage('userId is accept integer more tha 1'),
+          param('type')
+            .trim()
+            .customSanitizer(value => {
+              const defaut = ''
+              const accepts = ['public', 'private', 'support']
+              if (!value) return defaut
+              if (!accepts.includes(value)) return defaut
+              return value
+            }),
         ]
     }
   },

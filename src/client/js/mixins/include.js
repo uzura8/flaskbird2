@@ -24,6 +24,10 @@ export default {
     authUserId: function () {
       return this.$store.state.auth.state ? this.$store.state.auth.user.id : 0
     },
+
+    authUserToken: function () {
+      return config.firebase.isEnabled ? this.$store.state.auth.token : null
+    },
   },
 
   methods: {

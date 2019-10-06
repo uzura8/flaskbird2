@@ -65,7 +65,7 @@ export default {
           type: 'anonymous',
         }
         const idToken = await Firebase.getToken(res.user)
-        const serviceUser = User.createServiceUser('firebase', res.user.uid, vals)
+        const serviceUser = await User.createServiceUser('firebase', res.user.uid, vals)
         const user = {
           id: serviceUser.id,
           email: res.user.email,

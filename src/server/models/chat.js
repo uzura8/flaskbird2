@@ -5,6 +5,12 @@ class Chat extends db.Sequelize.Model {
     const params = { where: { id: id }}
     return this.findOne(params)
   }
+
+  static getChatByUserId(userId, type = '') {
+    let params = { where: { userId: userId }}
+    if (type) params.where.type = type
+    return this.findAll(params)
+  }
 }
 
 Chat.init(
@@ -17,9 +23,9 @@ Chat.init(
     },
     type: {
       type: db.Sequelize.ENUM,
-      values: ['private', 'public'],
+      values: ['private', 'public', 'support'],
       allowNull: false,
-      defaultValue: 'private',
+      defaultValue: 'public',
     },
     userId: {
       type: db.Sequelize.INTEGER,

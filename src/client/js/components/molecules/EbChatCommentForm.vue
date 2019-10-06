@@ -1,5 +1,5 @@
 <template>
-<div class="chatCommentForm widefull-box">
+<div class="EbChatCommentForm widefull-box">
   <div class="container">
     <div class="c-form-group">
       <div class="c-form-group_item c-form-group__item--main">
@@ -21,12 +21,12 @@
 import { Chat } from '@/api/'
 
 export default {
-  nane: 'ChatCommentForm',
+  nane: 'EbChatCommentForm',
 
   props: {
-    chat: {
-      type: Object,
-      default: null,
+    chatId: {
+      type: Number,
+      default: 0,
     },
   },
 
@@ -38,10 +38,6 @@ export default {
   },
 
   computed: {
-    isAuther () {
-      return this.isAuth && this.chat.userId == this.$store.state.auth.user.id
-    },
-
     hasError () {
       return !this.isEmpty(this.error)
     },
@@ -74,7 +70,7 @@ export default {
       }
 
       const payload = {
-        chatId: this.chat.id,
+        chatId: this.chatId,
         vals: {
           body: this.body,
         },

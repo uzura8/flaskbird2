@@ -44,11 +44,18 @@ export default {
   },
 
   created() {
+    this.setChat()
   },
 
   methods: {
-    setChat: function(chat) {
-      this.chat = chat
+    setChat: function() {
+      Chat.get(this.chatId)
+        .then(res => {
+          this.chat = res
+        })
+        .catch(err => {
+          this.handleApiError(err, 'Failed to get data from server')
+        })
     },
   },
 }

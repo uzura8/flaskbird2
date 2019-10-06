@@ -20,7 +20,7 @@
     </div>
   </div>
   <button v-else
-    @click="isActive = !isActive"
+    @click="chatOpen"
     class="button is-primary is-medium is-rounded btn-chat-window">
     <span class="icon is-large">
       <i class="fas fa-comment"></i>
@@ -30,8 +30,9 @@
 </template>
 
 <script>
-import site from '@/util/site'
 import EbChat from '@/components/organisms/EbChat'
+import { Chat } from '@/api/'
+
 export default {
   name: 'AppiIncluded',
   components: {
@@ -41,14 +42,17 @@ export default {
   data(){
     return {
       isActive: false,
-      chatId: 1,
-      chat: null,
+      chat: {},
     }
   },
 
   computed: {
     isLoading () {
       return this.$store.state.common.isLoading
+    },
+
+    chatId () {
+      return this.chat.id
     },
 
     appContainerSize () {
@@ -68,12 +72,59 @@ export default {
   },
 
   created() {
-    this.$store.dispatch('checkAuthenticate')
   },
 
   methods: {
-    setChat: function(chat) {
-      this.chat = chat
+    chatOpen: function() {
+      if (!this.chatId) {
+        this.activate()
+      } else {
+        this.isActive = true
+      }
+    },
+
+    activate: function() {
+      if (! this.isAuth) {
+        this.signInAnonymously()
+      } else {
+        this.setChat()
+      }
+    },
+
+    signInAnonymously: function() {
+      this.$store.dispatch('authenticateAnonymously')
+        .then(() => {
+          this.setChat()
+        })
+        .catch(err => {
+          this.handleApiError(err, 'Sign Anonymously is failed')
+        })
+    },
+
+    setChat: function() {
+      Chat.getByUserId(this.authUserId, this.authUserToken, 'support')
+        .then(res => {
+          if (!this.isEmpty(res)) {
+            this.chat = res[0]
+            this.isActive = true
+          } else {
+            this.assignSupportChat()
+          }
+        })
+        .catch(err => {
+          this.handleApiError(err, 'Failed to get data from server')
+        })
+    },
+
+    assignSupportChat: function() {
+      Chat.assignSupportChat(this.authUserId, this.authUserToken)
+        .then(res => {
+          this.chat = res[0]
+          this.isActive = true
+        })
+        .catch(err => {
+          this.handleApiError(err, 'Failed to get data from server')
+        })
     },
   },
 }

@@ -4,18 +4,6 @@ import controller from './controller'
 const router = express.Router()
 
 router.get(
-  '/',
-  controller.getChats
-)
-
-router.post(
-  '/',
-  controller.isAuthenticated,
-  controller.validate('createChat'),
-  controller.create
-)
-
-router.get(
   '/:id/comments',
   controller.validate('getComments'),
   controller.getChatComments
@@ -26,6 +14,22 @@ router.post(
   controller.isAuthenticated,
   controller.validate('comment'),
   controller.createComment
+)
+
+router.post(
+  '/users/:userId/support',
+  controller.isAuthenticated,
+  controller.isSelf,
+  controller.validate('userId'),
+  controller.assignSupportChat
+)
+
+router.get(
+  '/users/:userId/:type?',
+  controller.isAuthenticated,
+  controller.isSelf,
+  controller.validate('getChatByUserId'),
+  controller.getChatByUserId
 )
 
 router.get(
@@ -39,6 +43,18 @@ router.post(
   controller.isAuther,
   controller.validate('editChat'),
   controller.edit
+)
+
+router.get(
+  '/',
+  controller.getChats
+)
+
+router.post(
+  '/',
+  controller.isAuthenticated,
+  controller.validate('createChat'),
+  controller.create
 )
 
 export default router
