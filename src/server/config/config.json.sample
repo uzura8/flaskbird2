@@ -31,10 +31,6 @@
   },
   "greatefulChat": {
     "support": {
-      "chat": {
-        "namePrefix": "Support chat for ",
-        "body": ""
-      },
       "adminUserId": 1,
       "comment": {
         "first": "Hello! What's you wana talk about?"

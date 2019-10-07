@@ -155,13 +155,10 @@ export default {
         const chats = await Chat.getChatByUserId(userId, 'support')
         if (chats.length > 0) return res.json(chats)
 
-        const user = await User.findById(userId)
         const userAdmin = await User.findById(adminUserId)
         const chat = await Chat.create({
           type: 'support',
           userId: userId,
-          name: config.greatefulChat.support.chat.namePrefix + user.name,
-          body: config.greatefulChat.support.chat.body,
         })
         const chatComment = await ChatComment.create({
           chatId: chat.id,

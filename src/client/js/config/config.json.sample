@@ -14,5 +14,14 @@
     "storageBucket": "sample-site.appspot.com",
     "messagingSenderId": "sender-id",
     "appId": "app-id"
+  },
+  "greatefulChat": {
+    "isEnabled": true,
+    "support": {
+      "chat": {
+        "name": "Support Chat",
+        "body": ""
+      }
+    }
   }
 }

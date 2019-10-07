@@ -38,7 +38,7 @@ export default {
     const password = str.hashing(req.body.password)
     const name = req.body.name
     try {
-      const result = db.sequelize.transaction(async (t) => {
+      db.sequelize.transaction(async (t) => {
         const user = await User.create({
           name: name,
           type: 'normal',
@@ -73,25 +73,26 @@ export default {
     const name = req.body.name
     const type = req.body.type
     try {
-      const result = db.sequelize.transaction(async (t) => {
+      db.sequelize.transaction(async (t) => {
         const serviceUser = await ServiceUser.findByserviceUserId(serviceCode, serviceUserId)
         let userName, userId
         if (serviceUser) {
           userId = serviceUser.userId
           userName = serviceUser.User.name
         } else {
-          const user = await User.create({
-            name: name.length > 0 ? name: null,
+          let vals = {
             type: type,
             isDeleted: false,
-          })
+          }
+          if (name.length > 0) vals.name = name
+          const user = await User.create(vals)
           await ServiceUser.create({
             serviceCode: serviceCode,
             serviceUserId: serviceUserId,
             userId: user.id,
           })
           userId = user.id
-          userName = user.name
+          if (user.name) userName = user.name
         }
         return res.json({
           id: userId,

@@ -86,5 +86,14 @@ export default {
           this.handleApiError(err, 'Sign Out failed')
         })
     },
+
+    dispChatName: function (chat, isAdmin = false) {
+      if (chat.type == 'support') {
+        let name = config.greatefulChat.support.chat.name
+        if (isAdmin) name += ` | userId: ${chat.userId}`
+        return name
+      }
+      return chat.name
+    },
   },
 }

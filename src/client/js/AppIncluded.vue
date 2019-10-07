@@ -6,7 +6,7 @@
       <header class="chat-widget-header">
         <div class="container"></div>
         <h3 v-if="chat" class="title is-4 is-clearfix">
-          {{ chat.name }}
+          <span v-text="dispChatName(chat)"></span>
           <a @click="isActive = !isActive"
             class="button is-white u-bg-tr is-pulled-right">
             <i class="fas fa-times"></i>
