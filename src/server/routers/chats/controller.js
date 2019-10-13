@@ -220,17 +220,19 @@ export default {
         res.json(result)
 
         if (config.greatefulChat.isEnabled) {
-          const chat = await Chat.findById(chatComment.chatId)
-          if (chat.type == 'support') {
-            const adminUserId = config.greatefulChat.support.adminUserId
-            const adminUser = await User.findById(adminUserId)
-            req.gcBot = {
-              comment: result,
-              sessAttrs: null,
-              chat: chat,
-              adminUser: adminUser,
+          const adminUserId = config.greatefulChat.support.adminUserId
+          if (result.userId != adminUserId) {
+            const chat = await Chat.findById(chatComment.chatId)
+            if (chat.type == 'support') {
+              const adminUser = await User.findById(adminUserId)
+              req.gcBot = {
+                comment: result,
+                sessAttrs: null,
+                chat: chat,
+                adminUser: adminUser,
+              }
+              return next()
             }
-            return next()
           }
         }
       })
