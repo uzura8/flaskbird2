@@ -13,7 +13,8 @@ router.post(
   '/:id/comments',
   controller.isAuthenticated,
   controller.validate('comment'),
-  controller.createComment
+  controller.createComment,
+  controller.talkToChatBot
 )
 
 router.post(

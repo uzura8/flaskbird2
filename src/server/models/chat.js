@@ -33,11 +33,11 @@ Chat.init(
     },
     name: {
       type: db.Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
     body: {
       type: db.Sequelize.TEXT,
-      allowNull: false
+      allowNull: true
     },
   }, {
     sequelize: db.sequelize,

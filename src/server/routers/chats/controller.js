@@ -3,8 +3,10 @@ import { check, query, param, validationResult } from 'express-validator'
 import { db, Chat, ChatComment, User } from '@/models'
 import Authenticator from '@/middlewares/passport'
 import FirebaseAuth from '@/middlewares/firebase/auth'
+import AwsLex from '@/middlewares/aws/lex'
 import config from '@/config/config'
 const isFBEnabled = config.auth.firebase.isEnabled
+
 
 export default {
   isAuthenticated: (req, res, next) => {
@@ -194,19 +196,13 @@ export default {
       })
   },
 
-  validateCommentParams: (req, res, next) => {
-    const maxId = req.query.maxId
-  },
-
   createComment: async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
     }
-    const id = req.params.id
-    const body = req.body.body
     try {
-      const result = db.sequelize.transaction(async (t) => {
+      db.sequelize.transaction(async (t) => {
         const chatComment = await ChatComment.create({
           chatId: req.params.id,
           userId: req.user.id,
@@ -222,11 +218,34 @@ export default {
         }
         res.io.emit(`CHAT_COMMENT_${chatComment.chatId}`, result)
         res.json(result)
+
+        if (config.greatefulChat.isEnabled) {
+          const chat = await Chat.findById(chatComment.chatId)
+          if (chat.type == 'support') {
+            const adminUserId = config.greatefulChat.support.adminUserId
+            const adminUser = await User.findById(adminUserId)
+            req.gcBot = {
+              comment: result,
+              sessAttrs: null,
+              chat: chat,
+              adminUser: adminUser,
+            }
+            return next()
+          }
+        }
       })
     } catch (err) {
       return next(boom.badRequest(err))
     }
   },
+
+  talkToChatBot: (req, res, next) => {
+    if (!config.greatefulChat.isEnabled) {
+      return next()
+    }
+    AwsLex.talkToChatBot(req, res, next)
+  },
+
 
   validate: (method) => {
     switch (method) {
@@ -240,12 +259,8 @@ export default {
               if (!accepts.includes(value)) return defaut
               return value
             }),
-          check('name', 'Name is required')
-            .trim()
-            .isLength({ min: 1 }).withMessage('Name is required'),
-          check('body', 'Body is required')
-            .trim()
-            .isLength({ min: 1 }).withMessage('Body is required'),
+          check('name').trim(),
+          check('body').trim(),
         ]
 
       case 'editChat':
