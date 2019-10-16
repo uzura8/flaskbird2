@@ -11,9 +11,9 @@ export default {
     let sesAttrs = req.gcBot.sesAttrs != null ? req.gcBot.sesAttrs : null
     const comment = req.gcBot.comment
 
-    const botAlias = '$LATEST';
-    const botName = 'SupportChat';
-    const lexruntime = new AWS.LexRuntime(awsConfig.lex)
+    const botAlias = '$LATEST'
+    const botName = awsConfig.lex.bots.initialSupport
+    const lexruntime = new AWS.LexRuntime(awsConfig.lex.credential)
 
     try {
       const params = {

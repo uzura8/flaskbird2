@@ -1,7 +1,12 @@
 {
   "lex": {
-    "accessKeyId": "",
-    "secretAccessKey": "",
-    "region": "us-west-2"
+    "credential": {
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "region": "us-west-2"
+    },
+    "bots": {
+      "initialSupport": " gcSupport"
+    }
   }
 }
