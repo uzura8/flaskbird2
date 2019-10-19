@@ -13,6 +13,7 @@ module.exports = [
   {
     entry: {
       app: './src/server/app.js',
+      create_admin_user: './src/server/create_admin_user.js',
     },
     output: {
       path: path.join(__dirname, 'server'),

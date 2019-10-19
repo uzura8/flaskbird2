@@ -38,7 +38,7 @@
     "firebase": "^6.6.2",
     "firebase-admin": "^8.6.0",
     "moment": "^2.24.0",
-    "mysql2": "^1.6.5",
+    "mysql2": "^1.7.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "sequelize": "^5.16.0",

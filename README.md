@@ -24,19 +24,7 @@ echo "CREATE DATABASE DB-name DEFAULT CHARACTER SET utf8" | mysql -u user-name -
 mysql -u user-name -p DB-name < data/sql/setup.sql
 ```
 
-### 4. Setup ###
-
-```
-npm run build
-```
-
-### 5. Start server ###
-
-```
-npm run start
-```
-
-### Optional settings ###
+### 4. Optional settings ###
 #### If authenticate by Firebase
 
 1. Put firebase-admin credential file to src/server/config/firebase-admin-credentials.json
@@ -52,3 +40,21 @@ vi src/server/config/config.json
   }
 ```
 
+### 5. Setup ###
+
+```
+npm run build
+```
+
+
+### 6. Create Admin User ###
+
+```
+node server/create_admin_user.js admin@example.com password 'AdminUser'
+```
+
+### 7. Start server ###
+
+```
+npm run start
+```
