@@ -62,6 +62,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.chatDetail {
+  padding-bottom: 30px;
+}
 .sticky-box {
   position:sticky;
   top: 0;

@@ -2,7 +2,7 @@
 <div ref="appContainer" class="chat-container u-bg-tr" v-cloak>
   <b-loading :active.sync="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
   <div v-if="isActive" class="chat-widget">
-    <div class="chat-widget-container">
+    <div class="chat-widget-container" ref="chatWidgetContainer">
       <header class="chat-widget-header">
         <div class="container"></div>
         <h3 v-if="chat" class="title is-4 is-clearfix">
@@ -19,13 +19,15 @@
         @loaded-chat="setChat"></eb-chat>
     </div>
   </div>
-  <button v-else
-    @click="chatOpen"
-    class="button is-primary is-medium is-rounded btn-chat-window">
-    <span class="icon is-large">
-      <i class="fas fa-comment"></i>
-    </span>
-  </button>
+  <div v-else
+    class="chat-widget-btn-container">
+    <button @click="chatOpen"
+      class="button is-primary is-medium is-rounded btn-chat-window">
+      <span class="icon is-large">
+        <i class="fas fa-comment"></i>
+      </span>
+    </button>
+  </div>
 </div>
 </template>
 
@@ -132,28 +134,48 @@ export default {
 
 <style lang="scss" scoped>
 .chat-container {
+  margin: 0 10px 10px;
+  padding: 0 10px 10px 0;
   background-color: transparent;
   height: 100%;
+  overflow: hidden;
 }
 .chat-widget {
-  background-color: transparent;
-  padding: 1rem;
+  background-color: #fff;
+  padding: 60px 1rem 80px;
   height: 100%;
+  border: solid 1px #DBDBDB;
+  box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.4);
+}
+.chat-widget-btn-container {
+  padding-top: 10px;
 }
 .chat-widget-container {
   background-color: #fff;
-  padding: 55px 1rem 0.5rem;
   height: 100%;
+  margin: 0 auto;
 }
 .chat-widget-header {
+  margin: 0 10px;
   position: fixed;
   top: 0;
-  left: 1rem;
-  right: 1rem;
-  z-index: 1;
-  width: calc(100% - 2rem);
+  left: 0;
+  width: calc(100% - 30px);
+  height: 60px;
+  margin: 1 -1.5rem 0;
   background-color: #fff;
-  padding: 1rem 1rem 1rem;
+  padding: 1rem 0.5rem;
+  border-top: solid 1px #DBDBDB;
+  border-right: solid 1px #DBDBDB;
+  border-left: solid 1px #DBDBDB;
+
+  h3 {
+    padding-left: 0.5rem;
+
+    .button {
+      padding-right: 0.5rem;
+    }
+  }
 }
 </style>
 

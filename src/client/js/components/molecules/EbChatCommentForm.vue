@@ -1,17 +1,16 @@
 <template>
-<div class="EbChatCommentForm widefull-box">
-  <div class="container">
-    <div class="c-form-group">
-      <div class="c-form-group_item c-form-group__item--main">
-        <textarea class="textarea"
-          style="margin:0 auto;"
-          v-model="body"
-          :rows="body.split(/\n/).length"
-          placeholder="Add a comment..."></textarea>
-      </div>
-      <div class="c-form-group__item c-form-group__item--end">
-        <button class="button is-primary is-small" @click="create">Send</button>
-      </div>
+<div class="EbChatCommentForm"
+    :class="{ included:isInclude }">
+  <div class="chat-comment-form">
+    <div class="chat-comment-input">
+      <textarea class="textarea"
+        style="margin:0 auto;"
+        v-model="body"
+        :rows="body.split(/\n/).length"
+        placeholder="Add a comment..."></textarea>
+    </div>
+    <div class="chat-comment-button">
+      <button class="button is-primary is-small" @click="create">Send</button>
     </div>
   </div>
 </div>
@@ -27,6 +26,11 @@ export default {
     chatId: {
       type: Number,
       default: 0,
+    },
+
+    isInclude: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -91,35 +95,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.widefull-box {
-  max-width: 960px;
-  text-align: center;
-  margin: 0 -1.5rem;
-  width: 100%;
-  padding: 0;
-  background-color: #fff;
+.EbChatCommentForm {
+  margin: 1px 10px 0;
   position: fixed;
   bottom: 0;
-  height: 65px;
-  display: block;
-}
-.c-form-group {
-  padding: 0.5rem 1.5rem;
-  display: flex;
+  left: 0;
+  width: calc(100% - 30px);
+  height: 70px;
+  margin: 1 -1.5rem 0;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
 
-  &__item {
-    display: flex;
-
-    &--main {
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-    }
-
-    &--end {
-      justify-content: flex-end;
-      width: 70px;
-    }
+  &.included {
+    border-bottom: solid 1px #DBDBDB;
+    border-right: solid 1px #DBDBDB;
+    border-left: solid 1px #DBDBDB;
+    bottom: 10px !important;
   }
+}
+.chat-comment-form {
+  display: flex;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.chat-comment-input {
+  flex-grow: 5;
+}
+.chat-comment-button {
+  padding-left: 1rem;
 }
 </style>

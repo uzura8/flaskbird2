@@ -26,7 +26,8 @@
 
   <eb-chat-comment-form
     v-if="isAuth"
-    :chat-id="chatId" />
+    :chat-id="chatId"
+    :is-include="isInclude" />
 
   <nav
     v-else-if="isEnabledFB"
@@ -134,14 +135,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.ebChat {
+  height: 100%;
+}
 .comments-box {
   height: 100%;
   overflow: auto;
   overflow-x: hidden;
 
-  &.is-auth {
-    padding-bottom: 80px;
-  }
+  //&.is-auth {
+  //  padding-bottom: 80px;
+  //}
 }
 </style>
 
