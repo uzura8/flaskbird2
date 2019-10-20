@@ -40,6 +40,11 @@ vi src/server/config/config.json
   }
 ```
 
+#### For Amazon Lex
+
+1. cp src/server/config/aws-config.json.sample src/server/config/aws-config.json
+2. Set your AWS credential
+
 ### 5. Setup ###
 
 ```
