@@ -1,11 +1,11 @@
 <template>
 <div class="ebChat">
-  <section class="comments-box" :class="{'is-auth': isAuth}">
+  <section class="comments-box" :class="{'is-auth': isAuth}" ref="commentsBox">
     <div v-if="comments">
       <nav v-if="minId">
         <a class="u-clickable" @click="fetchComments({ maxId:minId })">More</a>
       </nav>
-      <ul>
+      <ul ref="commentList">
         <li v-for="item in comments"
           :key="item.id"
           class="">
@@ -127,7 +127,15 @@ export default {
 
     scrollToEnd() {
       this.$nextTick(() => {
-        window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+        if (this.isInclude) {
+          const domRect = this.$refs.commentList.getBoundingClientRect()
+          if (domRect != null && domRect.height != null) {
+            this.$refs.commentsBox.scrollTop = domRect.height
+          }
+        } else {
+          window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight)
+        }
+
       })
     },
   },
