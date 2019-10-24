@@ -40,19 +40,19 @@ Edit server side setting  for your environment
 {
   "port": 8080,
   "session": {
-    "secretKey": "secret-key", // Set the key to encrypt session
+    "secretKey": "secret-key",
     "cookie": {
       "maxAgeHours": 24,
-      "secure": false // If your site on https, set here "true"
+      "secure": false
     }
   },
   "dbs": {
     "mysql": {
-      "host": "localhost",    // Set here for your environment
-      "port": "3306",         // Set here for your environment
-      "user": "username",     // Set here for your environment
-      "password": "password", // Set here for your environment
-      "database": "db-name",  // Set here for your environment
+      "host": "localhost",
+      "port": "3306",
+      "user": "username",
+      "password": "password",
+      "database": "db-name",
       "logging": false
     }
   },
@@ -65,11 +65,11 @@ Edit client side setting  for your environment
 ```json
 // src/client/js/config/config.json
 {
-  "domain": "localhost", // Set your site domain
-  "port": 8080,          // Set your site port
-  "baseUrl": "/",        // Set your site base path
-  "isSSL": false,        // If your site on https, set here "true" 
-  "siteName": "Sample Site", // Set your site name
+  "domain": "localhost",
+  "port": 8080,
+  "baseUrl": "/",
+  "isSSL": false,
+  "siteName": "Sample Site",
 ```
 
 
@@ -125,13 +125,13 @@ Copy rows in "const firebaseConfig" object on the source code, and paste to  row
 
 "firebase": {
     "isEnabled": true,
-    "apiKey": "api-key",                                 // Set this value
-    "authDomain": "sample-site.firebaseapp.com",         // Set this value
-    "databaseURL": "https://sample-site.firebaseio.com", // Set this value
-    "projectId": "sample-site",                          // Set this value
-    "storageBucket": "sample-site.appspot.com",          // Set this value
-    "messagingSenderId": "sender-id",                    // Set this value
-    "appId": "app-id"                                    // Set this value
+    "apiKey": "api-key",
+    "authDomain": "sample-site.firebaseapp.com",
+    "databaseURL": "https://sample-site.firebaseio.com",
+    "projectId": "sample-site",
+    "storageBucket": "sample-site.appspot.com",
+    "messagingSenderId": "sender-id",
+    "appId": "app-id"
   },
 ```
 
