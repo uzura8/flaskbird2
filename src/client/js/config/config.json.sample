@@ -6,7 +6,7 @@
   "siteName": "Sample Site",
   "chatContainerId": "eb-chat-widget-container",
   "firebase": {
-    "isEnabled": false,
+    "isEnabled": true,
     "apiKey": "api-key",
     "authDomain": "sample-site.firebaseapp.com",
     "databaseURL": "https://sample-site.firebaseio.com",

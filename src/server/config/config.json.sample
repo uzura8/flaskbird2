@@ -4,7 +4,7 @@
     "secretKey": "secret-key",
     "cookie": {
       "maxAgeHours": 24,
-      "secure": true
+      "secure": false
     }
   },
   "dbs": {
@@ -26,7 +26,7 @@
   },
   "auth": {
     "firebase": {
-      "isEnabled": false
+      "isEnabled": true
     }
   },
   "greatefulChat": {
