@@ -104,7 +104,7 @@ Input app-nickname and push "Register app" button
 
 After registered, push "Next" button
 
-And press "Continue to  console" button, then your go back to the project top
+And press "Continue to  console" button, then you go back to the project top
 
 ##### Set web app config to client side setting
 
