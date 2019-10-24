@@ -96,11 +96,12 @@ You need register and sign in to [Firebase](https://firebase.google.com/), befor
 
 Choose icon for "Add Web App"
 
- ![firebase_config-client-side_01](https://github.com/rysk92/grateful-chat-private/tree/master/src/doc/assets/img/firebase_config-client-side_01.jpg)
+ ![firebase_config_01](https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_01.jpg)
+                                  https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_01.png?token=AAAWDTJ3Z2THPEWANWGPXL25XLESS
 
 Input app-nickname and push "Register app" button
 
- ![firebase_config-client-side_01](https://github.com/rysk92/grateful-chat-private/tree/master/src/doc/assets/img/firebase_config-client-side_02.jpg)
+ ![firebase_config_01](https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_02.jpg)
 
 After registered, push "Next" button
 
@@ -110,13 +111,13 @@ And press "Continue to  console" button, then your go back to the project top
 
 Press "1 app" label, and press the cog icon of registered Web App
 
- ![firebase_config-client-side_01](https://github.com/rysk92/grateful-chat-private/tree/master/src/doc/assets/img/firebase_config-client-side_03.jpg)
+ ![firebase_config_01](https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_03.jpg)
 
- ![firebase_config-client-side_01](https://github.com/rysk92/grateful-chat-private/tree/master/src/doc/assets/img/firebase_config-client-side_04.jpg)
+ ![firebase_config_01](https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_04.jpg)
 
 Scroll to "Firebase SDK snippet" section, and select "config" radio button
 
- ![firebase_config-client-side_01](https://github.com/rysk92/grateful-chat-private/tree/master/src/doc/assets/img/firebase_config-client-side_05.jpg)
+ ![firebase_config_01](https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_05.jpg)
 
 Copy rows in "const firebaseConfig" object on the source code, and paste to  rows from "apiKey" to "appId" in "src/client/js/config/config.json"
 
@@ -139,7 +140,7 @@ Copy rows in "const firebaseConfig" object on the source code, and paste to  row
 
 Press "Service account" tab on "Settings" page, and press "Generate new private key" button
 
- ![firebase_config-client-side_01](https://github.com/rysk92/grateful-chat-private/tree/master/src/doc/assets/img/firebase_config-client-side_06.png)
+ ![firebase_config_01](https://raw.githubusercontent.com/rysk92/grateful-chat-private/master/src/doc/assets/img/firebase_config_06.jpg)
 
 After downloaded, move the file to "src/server/config/" and rename "firebase-admin-credentials.json"
 
