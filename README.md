@@ -163,6 +163,22 @@ mv /path-to-downloaded-file src/server/config/firebase-admin-credentials.json
 
 
 
+##### Authentication setting
+
+Open Authentication page.
+
+![firebase_config_07](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_07.jpg)
+
+
+
+Register "Email/Password" and "Anonymous" for "Sign-in providers"
+
+![firebase_config_08](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_08.jpg)
+
+![firebase_config_09](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_09.jpg)
+
+
+
 #### For Lambda
 
 ##### Create Lambda function for chat bot on AWS Console
