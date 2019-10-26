@@ -17,7 +17,7 @@ GratefulChat is a Support Chat System for every site
 
 ### Installing
 
-Before installing, you need to setup MySQL and Web server.
+Before installing, you need to setup NodeJS, MySQL and Web server.
 
 
 
@@ -168,12 +168,12 @@ mv /path-to-downloaded-file src/server/config/firebase-admin-credentials.json
 
 Create new function.
 
-![lambda_setting_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_01.jpg)
+![lambda_setting_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_01.png)
 
 Select "Auter from scrach", input "Function name" and select "Node.js 10.x" for Runtime" 
 And push "Create function"
 
-![lambda_setting_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_02.jpg)
+![lambda_setting_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_02.png)
 
 #####Upload function from local
 
@@ -199,17 +199,17 @@ Singn in AWS console, and move to Amazon Lex page.
 
 Put create bot button
 
-![lex_config_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_01.jpg)
+![lex_config_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_01.png)
 
 Select "Custom bot", and input Bot name, Output voice and COPPA, then push "Create" button.
 
-![lex_config_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_02.jpg)
+![lex_config_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_02.png)
 
 ##### Create Intent
 
 Push "Create Intent" button
 
-![lex_config_03](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_03.jpg)
+![lex_config_03](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_03.png)
 
 
 
@@ -221,13 +221,13 @@ Create Slot to select number like below.
 * Slot type: AMZAON.NUMBER
 * Prompt: Which number?
 
-![lex_config_04](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_04.jpg)
+![lex_config_04](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_04.png)
 
 
 
 Register sample utterance.
 
-![lex_config_05](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_05.jpg)
+![lex_config_05](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_05.png)
 
 
 
