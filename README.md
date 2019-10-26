@@ -127,7 +127,8 @@ Scroll to "Firebase SDK snippet" section, and select "config" radio button ![fir
 
 
 
-Copy rows in "const firebaseConfig" object on the source code, and paste to  rows from "apiKey" to "appId" in "src/client/js/config/config.json"
+Copy rows in "const firebaseConfig" object on the source code, and paste to  rows from "apiKey" to "appId" in "src/client/js/config/config.json".
+You have to add double quotation to key string for json format.
 
 ```  json
 // src/client/js/config/config.json
@@ -240,25 +241,100 @@ Register sample utterance.
 
 
 
-In "Fulfillment" section, select "Lambda function" and select your lambda function.
-And Build and test.
+In "Fulfillment" section, select "Lambda function" and select your lambda function.  
+And Build and test.   
+And publish.
+
+![lex_config_06](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_06.png)
+
+![lex_config_07](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_07.png)
 
 
 
-### 5. Setup ###
+##### Create IAM User for Amazon Lex
+
+Open AIM page on AWS console and press "Users" link.
+
+![lex_config_08](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_08.png)
+
+
+
+Press "Add User" button.
+
+![lex_config_09](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_09.png)
+
+
+
+Input "User name" and select "Programatic access" for access type.
+
+![lex_config_10](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_10.png)
+
+
+
+Select "Attach existing policies directly", and Check "AmazonLexRunBotsOnly" forPollicy name
+
+![lex_config_11](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_11.png)
+
+
+
+Press "Create user" button.
+
+![lex_config_12](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_12.png)
+
+
+
+Copy "Access key ID" and "Secret access key" on complete page.
+
+![lex_config_13](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_13.png)
+
+
+
+##### Setup config for AWS
+
+Copy from sample file.
+
+```bash
+cp src/server/config/aws-config.json.sample src/server/config/aws-config.json
+vi src/server/config/aws-config.json
+```
+
+Edit config.  
+Paste accessKeyId and secretAccessKey.
+
+```json
+{
+  "lex": {
+    "credential": {
+      "accessKeyId": "Paste here!",
+      "secretAccessKey": "Paste here!",
+      "region": "us-west-2"
+    },
+    "bots": {
+      "initialSupport": "GCSupportBot"
+    }
+  }
+}
+```
+
+
+
+#### Build source
 
 ```bash
 npm run build
 ```
 
 
-### 6. Create Admin User ###
+
+#### Create Admin User
 
 ```bash
 node server/create_admin_user.js admin@example.com password 'AdminUser'
 ```
 
-### 7. Start server ###
+
+
+### Start server ###
 
 ```bash
 npm run start
