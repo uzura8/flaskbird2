@@ -175,9 +175,14 @@ And push "Create function"
 
 ![lambda_setting_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_02.png)
 
-#####Upload function from local
+
+
+##### Upload function from local
 
 Before execute this section, you have to setup [AWS CLI](https://docs.aws.amazon.com/cli/) on your env. 
+Refer to [AWS Document](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+
+Clone Lex Bot Function from [Github](https://github.com/uzura8/gc-support-chat-lex-bot), and execute deploy command.
 
 ```bash
 cd /path-to-your-dir
@@ -201,9 +206,13 @@ Put create bot button
 
 ![lex_config_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_01.png)
 
+
+
 Select "Custom bot", and input Bot name, Output voice and COPPA, then push "Create" button.
 
 ![lex_config_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_02.png)
+
+
 
 ##### Create Intent
 
