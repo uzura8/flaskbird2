@@ -6,7 +6,7 @@
   "siteName": "Sample Site",
   "chatContainerId": "eb-chat-widget-container",
   "firebase": {
-    "isEnabled": true,
+    "isEnabled": true
   },
   "greatefulChat": {
     "isEnabled": true,
