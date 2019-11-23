@@ -36,6 +36,7 @@ Edit configs for your env, after copy from sample.
 ```bash
 cp src/server/config/config.json.sample src/server/config/config.json
 cp src/client/js/config/config.json.sample src/client/js/config/config.json
+cp src/client/js/config/firebase_config.js.sample src/client/js/config/firebase_config.js
 ```
 
 Edit server side setting  for your environment
@@ -127,22 +128,14 @@ Scroll to "Firebase SDK snippet" section, and select "config" radio button ![fir
 
 
 
-Copy rows in "const firebaseConfig" object on the source code, and paste to  rows from "apiKey" to "appId" in "src/client/js/config/config.json".
-You have to add double quotation to key string for json format.
+Copy rows in "const firebaseConfig" object on the source code, and paste to src/client/js/config/firebase_config.js
 
 ```  json
 // src/client/js/config/config.json
 
-"firebase": {
-    "isEnabled": true,
-    "apiKey": "api-key",
-    "authDomain": "sample-site.firebaseapp.com",
-    "databaseURL": "https://sample-site.firebaseio.com",
-    "projectId": "sample-site",
-    "storageBucket": "sample-site.appspot.com",
-    "messagingSenderId": "sender-id",
-    "appId": "app-id"
-  },
+const firebaseConfig = {
+  // Paste Here!
+}
 ```
 
 
