@@ -1,7 +1,7 @@
 <template>
 <div class="chatDetail">
   <h1 v-if="chat" class="title is-clearfix sticky-box">
-    <span v-text="dispChatName(chat, true)"></span>
+    <span v-text="dispChatName(chat.type, chat, true)"></span>
     <router-link
       v-if="isAuther"
       :to="'/admin/chats/' + chat.id + '/edit'"

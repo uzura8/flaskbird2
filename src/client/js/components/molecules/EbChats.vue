@@ -9,7 +9,7 @@
               <strong>
                 <router-link
                   :to="isUseAdmin ? '/admin/chats/' + item.id : '/chats/' + item.id"
-                  v-text="dispChatName(item, isUseAdmin)">
+                  v-text="dispChatName(item.type, item, isUseAdmin)">
                 </router-link>
               </strong>
               <br>
