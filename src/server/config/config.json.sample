@@ -30,8 +30,8 @@
     }
   },
   "greatefulChat": {
-    "isEnabled": true,
     "support": {
+      "isEnabled": true,
       "adminUserId": 1,
       "comment": {
         "first": "こんにちは！話す内容を選んでください。\n1) 会社について\n2) 住所について\n3) 給料について\n4) スタッフと話す"

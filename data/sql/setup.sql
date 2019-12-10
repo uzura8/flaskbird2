@@ -56,3 +56,4 @@ CREATE TABLE `chat_comment` (
   CONSTRAINT `chat_comment_chat_id_chat_id` FOREIGN KEY (`chat_id`) REFERENCES `chat` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `chat` VALUES (0, 'public', NULL, NULL, 1, NOW(), NOW());

@@ -17,6 +17,11 @@ router.post(
   controller.talkToChatBot
 )
 
+router.get(
+  '/public',
+  controller.getPublicChat
+)
+
 router.post(
   '/users/:userId/support',
   controller.isAuthenticated,

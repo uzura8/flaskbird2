@@ -76,11 +76,13 @@ export default {
         })
     },
 
-    dispChatName: function (chat, isAdmin = false) {
-      if (chat.type == 'support') {
-        let name = config.greatefulChat.support.chat.name
+    dispChatName: function (chatType, chat = {}, isAdmin = false) {
+      if (chatType == 'support') {
+        let name = config.greatefulChat.chat.support.name
         if (isAdmin) name += ` | userId: ${chat.userId}`
         return name
+      } else if (chatType == 'public') {
+        return config.greatefulChat.chat.public.name
       }
       return chat.name
     },

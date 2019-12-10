@@ -11,6 +11,11 @@ class Chat extends db.Sequelize.Model {
     if (type) params.where.type = type
     return this.findAll(params)
   }
+
+  static getPublicChat() {
+    let params = { where: { type: 'public' }}
+    return this.findAll(params)
+  }
 }
 
 Chat.init(

@@ -67,6 +67,16 @@ export default {
       })
   },
 
+  getPublicChat: (req, res, next) => {
+    Chat.getPublicChat()
+      .then(chats => {
+        return res.json(chats)
+      })
+      .catch(err => {
+        return next(boom.badImplementation(err))
+      })
+  },
+
   getChat: (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -242,7 +252,7 @@ export default {
   },
 
   talkToChatBot: (req, res, next) => {
-    if (!config.greatefulChat.isEnabled) {
+    if (!config.greatefulChat.support.isEnabled) {
       return next()
     }
     AwsLex.talkToChatBot(req, res, next)

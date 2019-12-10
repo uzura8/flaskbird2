@@ -4,14 +4,22 @@
   <div v-if="isActive" class="chat-widget">
     <div class="chat-widget-container" ref="chatWidgetContainer">
       <header class="chat-widget-header">
-        <div class="container"></div>
-        <h3 v-if="chat" class="title is-4 is-clearfix">
-          <span v-text="dispChatName(chat)"></span>
+
+        <div class="tabs">
+          <ul>
+            <li :class="{ 'is-active': !isPublicChat }">
+              <a @click="isPublicChat = false" v-text="dispChatName('support', chat)"></a>
+            </li>
+            <li :class="{ 'is-active': isPublicChat }">
+              <a @click="isPublicChat = true" v-text="dispChatName('public')"></a>
+            </li>
+          </ul>
+
           <a @click="isActive = !isActive"
-            class="button is-white u-bg-tr is-pulled-right">
+            class="button is-white u-bg-tr">
             <i class="fas fa-times"></i>
           </a>
-        </h3>
+        </div>
       </header>
       <eb-chat
         :isInclude="true"
@@ -44,6 +52,7 @@ export default {
   data(){
     return {
       isActive: false,
+      isPublicChat: false,
       chat: {},
     }
   },
@@ -70,6 +79,10 @@ export default {
       if (typeof window.parent.postMessage === undefined) return
       //const origin = site.baseUri('origin')
       window.parent.postMessage({ chatActive: val }, '*');
+    },
+
+    isPublicChat: function (val) {
+      this.setChat()
     }
   },
 
@@ -104,6 +117,29 @@ export default {
     },
 
     setChat: function() {
+      if (this.isPublicChat) {
+        this.setPublicChat()
+      } else {
+        this.setSupportChat()
+      }
+    },
+
+    setPublicChat: function() {
+      Chat.getPublic()
+        .then(res => {
+          if (!this.isEmpty(res)) {
+            this.chat = res[0]
+            this.isActive = true
+          } else {
+            this.handleApiError(err, 'Data is empty')
+          }
+        })
+        .catch(err => {
+          this.handleApiError(err, 'Failed to get data from server')
+        })
+    },
+
+    setSupportChat: function() {
       Chat.getByUserId(this.authUserId, this.authUserToken, 'support')
         .then(res => {
           if (!this.isEmpty(res)) {
@@ -168,6 +204,15 @@ export default {
   border-top: solid 1px #DBDBDB;
   border-right: solid 1px #DBDBDB;
   border-left: solid 1px #DBDBDB;
+
+  .tabs {
+    position: relative;
+
+    .button {
+      position: absolute;
+      right: 0;
+    }
+  }
 
   h3 {
     padding-left: 0.5rem;

@@ -53,4 +53,12 @@ export default {
         .catch(err => reject(err))
     })
   },
+
+  getPublic: () => {
+    return new Promise((resolve, reject) => {
+      client.get('chats/public')
+        .then(res => resolve(res.data))
+        .catch(err => reject(err))
+    })
+  },
 }

@@ -88,14 +88,14 @@ export default {
     },
   },
 
-  created() {
-    if (this.chatId != this.$store.state.chatComment.chatId) {
-      this.$store.dispatch('resetChatCommentList', this.chatId)
-      this.fetchComments()
+  watch: {
+    chatId: function (val) {
+      this.resetComments()
     }
-    this.socket.on(`CHAT_COMMENT_${this.chatId}`, (comment) => {
-      this.$store.dispatch('addChatComment', comment)
-    })
+  },
+
+  created() {
+    this.resetComments()
   },
 
   updated() {
@@ -103,6 +103,14 @@ export default {
   },
 
   methods: {
+    resetComments: function(params={}) {
+      this.$store.dispatch('resetChatCommentList', this.chatId)
+      this.fetchComments()
+      this.socket.on(`CHAT_COMMENT_${this.chatId}`, (comment) => {
+        this.$store.dispatch('addChatComment', comment)
+      })
+    },
+
     fetchComments: function(params={}) {
       const payload = {
         chatId: this.chatId,

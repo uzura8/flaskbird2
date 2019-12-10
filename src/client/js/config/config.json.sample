@@ -10,9 +10,13 @@
   },
   "greatefulChat": {
     "isEnabled": true,
-    "support": {
-      "chat": {
-        "name": "Support Chat",
+    "chat": {
+      "support": {
+        "name": "Support",
+        "body": ""
+      },
+      "public": {
+        "name": "Group",
         "body": ""
       }
     }
