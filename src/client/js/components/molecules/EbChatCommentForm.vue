@@ -7,6 +7,7 @@
         style="margin:0 auto;"
         v-model="body"
         :rows="body.split(/\n/).length"
+        @keydown.enter="keyDownEnter"
         placeholder="Add a comment..."></textarea>
     </div>
     <div class="chat-comment-button">
@@ -62,6 +63,11 @@ export default {
       if (this.isEmpty(this.body)) {
         this.error ='Input comment'
       }
+    },
+
+    keyDownEnter: function() {
+      if (event.keyCode !== 13) return
+      this.create()
     },
 
     create: function() {
