@@ -3,7 +3,7 @@
   <section class="comments-box" :class="{'is-auth': isAuth}" ref="commentsBox">
     <div v-if="comments">
       <nav v-if="minId">
-        <a class="u-clickable" @click="fetchComments({ maxId:minId })">More</a>
+        <a class="u-clickable" @click="fetchComments({ maxId:minId }, true)">More</a>
       </nav>
       <ul ref="commentList">
         <li v-for="item in comments"
@@ -99,7 +99,6 @@ export default {
   },
 
   updated() {
-    this.scrollToEnd()
   },
 
   methods: {
@@ -108,10 +107,11 @@ export default {
       this.fetchComments()
       this.socket.on(`CHAT_COMMENT_${this.chatId}`, (comment) => {
         this.$store.dispatch('addChatComment', comment)
+        this.scrollToEnd()
       })
     },
 
-    fetchComments: function(params={}) {
+    fetchComments: function(params={}, isNoScroll = false) {
       const payload = {
         chatId: this.chatId,
         params: params,
@@ -119,6 +119,9 @@ export default {
       this.$store.dispatch('fetchChatComments', payload)
         .catch(err => {
           this.handleApiError(err, 'Failed to get data from server')
+        })
+        .then(() => {
+          if (!isNoScroll) this.scrollToEnd()
         })
     },
 
