@@ -194,12 +194,20 @@ export default {
 
   getChatComments: (req, res, next) => {
     const chatId = req.params.id
-    const count = req.query.count ? req.query.count : 10
+    const count = req.query.count ? req.query.count : config.chat.comment.defaultCount
     const maxId = req.query.maxId ? req.query.maxId : null
     const sinceId = req.query.sinceId ? req.query.sinceId : null
-    ChatComment.findAllByChatId(chatId, count, maxId, sinceId)
+    ChatComment.findAllByChatId(chatId, count + 1, maxId, sinceId)
       .then(comments => {
-        return res.json(comments)
+        let nextId = 0
+        if (comments.length > count) {
+          const nextComment = comments.pop()
+          nextId = nextComment.id
+        }
+        return res.json({
+          comments: comments,
+          nextId: nextId,
+        })
       })
       .catch(err => {
         return next(boom.badImplementation(err))

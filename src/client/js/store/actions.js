@@ -232,8 +232,9 @@ export default {
   fetchChatComments: ({ commit }, payload) => {
     commit(types.SET_COMMON_LOADING, true)
     return ChatComment.fetch(payload.chatId, payload.params)
-      .then(({ lists }) => {
-        commit(types.FETCH_CHAT_COMMENT_LIST, lists)
+      .then(({ res }) => {
+        commit(types.FETCH_CHAT_COMMENT_LIST, res.comments)
+        commit(types.SET_CHAT_COMMENT_NEXT_ID, res.nextId)
         commit(types.SET_COMMON_LOADING, false)
       })
       .catch(err => {

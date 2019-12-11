@@ -7,7 +7,7 @@ export default {
     const options = { params: params };
     return new Promise((resolve, reject) => {
       client.get(uri, options)
-        .then(res => resolve({ lists: res.data }))
+        .then(res => resolve({ res: res.data }))
         .catch(err => {
           reject(new Error(err.response.data.message || err.message))
         })

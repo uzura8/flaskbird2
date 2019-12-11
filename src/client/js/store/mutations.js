@@ -35,6 +35,10 @@ export default {
     })
   },
 
+  [types.SET_CHAT_COMMENT_NEXT_ID] (state, payload) {
+    state.chatComment.nextId = payload
+  },
+
   [types.CREATE_CHAT_COMMENT] (state, payload) {
     //state.chatComment.list.push(payload)
   },

@@ -19,6 +19,7 @@ const state = {
   chatComment: {
     chatId: null,
     list: [],
+    nextId: 0,
   },
   example: {
     list: [],

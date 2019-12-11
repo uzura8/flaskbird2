@@ -2,7 +2,7 @@
 <div class="ebChat">
   <section class="comments-box" :class="{'is-auth': isAuth}" ref="commentsBox">
     <div v-if="comments">
-      <nav v-if="minId">
+      <nav v-if="existsNext && minId">
         <a class="u-clickable" @click="fetchComments({ maxId:minId }, true)">More</a>
       </nav>
       <ul ref="commentList">
@@ -81,6 +81,10 @@ export default {
 
     minId () {
       return !this.isEmpty(this.comments) ? this.comments[0].id : 0
+    },
+
+    existsNext () {
+      return this.$store.state.chatComment.nextId
     },
 
     isEnabledFB () {
