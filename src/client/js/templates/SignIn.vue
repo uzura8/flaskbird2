@@ -1,11 +1,12 @@
 <template>
 <div class="signIn">
-  <h1 class="title">Sign In</h1>
+  <h1 class="title">{{ $t('common.signIn') }}</h1>
 
   <eb-sign-in-form></eb-sign-in-form>
 
-  <p>You don't have an account? 
-    <router-link to="/signup">create account now!!</router-link>
+  <p class="u-mt5">
+    {{ $t(`msg["You don't have an account?"]`) }} 
+    <router-link to="/signup">{{ $t('msg["create account now!!"]') }}</router-link>
   </p>
 </div>
 </template>

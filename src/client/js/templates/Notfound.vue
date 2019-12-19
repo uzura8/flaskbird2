@@ -1,7 +1,5 @@
 <template lang="html">
-  <div class="notfound">
-    <h3>404: Not Found</h3>
-  </div>
+  <h1 class="title">{{ $t('error.404') }}</h1>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
 <div>
-  <h1 class="title">User Top</h1>
-  <p v-if="isAuth">Hi, {{userName}} !</p>
+    <h1 class="title">{{ $t('page.userTop') }}</h1>
+  <p v-if="isAuth">{{ $t('msg.signInGreeting', { name: userName }) }}</p>
 </div>
 </template>
 
@@ -16,7 +16,7 @@ export default{
   computed: {
     userName () {
       return this.isEmpty(this.$store.state.auth.user.name)
-        ? 'GuestUser'
+        ? this.$t('term.guestUser')
         : this.$store.state.auth.user.name
     },
   },

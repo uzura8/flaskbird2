@@ -1,6 +1,6 @@
 <template>
 <div class="chatEdit">
-  <h1 class="title">Edit: {{ chat.name }}</h1>
+  <h1 class="title">{{ $t('common.edit') }}: {{ chat.name }}</h1>
   <eb-chat-form
     :chat-id="chatId"
     :is-use-admin="true"

@@ -112,7 +112,7 @@ export default {
           this.setChat()
         })
         .catch(err => {
-          this.handleApiError(err, 'Sign Anonymously is failed')
+          this.handleApiError(err, this.$t('msg["Sign Anonymously is failed"]'))
         })
     },
 
@@ -131,11 +131,11 @@ export default {
             this.chat = res[0]
             this.isActive = true
           } else {
-            this.handleApiError(err, 'Data is empty')
+            this.handleApiError(err, this.$t('msg["Data is empty"]'))
           }
         })
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
     },
 
@@ -150,7 +150,7 @@ export default {
           }
         })
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
     },
 
@@ -161,7 +161,7 @@ export default {
           this.isActive = true
         })
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
     },
   },

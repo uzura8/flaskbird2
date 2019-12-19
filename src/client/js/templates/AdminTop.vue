@@ -1,10 +1,7 @@
 <template>
 <div>
-  <h1 class="title">Admin Top</h1>
-  <p>Hi, {{userName}} !</p>
-  <p>
-    <router-link to="/admin/chats/1">Chat</router-link>
-  </p>
+  <h1 class="title">{{ $t('page.adminTop') }}</h1>
+  <p>{{ $t('msg.signInGreeting', { name: userName }) }}</p>
 </div>
 </template>
 
@@ -19,7 +16,7 @@ export default{
   computed: {
     userName () {
       return this.isEmpty(this.$store.state.auth.user.name)
-        ? 'GuestUser'
+        ? this.$t('term.guestUser')
         : this.$store.state.auth.user.name
     },
   },

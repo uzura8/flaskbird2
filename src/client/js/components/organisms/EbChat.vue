@@ -13,7 +13,7 @@
             :class="{'is-info': item.userId == authUserId}">
             <div>
               <strong v-if="item.user && item.user.name != 'null'">{{ item.user.name }}</strong>
-              <strong v-else>GuestUser</strong>
+              <strong v-else>{{ $t('term.guestUser') }}</strong>
               <small class="u-ml05r">{{ item.createdAt | dateFormat('lll') }}</small>
             </div>
             <p class="is-size-5">{{ item.body }}</p>
@@ -21,7 +21,7 @@
         </li>
       </ul>
     </div>
-    <p v-else>No data</p>
+    <p v-else>{{ $t('msg["No Data"]') }}</p>
   </section>
 
   <eb-chat-comment-form
@@ -33,7 +33,7 @@
     v-else-if="isEnabledFB"
     class="u-mt1r">
     <a @click="signInAnonymously"
-      class="button is-text">Comment as anonymous user</a>
+      class="button is-text">{{ $t('msg["Comment as anonymous user"]') }}</a>
   </nav>
 
 </div>
@@ -122,7 +122,7 @@ export default {
       }
       this.$store.dispatch('fetchChatComments', payload)
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
         .then(() => {
           if (!isNoScroll) this.scrollToEnd()
@@ -136,7 +136,7 @@ export default {
           this.fetchComments()
         })
         .catch(err => {
-          this.showGlobalMessage('Sign Anonymously is failed')
+          this.showGlobalMessage(this.$t('msg["Sign Anonymously is failed"]'))
         })
     },
 

@@ -1,0 +1,79 @@
+{
+  "common": {
+    "top": "Top",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "name": "Name",
+    "email": "Email",
+    "userName": "UserName",
+    "password": "Password",
+    "description": "Description",
+    "send": "Send",
+    "edit": "Edit",
+    "create": "Create",
+    "register": "Register",
+    "delete": "Delete"
+  },
+  "msg": {
+    "Server error": "Server error",
+    "Data is empty": "Data is empty",
+    "No Data": "No Data",
+    "Edit failed": "Edit failed",
+    "Create failed": "Create failed",
+    "Delete failed": "Delete failed",
+    "Values not updated": "Values not updated",
+    "Failed to get data from server": "Failed to get data from server",
+    "Required to auth": "Required to auth",
+    "Signed out": "Signed out",
+    "Sign Out failed": "Sign Out failed",
+    "Sign Anonymously is failed": "Sign Anonymously is failed",
+    "Send comment failed": "Send comment failed",
+    "Correct inputs": "Correct inputs",
+    "Name is required": "Name is required",
+    "UserName is required": "Name is required",
+    "Description is required": "Description is required",
+    "Sign Up failed": "Sign Up failed",
+    "Sign In failed": "Sign In failed",
+    "Email is required": "Email is required",
+    "Email is not valid": "Email is not valid",
+    "Password is required": "Password is required",
+    "Password must be at least 6 characters": "Password must be at least 6 characters",
+    "Comment as anonymous user": "Comment as anonymous user",
+    "You don't have an account?": "You don't have an account?",
+    "create account now!!": "create account now!!",
+    "Do you have an account?": "Do you have an account?",
+    "sign in now!!": "sign in now!!",
+    "signInGreeting": "Hi, {name} !"
+  },
+  "error": {
+    "404": "404: Not Found"
+  },
+  "form": {
+    "Used for Sign In": "Used for Sign In",
+    "Room Name": "Room Name",
+    "Description for room": "Description for room",
+    "Used for display room name": "Used for display room name",
+    "Used for room description": "Used for room description",
+    "Used for display user name": "Used for display user name",
+    "Add a comment...": "Add a comment..."
+  },
+  "term": {
+    "userName": "Nickname",
+    "guestUser": "GuestUser",
+    "Support Chat": "Support",
+    "Group Chat": "Group"
+  },
+  "page": {
+    "top": "Top",
+    "siteTop": "Site top",
+    "adminTop": "Admin Top",
+    "adminSignIn": "Admin Sign In",
+    "userTop": "User Top",
+    "about": "About",
+    "chatRooms": "Chat Rooms",
+    "createChatRoom": "Create Chat Room"
+  }
+}

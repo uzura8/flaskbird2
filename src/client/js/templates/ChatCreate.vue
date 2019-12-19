@@ -1,6 +1,6 @@
 <template>
 <div class="chatCreate">
-  <h1 class="title">Create Chat Room</h1>
+  <h1 class="title">{{ $t('page.createChatRoom') }}</h1>
   <eb-chat-form />
 </div>
 </template>

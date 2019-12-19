@@ -1,6 +1,6 @@
 <template>
 <div class="ebSignInForm">
-  <b-field label="Email"
+  <b-field :label="$t('common.email')"
     :type="isEmpty(errors.email) ? '' : 'is-danger'"
     :message="isEmpty(errors.email) ? '' : errors.email[0]">
     <b-input type="email"
@@ -8,11 +8,11 @@
       icon="envelope"
       icon-pack="fas"
       @blur="validate('email')"
-      placeholder="Email">
+      :placeholder="$t('common.email')">
     </b-input>
   </b-field>
 
-  <b-field label="Password"
+  <b-field :label="$t('common.password')"
     :type="isEmpty(errors.password) ? '' : 'is-danger'"
     :message="isEmpty(errors.password) ? '' : errors.password[0]">
     <b-input type="password"
@@ -21,7 +21,7 @@
       icon="lock"
       icon-pack="fas"
       @blur="validate('password')"
-      placeholder="Password">
+      :placeholder="$t('common.password')">
     </b-input>
   </b-field>
 
@@ -30,7 +30,7 @@
       <button
         class="button is-link"
         :disabled="hasErrors"
-        @click="signIn">Sign In</button>
+        @click="signIn">{{ $t('common.signIn') }}</button>
     </div>
   </div>
 </div>
@@ -75,7 +75,7 @@ export default {
     signIn: function() {
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalMessage('Correct inputs')
+        this.showGlobalMessage(this.$t('msg["Correct inputs"]'))
       } else {
         const vals = {
           email: this.email,
@@ -94,7 +94,7 @@ export default {
             }
           })
           .catch(err => {
-            this.handleApiError(err, 'Sign In failed')
+            this.handleApiError(err, this.$t('msg["Sign In failed"]'))
           })
       }
     },
@@ -121,17 +121,17 @@ export default {
 
     validateEmail: function() {
       this.initError('email')
-      if (this.isEmpty(this.email)) this.errors.email.push('Email is required')
-      if (!str.checkEmail(this.email)) this.errors.email.push('Email is not valid')
+      if (this.isEmpty(this.email)) this.errors.email.push(this.$t('msg["Email is required"]'))
+      if (!str.checkEmail(this.email)) this.errors.email.push(this.$t('msg["Email is not valid"]'))
     },
 
     validatePassword: function() {
       this.initError('password')
       if (this.isEmpty(this.password)) {
-        this.errors.password.push('Password is required')
+        this.errors.password.push(this.$t('msg["Password is required"]'))
       }
       if (this.password.length < 6) {
-        this.errors.password.push('Password must be at least 6 characters')
+        this.errors.password.push(this.$t('msg["Password must be at least 6 characters"]'))
       }
     },
 

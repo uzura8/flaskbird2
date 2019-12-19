@@ -8,10 +8,12 @@
         v-model="body"
         :rows="body.split(/\n/).length"
         @keydown.enter="keyDownEnter"
-        placeholder="Add a comment..."></textarea>
+        :placeholder="$t(`form['Add a comment...']`)"></textarea>
     </div>
     <div class="chat-comment-button">
-      <button class="button is-primary is-small" @click="create">Send</button>
+      <button
+        class="button is-primary is-small"
+        @click="create">{{ $t('common.send') }}</button>
     </div>
   </div>
 </div>
@@ -89,7 +91,7 @@ export default {
       this.$store.dispatch('createChatComment', payload)
         .catch(err => {
           this.$store.dispatch('setIsLoading', false)
-          this.handleApiError(err, 'Send comment failed')
+          this.handleApiError(err, this.$t("msg['Send comment failed']"))
         })
         .then(() => {
           this.$store.dispatch('setIsLoading', false)

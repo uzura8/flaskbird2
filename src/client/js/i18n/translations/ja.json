@@ -1,0 +1,78 @@
+{
+  "common": {
+    "top": "トップ",
+    "createdAt": "作成日時",
+    "updatedAt": "変更日時",
+    "signUp": "ユーザ登録",
+    "signIn": "ログイン",
+    "signOut": "ログアウト",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "userName": "ユーザ名",
+    "name": "名称",
+    "description": "説明",
+    "send": "送信",
+    "edit": "変更",
+    "create": "作成",
+    "register": "登録する",
+    "delete": "削除"
+  },
+  "msg": {
+    "Server error": "サーバーエラー",
+    "Data is empty": "データがありません",
+    "No Data": "データがありません",
+    "Edit failed": "変更に失敗しました",
+    "Create failed": "作成に失敗しました",
+    "Delete failed": "削除に失敗しました",
+    "Values not updated": "更新されませんでした",
+    "Failed to get data from server": "データの取得に失敗しました",
+    "Required to auth": "ログインが必要です",
+    "Signed out": "ログアウトしました",
+    "Sign Out failed": "ログアウトに失敗しました",
+    "Sign Anonymously is failed": "ゲストログインに失敗しました",
+    "Send comment failed": "コメントの送信に失敗しました",
+    "Correct inputs": "入力に誤りがあります",
+    "Name is required": "名称が未入力です",
+    "UserName is required": "ユーザ名が未入力です",
+    "Description is required": "説明が未入力です",
+    "Sign Up failed": "登録に失敗しました",
+    "Sign In failed": "ログインに失敗しました",
+    "Email is required": "メールアドレスが未入力です",
+    "Email is not valid": "メールアドレスが正しくありません",
+    "Password is required": "パスワードが未入力です",
+    "Password must be at least 6 characters": "パスワードは６文字以上入力してください",
+    "Comment as anonymous user": "ゲストユーザで書き込む",
+    "You don't have an account?": "登録済ですか？",
+    "create account now!!": "まだの場合は登録してください。",
+    "Do you have an account?": "登録済ですか？",
+    "sign in now!!": "ログインしてください。",
+    "signInGreeting": "こんにちは、{name} さん！"
+  },
+  "error": {
+    "404": "404: ページが見つかりません"
+  },
+  "form": {
+    "Used for Sign In": "ログインに使用されます",
+    "Room Name": "チャットルーム名",
+    "Description for room": "ルームの説明",
+    "Used for display room name": "ルームの表示名に使用されます",
+    "Used for room description": "ルームの説明に使用されます",
+    "Used for display user name": "表示されるユーザ名として使用されます",
+    "Add a comment...": "メッセージを入力してください"
+  },
+  "term": {
+    "userName": "ニックネーム",
+    "guestUser": "ゲストユーザ",
+    "Support Chat": "サポート",
+    "Group Chat": "グループ"
+  },
+  "page": {
+    "siteTop": "サイトトップ",
+    "adminTop": "管理画面トップ",
+    "adminSignIn": "管理画面ログイン",
+    "userTop": "ユーザトップ",
+    "about": "このサイトについて",
+    "chatRooms": "チャットルーム",
+    "createChatRoom": "チャットルーム作成"
+  }
+}

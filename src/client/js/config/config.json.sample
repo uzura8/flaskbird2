@@ -9,16 +9,6 @@
     "isEnabled": true
   },
   "greatefulChat": {
-    "isEnabled": true,
-    "chat": {
-      "support": {
-        "name": "Support",
-        "body": ""
-      },
-      "public": {
-        "name": "Group",
-        "body": ""
-      }
-    }
+    "isEnabled": true
   }
 }

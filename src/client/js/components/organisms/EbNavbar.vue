@@ -16,14 +16,15 @@
   </div>
   <div  class="navbar-menu" v-bind:class="{'is-active': isHeaderMenuOpen}">
     <div class="navbar-start">
-      <router-link to="/" class="navbar-item">Top</router-link>
-      <router-link to="/chats" class="navbar-item">Chat Rooms</router-link>
-      <router-link v-if="!isAuth" to="/signup" class="navbar-item">Sign up</router-link>
-      <router-link v-if="!isAuth" to="/signin" class="navbar-item">Sign in</router-link>
-      <router-link v-if="isAuth" to="/user" class="navbar-item">User top</router-link>
-      <a v-if="isAuth" class="navbar-item u-clickable" @click="signOut">Sign out</a>
-      <router-link to="/about" class="navbar-item">About</router-link>
-      <router-link v-if="isAdmin" to="/admin" class="navbar-item">Admin Top</router-link>
+      <router-link to="/" class="navbar-item">{{ $t('common.top') }}</router-link>
+      <router-link to="/chats" class="navbar-item">{{ $t('page.chatRooms') }}</router-link>
+      <router-link v-if="!isAuth" to="/signup" class="navbar-item">{{ $t('common.signUp') }}</router-link>
+      <router-link v-if="!isAuth" to="/signin" class="navbar-item">{{ $t('common.signIn') }}</router-link>
+      <router-link v-if="isAuth" to="/user" class="navbar-item">{{ $t('page.userTop') }}</router-link>
+      <a v-if="isAuth" class="navbar-item u-clickable" @click="signOut">{{ $t('common.signOut') }}</a>
+      <router-link to="/about" class="navbar-item">{{ $t('page.about') }}</router-link>
+      <router-link v-if="isAdmin" to="/admin" class="navbar-item">{{ $t('page.adminTop') }}</router-link>
+      <router-link to="/" class="navbar-item"></router-link>
     </div>
   </div>
 </nav>

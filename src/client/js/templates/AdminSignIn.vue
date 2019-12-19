@@ -1,6 +1,6 @@
 <template>
 <div class="signIn">
-  <h1 class="title">Admin Sign In</h1>
+  <h1 class="title">{{ $t('page.adminSignIn') }}</h1>
 
   <eb-sign-in-form :is-use-admin="true"></eb-sign-in-form>
 

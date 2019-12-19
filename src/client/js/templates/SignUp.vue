@@ -1,38 +1,38 @@
 <template>
 <div class="signup">
-  <h1 class="title">Sign Up</h1>
+  <h1 class="title">{{ $t('common.signUp') }}</h1>
 
-  <b-field label="Email"
+  <b-field :label="$t('common.email')"
     :type="isEmpty(errors.email) ? '' : 'is-danger'"
-    :message="isEmpty(errors.email) ? 'Used for Sign In' : errors.email[0]">
+    :message="isEmpty(errors.email) ? $t(`form['Used for Sign In']`) : errors.email[0]">
     <b-input type="email"
       v-model="email"
       icon="envelope"
       icon-pack="fas"
       @blur="validate('email')"
-      placeholder="Email">
+      :placeholder="$t('common.email')">
     </b-input>
   </b-field>
 
-  <b-field label="Password"
+  <b-field :label="$t('common.password')"
     :type="isEmpty(errors.password) ? '' : 'is-danger'"
-    :message="isEmpty(errors.password) ? 'Used for Sign In' : errors.password[0]">
+    :message="isEmpty(errors.password) ? $t(`form['Used for Sign In']`) : errors.password[0]">
     <b-input type="password"
       v-model="password"
       :password-reveal="true"
       icon="lock"
       icon-pack="fas"
       @blur="validate('password')"
-      placeholder="Password">
+      :placeholder="$t('common.password')">
     </b-input>
   </b-field>
 
-  <b-field label="Name"
+  <b-field :label="$t('common.userName')"
     :type="isEmpty(errors.name) ? '' : 'is-danger'"
-    :message="isEmpty(errors.name) ? 'Used for display name' : errors.name[0]">
+    :message="isEmpty(errors.name) ? $t(`form['Used for display user name']`) : errors.name[0]">
     <b-input v-model="name"
       @blur="validate('name')"
-      placeholder="Name">
+      :placeholder="$t('common.userName')">
     </b-input>
   </b-field>
 
@@ -41,12 +41,13 @@
       <button
         class="button is-link"
         :disabled="hasErrors"
-        @click="signUp">Register</button>
+        @click="signUp">{{ $t('common.register') }}</button>
     </div>
   </div>
 
-  <p>Do you have an account? 
-    <router-link to="/signin">sign in now!!</router-link>
+  <p class="u-mt5">
+    {{ $t('msg["Do you have an account?"]') }} 
+    <router-link to="/signin">{{ $t('msg["sign in now!!"]' )}}</router-link>
   </p>
 </div>
 </template>
@@ -85,7 +86,7 @@ export default {
     signUp: function() {
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalMessage('Correct inputs')
+        this.showGlobalMessage(this.$t('msg["Correct inputs"]'))
       } else {
         const vals = {
           name: this.name,
@@ -98,7 +99,7 @@ export default {
           })
           .catch((err) => {
             //console.log(err);
-            this.showGlobalMessage('Sign Up Failed')
+            this.showGlobalMessage(this.$t('msg["Sign Up Failed"]'))
           })
       }
     },
@@ -125,24 +126,24 @@ export default {
 
     validateEmail: function() {
       this.initError('email')
-      if (this.isEmpty(this.email)) this.errors.email.push('Email is required')
-      if (!str.checkEmail(this.email)) this.errors.email.push('Email is not valid')
+      if (this.isEmpty(this.email)) this.errors.email.push(this.$t('msg["Email is required"]'))
+      if (!str.checkEmail(this.email)) this.errors.email.push(this.$t('msg["Email is not valid"]'))
     },
 
     validatePassword: function() {
       this.initError('password')
       if (this.isEmpty(this.password)) {
-        this.errors.password.push('Password is required')
+        this.errors.password.push(this.$t('msg["Password is required"]'))
       }
       if (this.password.length < 6) {
-        this.errors.password.push('Password must be at least 6 characters')
+        this.errors.password.push(this.$t('msg["Password must be at least 6 characters"]'))
       }
     },
 
     validateName: function() {
       this.initError('name')
       if (this.isEmpty(this.name)) {
-        this.errors.name.push('Name is required')
+        this.errors.name.push(this.$t('msg["UserName is required"]'))
       }
     },
 

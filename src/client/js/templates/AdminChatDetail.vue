@@ -54,7 +54,7 @@ export default {
           this.chat = res
         })
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
     },
   },

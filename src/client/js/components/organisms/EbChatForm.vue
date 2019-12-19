@@ -1,22 +1,22 @@
 <template>
 <div class="EbChatForm">
-  <b-field label="Room Name"
+  <b-field :label="$t(`form['Room Name']`)"
     :type="isEmpty(errors.name) ? '' : 'is-danger'"
-    :message="isEmpty(errors.name) ? 'Used for display name' : errors.name[0]">
+    :message="isEmpty(errors.name) ? $t(`form['Used for display room name']`) : errors.name[0]">
     <b-input
       v-model="name"
       @blur="validate('name')"
-      placeholder="Name">
+      :placeholder="$t(`form['Room Name']`)">
     </b-input>
   </b-field>
 
-  <b-field label="Description"
-    :type="isEmpty(errors.body) ? 'Description for room' : 'is-danger'"
-    :message="isEmpty(errors.body) ? 'Used for room description' : errors.body[0]">
+  <b-field :label="$t('common.description')"
+    :type="isEmpty(errors.body) ? $t(`form['Description for room']`) : 'is-danger'"
+    :message="isEmpty(errors.body) ? $t(`form['Used for room description']`) : errors.body[0]">
     <b-input type="textarea"
       v-model="body"
       @blur="validate('body')"
-      placeholder="Description">
+      :placeholder="$t('common.description')">
     </b-input>
   </b-field>
 
@@ -25,7 +25,7 @@
       <button
         class="button is-link"
         :disabled="hasErrors"
-        @click="save" v-text="isEdit ? 'Edit' : 'Create'"></button>
+        @click="save" v-text="isEdit ? $t('common.edit') : $t('common.create')"></button>
     </div>
   </div>
 </div>
@@ -107,19 +107,19 @@ export default {
           this.$emit('loaded-chat', res)
         })
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
     },
 
     save: function() {
       if (this.isEdit && !this.isUpdated) {
-        this.showGlobalMessage('Values not updated')
+        this.showGlobalMessage(this.$t('msg["Values not updated"]'))
         return
       }
 
       this.validateAll()
       if (this.hasErrors) {
-        this.showGlobalMessage('Correct inputs')
+        this.showGlobalMessage(this.$t('msg["Correct inputs"]'))
         return
       }
 
@@ -138,7 +138,7 @@ export default {
             }
           })
           .catch(err => {
-            this.handleApiError(err, 'Edit failed')
+            this.handleApiError(err, this.$t('msg["Edit failed"]'))
           })
       } else {
         vals.type = 'public'
@@ -151,7 +151,7 @@ export default {
             }
           })
           .catch(err => {
-            this.handleApiError(err, 'Create failed')
+            this.handleApiError(err, this.$t('msg["Create failed"]'))
           })
       }
     },
@@ -179,14 +179,14 @@ export default {
     validateName: function() {
       this.initError('name')
       if (this.isEmpty(this.name)) {
-        this.errors.name.push('Name is required')
+        this.errors.name.push(this.$t('msg["Name is required"]'))
       }
     },
 
     validateBody: function() {
       this.initError('body')
       if (this.isEmpty(this.body)) {
-        this.errors.body.push('Body is required')
+        this.errors.body.push(this.$t('msg["Description is required"]'))
       }
     },
 

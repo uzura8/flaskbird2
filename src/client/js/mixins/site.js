@@ -73,7 +73,7 @@ export default {
       } else if (defaultMsg) {
         this.showGlobalMessage(defaultMsg)
       } else {
-        this.showGlobalMessage('Server error')
+        this.showGlobalMessage(this.$t('msg["Server error"]'))
       }
     },
 
@@ -83,17 +83,17 @@ export default {
           router.push({ path: '/signin' })
         })
         .catch(err => {
-          this.handleApiError(err, 'Sign Out failed')
+          this.handleApiError(err, this.$t('msg["Sign Out failed"]'))
         })
     },
 
     dispChatName: function (chatType, chat = {}, isAdmin = false) {
       if (chatType == 'support') {
-        let name = config.greatefulChat.chat.support.name
+        let name = this.$t('term["Support Chat"]')
         if (isAdmin) name += ` | userId: ${chat.userId}`
         return name
       } else if (chatType == 'public') {
-        return config.greatefulChat.chat.public.name
+        return this.$t('term["Group Chat"]')
       }
       return chat.name
     },

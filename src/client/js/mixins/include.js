@@ -49,7 +49,7 @@ export default {
     handleApiError: function(err, defaultMsg='') {
       if (err != null && err.response != null && err.response.status == 401) {
         store.dispatch('resetAuth')
-        this.showGlobalMessage('Required to auth')
+        this.showGlobalMessage(this.$t('msg["Required to auth"]'))
       }
       if (typeof this.setErrors == 'function'
         && !this.isEmpty(err)
@@ -62,27 +62,27 @@ export default {
       } else if (defaultMsg) {
         this.showGlobalMessage(defaultMsg)
       } else {
-        this.showGlobalMessage('Server error')
+        this.showGlobalMessage(this.$t('msg["Server error"]'))
       }
     },
 
     signOut: function () {
       store.dispatch('signOut')
         .then(() => {
-          this.showGlobalMessage('Signed out', 'is-success')
+          this.showGlobalMessage(this.$t('msg["Signed out"]'), 'is-success')
         })
         .catch(err => {
-          this.handleApiError(err, 'Sign Out failed')
+          this.handleApiError(err, this.$t('msg["Sign Out failed"]'))
         })
     },
 
     dispChatName: function (chatType, chat = {}, isAdmin = false) {
       if (chatType == 'support') {
-        let name = config.greatefulChat.chat.support.name
+        let name = this.$t('term["Support Chat"]')
         if (isAdmin) name += ` | userId: ${chat.userId}`
         return name
       } else if (chatType == 'public') {
-        return config.greatefulChat.chat.public.name
+        return this.$t('term["Group Chat"]')
       }
       return chat.name
     },

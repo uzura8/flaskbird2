@@ -18,14 +18,14 @@
           </div>
           <nav class="level is-mobile">
             <div class="level-left">
-              <small>created: {{ item.createdAt | dateFormat('lll') }}</small>
+              <small>{{ $t('common["createdAt"]') }}: {{ item.createdAt | dateFormat('lll') }}</small>
             </div>
           </nav>
         </div>
       </article>
     </li>
   </ul>
-  <p v-else>No data.</p>
+  <p v-else>{{ $t('msg["No Data"]') }}</p>
 </div>
 </template>
 
@@ -63,7 +63,7 @@ export default {
           this.chats = res
         })
         .catch(err => {
-          this.handleApiError(err, 'Failed to get data from server')
+          this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
     },
   },
