@@ -17,14 +17,5 @@ const i18n = new VueI18n({
   fallbackLocale: 'en',
   messages: messages,
 })
-//
-//import moment from 'moment';
-//if (locale !== 'en') {
-//  require('moment/locale/' + locale);
-//  moment.locale(locale);
-//}
-//Vue.filter('moment', function (date) {
-//  return moment(date).format('LLL');
-//});
-//
+
 export default i18n

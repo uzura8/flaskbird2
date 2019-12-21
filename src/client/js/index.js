@@ -13,13 +13,6 @@ if (config.firebase.isEnabled) Firebase.init()
 import Buefy from 'buefy'
 Vue.use(Buefy)
 
-import moment from 'moment'
-import 'moment/locale/ja'
-moment.locale('en');
-Vue.filter('dateFormat', function (date, format='LLL') {
-  return moment(date).format(format);
-});
-
 import mixin from '@/mixins/site'
 Vue.mixin(mixin);
 

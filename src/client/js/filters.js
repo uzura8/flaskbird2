@@ -1,4 +1,5 @@
-import str from './util/str'
+import str from '@/util/str'
+import moment from '@/moment'
 
 export function numFormat(num) {
   num = parseInt(num)
@@ -8,5 +9,9 @@ export function numFormat(num) {
 
 export function substr(text, num) {
   return str.substr(text, num, '...')
+}
+
+export function dateFormat(date, format='LLL') {
+  return moment(date).format(format);
 }
 
