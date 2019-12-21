@@ -1,12 +1,12 @@
 <template>
 <div class="EbChatCommentForm"
-    :class="{ included:isInclude }">
+  :class="{ included:isInclude }">
   <div class="chat-comment-form">
     <div class="chat-comment-input">
       <textarea class="textarea"
         style="margin:0 auto;"
         v-model="body"
-        :rows="body.split(/\n/).length"
+        :rows="bodyRows"
         @keydown.enter="keyDownEnter"
         :placeholder="$t(`form['Add a comment...']`)"></textarea>
     </div>
@@ -48,6 +48,11 @@ export default {
     hasError () {
       return !this.isEmpty(this.error)
     },
+
+    bodyRows () {
+      const rows = this.body.split(/\n/).length
+      return rows > 10 ? 10 : rows
+    },
   },
 
   created() {
@@ -68,8 +73,12 @@ export default {
     },
 
     keyDownEnter: function() {
-      if (event.keyCode !== 13) return
-      this.create()
+      if (event.keyCode === 13) {
+        if (event.shiftKey) {
+          return
+        }
+        this.create()
+      }
     },
 
     create: function() {
@@ -109,15 +118,14 @@ export default {
   bottom: 0;
   left: 0;
   width: calc(100% - 30px);
-  height: 70px;
-  margin: 1 -1.5rem 0;
+  max-height: 300px;
   background-color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 1rem;
 
   &.included {
-    border-bottom: solid 1px #DBDBDB;
-    border-right: solid 1px #DBDBDB;
-    border-left: solid 1px #DBDBDB;
+    border-bottom: solid 1px #dbdbdb;
+    border-right: solid 1px #dbdbdb;
+    border-left: solid 1px #dbdbdb;
     bottom: 10px !important;
   }
 }
