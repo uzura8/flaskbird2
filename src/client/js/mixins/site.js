@@ -93,7 +93,7 @@ export default {
         if (isAdmin) name += ` | userId: ${chat.userId}`
         return name
       } else if (chatType == 'public') {
-        return this.$t('term["Group Chat"]')
+        return chat.name ? chat.name : this.$t('term["Group Chat"]')
       }
       return chat.name
     },

@@ -13,7 +13,7 @@
                 </router-link>
               </strong>
             </div>
-            <div class="u-mt5" v-html='usableTextEscaped(item.body)'></div>
+            <div v-if="item.body" class="u-mt5" v-html='usableTextEscaped(item.body)'></div>
           </div>
           <nav class="level is-mobile">
             <div class="level-left">
