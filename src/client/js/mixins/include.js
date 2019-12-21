@@ -86,5 +86,17 @@ export default {
       }
       return chat.name
     },
+
+    usableTextSanitize: function (text) {
+      let conved = util.str.nl2br(text)
+      conved = util.str.url2link(conved)
+      return this.$sanitize(conved)
+    },
+
+    usableTextEscaped: function (text) {
+      let conved = util.str.escapeHtml(text)
+      conved = util.str.nl2br(conved)
+      return util.str.url2link(conved)
+    },
   },
 }

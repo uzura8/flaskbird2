@@ -3,6 +3,7 @@ import config from '@/config/config'
 import Vue from 'vue'
 import store from '@/store'
 import i18n from '@/i18n'
+import '@/sanitize'
 import App from '@/AppIncluded'
 
 import Firebase from '@/firebase'

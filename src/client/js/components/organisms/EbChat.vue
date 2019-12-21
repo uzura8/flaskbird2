@@ -16,7 +16,8 @@
               <strong v-else>{{ $t('term.guestUser') }}</strong>
               <small class="u-ml05r">{{ item.createdAt | dateFormat('lll') }}</small>
             </div>
-            <p class="is-size-5">{{ item.body }}</p>
+            <div class="is-size-5 u-mt5"
+              v-html='usableTextEscaped(item.body)'></div>
           </div>
         </li>
       </ul>

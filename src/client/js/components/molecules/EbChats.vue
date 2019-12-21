@@ -5,16 +5,15 @@
       <article class="media">
         <div class="media-content">
           <div class="content">
-            <p>
+            <div>
               <strong>
                 <router-link
                   :to="isUseAdmin ? '/admin/chats/' + item.id : '/chats/' + item.id"
                   v-text="dispChatName(item.type, item, isUseAdmin)">
                 </router-link>
               </strong>
-              <br>
-              {{ item.body }}
-            </p>
+            </div>
+            <div class="u-mt5" v-html='usableTextEscaped(item.body)'></div>
           </div>
           <nav class="level is-mobile">
             <div class="level-left">
