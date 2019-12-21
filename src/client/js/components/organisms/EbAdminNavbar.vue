@@ -41,6 +41,15 @@ export default {
   },
 
   created: function() {
+    this.listen(window, 'click', function(e){
+      if (!this.$el.contains(e.target)) {
+        this.$store.dispatch('setHeaderMenuOpen', false)
+      }
+    }.bind(this));
+  },
+
+  destroyed: function() {
+    this.destroyed()
   },
 
   methods: {
