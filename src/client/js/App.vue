@@ -4,7 +4,7 @@
   <eb-navbar v-else />
   <div class="container" v-cloak>
     <main class="section">
-      <b-loading :active.sync="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
+      <b-loading :active="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
       <router-view></router-view>
     </main>
   </div>

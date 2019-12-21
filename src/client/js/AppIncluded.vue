@@ -1,6 +1,6 @@
 <template>
 <div ref="appContainer" class="chat-container u-bg-tr" v-cloak>
-  <b-loading :active.sync="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
+  <b-loading :active="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
   <div v-if="isActive" class="chat-widget">
     <div class="chat-widget-container" ref="chatWidgetContainer">
       <header class="chat-widget-header">
