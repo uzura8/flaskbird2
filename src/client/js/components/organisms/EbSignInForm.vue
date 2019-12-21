@@ -8,6 +8,7 @@
       icon="envelope"
       icon-pack="fas"
       @blur="validate('email')"
+      @keyup.native.enter="keyDownEnter($event)"
       :placeholder="$t('common.email')">
     </b-input>
   </b-field>
@@ -21,6 +22,7 @@
       icon="lock"
       icon-pack="fas"
       @blur="validate('password')"
+      @keyup.native.enter="keyDownEnter($event)"
       :placeholder="$t('common.password')">
     </b-input>
   </b-field>
@@ -97,6 +99,11 @@ export default {
             this.handleApiError(err, this.$t('msg["Sign In failed"]'))
           })
       }
+    },
+
+    keyDownEnter: function(event) {
+      if (event.keyCode !== 13) return
+      this.signIn()
     },
 
     setErrors: function(errors) {

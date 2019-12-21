@@ -72,7 +72,7 @@ export default {
       }
     },
 
-    keyDownEnter: function() {
+    keyDownEnter: function(event) {
       if (event.keyCode === 13) {
         if (event.shiftKey) {
           return
