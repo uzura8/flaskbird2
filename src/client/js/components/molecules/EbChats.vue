@@ -57,7 +57,8 @@ export default {
 
   methods: {
     getChats: function() {
-      Chat.get()
+      const token = this.isFirebaseEnabled ? this.$store.state.auth.token : null
+      Chat.get('', token)
         .then(res => {
           this.chats = res
         })

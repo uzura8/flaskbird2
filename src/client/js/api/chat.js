@@ -26,9 +26,11 @@ export default {
     })
   },
 
-  get: (chatId = '') => {
+  get: (chatId = '', token = null) => {
     return new Promise((resolve, reject) => {
-      client.get(`chats/${chatId}`)
+      let options = {}
+      if (token) options.headers = { Authorization: token }
+      client.get(`chats/${chatId}`, options)
         .then(res => resolve(res.data))
         .catch(err => reject(err))
     })

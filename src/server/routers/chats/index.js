@@ -40,6 +40,7 @@ router.get(
 
 router.get(
   '/:id',
+  controller.setUser,
   controller.getChat
 )
 
@@ -53,6 +54,7 @@ router.post(
 
 router.get(
   '/',
+  controller.setUser,
   controller.getChats
 )
 

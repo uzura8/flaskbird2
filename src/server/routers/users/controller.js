@@ -10,9 +10,10 @@ const isFBEnabled = config.auth.firebase.isEnabled
 export default {
   authenticate: (req, res, next) => {
     if (isFBEnabled) {
-      FirebaseAuth.verifyToken(req, res, next)
+      FirebaseAuth.isAuthenticated(req, res, next)
     } else {
-      Authenticator.isAuthenticated(req, res, next)
+      // TODO: for passport auth
+      //Authenticator.isAuthenticated(req, res, next)
     }
   },
 
@@ -22,7 +23,7 @@ export default {
 
   isAuthenticated: (req, res, next) => {
     if (isFBEnabled) {
-      FirebaseAuth.verifyToken(req, res, next)
+      FirebaseAuth.isAuthenticated(req, res, next)
     } else {
       Authenticator.isAuthenticated(req, res, next)
     }

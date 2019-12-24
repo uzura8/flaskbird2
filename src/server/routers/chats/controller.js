@@ -11,9 +11,18 @@ const isFBEnabled = config.auth.firebase.isEnabled
 export default {
   isAuthenticated: (req, res, next) => {
     if (isFBEnabled) {
-      FirebaseAuth.verifyToken(req, res, next)
+      FirebaseAuth.isAuthenticated(req, res, next)
     } else {
       Authenticator.isAuthenticated(req, res, next)
+    }
+  },
+
+  setUser: (req, res, next) => {
+    if (isFBEnabled) {
+      FirebaseAuth.setUser(req, res, next)
+    } else {
+      // TODO: for passport auth
+      //Authenticator.isAuthenticated(req, res, next)
     }
   },
 
@@ -43,14 +52,25 @@ export default {
     }
   },
 
-  getChats: (req, res, next) => {
-    Chat.findAll()
-      .then(chats => {
-        return res.json(chats)
-      })
-      .catch(err => {
-        return next(boom.badImplementation(err))
-      })
+  getChats: async (req, res, next) => {
+    const isAdmin = res.user != null && res.user.id && res.user.type == 'admin'
+    if (isAdmin) {
+      Chat.getChat()
+        .then(chats => {
+          return res.json(chats)
+        })
+        .catch(err => {
+          return next(boom.badImplementation(err))
+        })
+    } else {
+      Chat.getPublicChat(req.user.id)
+        .then(chats => {
+          return res.json(chats)
+        })
+        .catch(err => {
+          return next(boom.badImplementation(err))
+        })
+    }
   },
 
   getChatByUserId: (req, res, next) => {
@@ -82,13 +102,20 @@ export default {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
     }
+    const user = req.user
+    const isAdmin = user != null && user.type == 'admin'
     Chat.findById(req.params.id)
       .then(chat => {
-        if (chat) {
-          return res.json(chat)
-        } else {
+        if (!chat) {
           return next(boom.notFound('Requested id is invalid'))
         }
+        if (chat.type == 'public' || isAdmin) {
+          return res.json(chat)
+        }
+        if (chat.userId == user.id) {
+          return res.json(chat)
+        }
+        return next(boom.forbidden('You have no permission'))
       })
       .catch(err => {
         return next(boom.badImplementation(err))

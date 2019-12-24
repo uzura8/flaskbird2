@@ -12,8 +12,19 @@ class Chat extends db.Sequelize.Model {
     return this.findAll(params)
   }
 
-  static getPublicChat() {
-    let params = { where: { type: 'public' }}
+  static getPublicChat(userId = null) {
+    let where
+    if (userId) {
+      where = {
+        [db.Sequelize.Op.or]: [
+          { type: 'public' },
+          { userId: userId },
+        ]
+      }
+    } else {
+      where = { type: 'public' }
+    }
+    const params = { where: where }
     return this.findAll(params)
   }
 }

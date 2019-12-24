@@ -49,7 +49,7 @@ export default {
 
   methods: {
     setChat: function() {
-      Chat.get(this.chatId)
+      Chat.get(this.chatId, this.authUserToken)
         .then(res => {
           this.chat = res
         })
