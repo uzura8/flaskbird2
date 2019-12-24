@@ -15,9 +15,10 @@ export default{
 
   computed: {
     userName () {
-      return this.isEmpty(this.$store.state.auth.user.name)
-        ? this.$t('term.guestUser')
-        : this.$store.state.auth.user.name
+      const defName = this.$t('term.guestUser')
+      if (this.isEmpty(this.$store.state.auth.user)) return defName
+      if (this.isEmpty(this.$store.state.auth.user.name)) return defName
+      return this.$store.state.auth.user.name
     },
   },
 
