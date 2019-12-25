@@ -31,8 +31,12 @@ export default {
       let options = {}
       if (token) options.headers = { Authorization: token }
       client.get(`chats/${chatId}`, options)
-        .then(res => resolve(res.data))
-        .catch(err => reject(err))
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch(err => {
+          reject(err)
+        })
     })
   },
 

@@ -16,6 +16,7 @@ const state = {
     user: null,
     token: null,
   },
+  chat: {},
   chatComment: {
     chatId: null,
     list: [],

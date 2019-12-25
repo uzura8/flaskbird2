@@ -6,6 +6,8 @@ const router = express.Router()
 router.get(
   '/:id/comments',
   controller.validate('getComments'),
+  controller.setUser,
+  controller.checkReadable,
   controller.getChatComments
 )
 
@@ -13,6 +15,7 @@ router.post(
   '/:id/comments',
   controller.isAuthenticated,
   controller.validate('comment'),
+  controller.checkCommentable,
   controller.createComment,
   controller.talkToChatBot
 )
@@ -41,14 +44,15 @@ router.get(
 router.get(
   '/:id',
   controller.setUser,
+  controller.checkReadable,
   controller.getChat
 )
 
 router.post(
   '/:id',
   controller.isAuthenticated,
-  controller.isAuther,
   controller.validate('editChat'),
+  controller.checkEditable,
   controller.edit
 )
 

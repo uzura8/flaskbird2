@@ -1,5 +1,5 @@
 import * as types from './mutation-types'
-import { Example, User, ChatComment, Firebase } from '@/api'
+import { Example, User, Chat, ChatComment, Firebase } from '@/api'
 import config from '@/config/config'
 const isEnabledFB = config.firebase.isEnabled
 
@@ -220,6 +220,19 @@ export default {
     commit(types.SET_COMMON_LOADING, isLoading)
   },
 
+  setChat: ({ commit }, payload) => {
+    commit(types.SET_COMMON_LOADING, true)
+    return Chat.get(payload.chatId, payload.token)
+      .then(res => {
+        commit(types.SET_CHAT, res)
+        commit(types.SET_COMMON_LOADING, false)
+      })
+      .catch(err => {
+        commit(types.SET_COMMON_LOADING, false)
+        throw err
+      })
+  },
+
   setChatCommentChatId: ({ commit }, chatId) => {
     commit(types.SET_CHAT_COMMENT_CHAT_ID, chatId)
   },
@@ -231,7 +244,7 @@ export default {
 
   fetchChatComments: ({ commit }, payload) => {
     commit(types.SET_COMMON_LOADING, true)
-    return ChatComment.fetch(payload.chatId, payload.params)
+    return ChatComment.fetch(payload.chatId, payload.params, payload.token)
       .then(({ res }) => {
         commit(types.FETCH_CHAT_COMMENT_LIST, res.comments)
         commit(types.SET_CHAT_COMMENT_NEXT_ID, res.nextId)

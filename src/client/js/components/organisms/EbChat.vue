@@ -96,7 +96,7 @@ export default {
   watch: {
     chatId: function (val) {
       this.resetComments()
-    }
+    },
   },
 
   created() {
@@ -110,6 +110,7 @@ export default {
     resetComments: function(params={}) {
       this.$store.dispatch('resetChatCommentList', this.chatId)
       this.fetchComments()
+      this.scrollToEnd()
       this.socket.on(`CHAT_COMMENT_${this.chatId}`, (comment) => {
         this.$store.dispatch('addChatComment', comment)
         this.scrollToEnd()
@@ -120,6 +121,7 @@ export default {
       const payload = {
         chatId: this.chatId,
         params: params,
+        token: this.authUserToken,
       }
       this.$store.dispatch('fetchChatComments', payload)
         .catch(err => {

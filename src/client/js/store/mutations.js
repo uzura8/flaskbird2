@@ -21,6 +21,10 @@ export default {
     state.common.isHeaderMenuOpen = isOpen
   },
 
+  [types.SET_CHAT] (state, payload) {
+    state.chat = payload
+  },
+
   [types.SET_CHAT_COMMENT_CHAT_ID] (state, payload) {
     state.chatComment.chatId = payload
   },

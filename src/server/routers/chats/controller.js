@@ -4,6 +4,7 @@ import { db, Chat, ChatComment, User } from '@/models'
 import Authenticator from '@/middlewares/passport'
 import FirebaseAuth from '@/middlewares/firebase/auth'
 import AwsLex from '@/middlewares/aws/lex'
+import ChatAcl from '@/middlewares/chatAcl'
 import config from '@/config/config'
 const isFBEnabled = config.auth.firebase.isEnabled
 
@@ -26,22 +27,16 @@ export default {
     }
   },
 
-  isAuther: (req, res, next) => {
-    Chat.findById(req.params.id)
-      .then(chat => {
-        if (chat) {
-          if (chat.userId == req.user.id) {
-            return next()
-          } else {
-            return next(boom.forbidden('You have no permission'))
-          }
-        } else {
-          return next(boom.notFound('Requested id is invalid'))
-        }
-      })
-      .catch(err => {
-        return next(boom.badImplementation(err))
-      })
+  checkReadable: (req, res, next) => {
+    ChatAcl.checkReadable(req, res, next)
+  },
+
+  checkEditable: (req, res, next) => {
+    ChatAcl.checkEditable(req, res, next)
+  },
+
+  checkCommentable: (req, res, next) => {
+    ChatAcl.checkCommentable(req, res, next)
   },
 
   isSelf: (req, res, next) => {
@@ -97,29 +92,36 @@ export default {
       })
   },
 
-  getChat: (req, res, next) => {
+  getChat: async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
     }
-    const user = req.user
-    const isAdmin = user != null && user.type == 'admin'
-    Chat.findById(req.params.id)
-      .then(chat => {
-        if (!chat) {
-          return next(boom.notFound('Requested id is invalid'))
-        }
-        if (chat.type == 'public' || isAdmin) {
-          return res.json(chat)
-        }
-        if (chat.userId == user.id) {
-          return res.json(chat)
-        }
-        return next(boom.forbidden('You have no permission'))
-      })
-      .catch(err => {
-        return next(boom.badImplementation(err))
-      })
+
+    const chat = req.chat
+    //const count = config.chat.comment.defaultCount
+    //const comments = await ChatComment.findAllByChatId(chat.id, count + 1)
+    //  .catch(err => {
+    //    return next(boom.badImplementation(err))
+    //  })
+    //let nextId = 0
+    //if (comments.length > count) {
+    //  const nextComment = comments.pop()
+    //  nextId = nextComment.id
+    //}
+    //chat.comments = {
+    //  list: comments,
+    //  nextId: nextId,
+    //}
+
+    //return res.json({
+    //  item: chat,
+    //  comments: {
+    //    list: comments,
+    //    nextId: nextId,
+    //  },
+    //})
+    return res.json(chat)
   },
 
   create: (req, res, next) => {
