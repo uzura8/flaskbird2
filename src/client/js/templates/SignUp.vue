@@ -98,7 +98,6 @@ export default {
             this.$router.push({ name:'UserTop' })
           })
           .catch((err) => {
-            //console.log(err);
             this.showGlobalMessage(this.$t('msg["Sign Up Failed"]'))
           })
       }

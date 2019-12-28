@@ -35,12 +35,14 @@ class Authenticator {
   }
 
   static async setUser(req, res, next) {
-    const idToken = req.headers.authorization
     let user = null
-    try {
-      user = await this.verifyToken(idToken)
-    } catch (err) {
-      user = null
+    const idToken = req.headers.authorization
+    if (idToken != null) {
+      try {
+        user = await this.verifyToken(idToken)
+      } catch (err) {
+        user = null
+      }
     }
     req.user = user
     return next()

@@ -48,9 +48,9 @@ export default {
   },
 
   getChats: async (req, res, next) => {
-    const isAdmin = res.user != null && res.user.id && res.user.type == 'admin'
+    const isAdmin = req.user != null && req.user.type == 'admin'
     if (isAdmin) {
-      Chat.getChat()
+      Chat.findAll()
         .then(chats => {
           return res.json(chats)
         })
@@ -58,7 +58,8 @@ export default {
           return next(boom.badImplementation(err))
         })
     } else {
-      Chat.getPublicChat(req.user.id)
+      const userId = req.user != null ? req.user.id : null
+      Chat.getPublicChat(userId)
         .then(chats => {
           return res.json(chats)
         })

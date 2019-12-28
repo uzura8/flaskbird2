@@ -29,13 +29,16 @@ export default {
 
   data(){
     return {
-      chat: {},
     }
   },
 
   computed: {
     chatId () {
       return Number(this.$route.params.id)
+    },
+
+    chat () {
+      return this.$store.state.chat
     },
 
     isAuther () {
@@ -49,10 +52,11 @@ export default {
 
   methods: {
     setChat: function() {
-      Chat.get(this.chatId)
-        .then(res => {
-          this.chat = res
-        })
+      const payload = {
+        chatId: this.chatId,
+        token: this.authUserToken,
+      }
+      this.$store.dispatch('setChat', payload)
         .catch(err => {
           this.handleApiError(err, this.$t('msg["Failed to get data from server"]'))
         })
