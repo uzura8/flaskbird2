@@ -3,7 +3,7 @@
   <section class="comments-box" :class="{'is-auth': isAuth}" ref="commentsBox">
     <div v-if="comments">
       <nav v-if="existsNext && minId">
-        <a class="u-clickable" @click="fetchComments({ maxId:minId }, true)">More</a>
+        <a class="u-clickable" @click="fetchComments({ maxId:minId }, true)">{{ $t('common.more') }}</a>
       </nav>
       <ul ref="commentList">
         <li v-for="item in comments"

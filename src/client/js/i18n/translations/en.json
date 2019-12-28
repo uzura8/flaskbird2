@@ -15,7 +15,8 @@
     "edit": "Edit",
     "create": "Create",
     "register": "Register",
-    "delete": "Delete"
+    "delete": "Delete",
+    "more": "More"
   },
   "msg": {
     "Server error": "Server error",

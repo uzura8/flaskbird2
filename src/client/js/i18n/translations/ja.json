@@ -15,7 +15,8 @@
     "edit": "変更",
     "create": "作成",
     "register": "登録する",
-    "delete": "削除"
+    "delete": "削除",
+    "more": "もっと見る"
   },
   "msg": {
     "Server error": "サーバーエラー",
