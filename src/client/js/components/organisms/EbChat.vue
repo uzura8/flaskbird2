@@ -166,12 +166,9 @@ export default {
 }
 .comments-box {
   height: 100%;
+  padding-bottom: 0.5rem;
   overflow: auto;
   overflow-x: hidden;
-
-  //&.is-auth {
-  //  padding-bottom: 80px;
-  //}
 }
 </style>
 
