@@ -197,7 +197,7 @@ export default {
         const chats = await Chat.getChatByUserId(userId, 'support')
         if (chats.length > 0) return res.json(chats)
 
-        const userAdmin = await User.findById(adminUserId)
+        //const userAdmin = await User.findById(adminUserId)
         const chat = await Chat.create({
           type: 'support',
           userId: userId,
@@ -212,7 +212,7 @@ export default {
           chatId: chatComment.chatId,
           userId: chatComment.userId,
           body: chatComment.body,
-          user: { name:userAdmin.name }
+          //user: { name:userAdmin }
         }
         res.io.emit(`CHAT_COMMENT_${chatComment.chatId}`, resChatComment)
         return res.json([chat])
