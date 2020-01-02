@@ -36,6 +36,7 @@ package-lock.json
 
 /src/client/js/config/config.json
 /src/client/js/config/firebase_config.js
+/src/client/js/config/site.json
 /app/statics/js/*
 /app/statics/css/*
 
