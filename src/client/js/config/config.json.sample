@@ -4,7 +4,6 @@
   "baseUrl": "/",
   "isSSL": false,
   "siteName": "Sample Site",
-  "chatContainerId": "eb-chat-widget-container",
   "firebase": {
     "isEnabled": true
   },

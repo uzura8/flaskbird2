@@ -1,70 +1,48 @@
-# GratefulChat
+# Flaskbird
 
-GratefulChat is a Support Chat System for every site
-
-
+WEB application platform of the general-purpose created by Python, Flask, VueJS and webpack
 
 ## Getting Started
 
 ### Prerequisites
 
-* NodeJS >= ver10
+* Python >= ver3.7.x
 * MySQL >= ver5.7
-* Firebase
-* AWS CLI
 
 
 
 ### Installing
 
-Before installing, you need to setup NodeJS, MySQL and Web server.
-
-
+Before installing, you need to setup MySQL and Web server.
 
 #### Install required libraries
 
 ```bash
+pip install -r requirements.txt
 npm install
 ```
-
-
 
 #### Copy and edit config files
 
 Edit configs for your env, after copy from sample.
 
 ```bash
-cp src/server/config/config.json.sample src/server/config/config.json
+chmod -R 777 var
+cp adapter.wsgi.sample adapter.wsgi
+vim adapter.wsgi
+cp instance/config.py.sample instance/config.py
 cp src/client/js/config/config.json.sample src/client/js/config/config.json
-cp src/client/js/config/firebase_config.js.sample src/client/js/config/firebase_config.js
 ```
+
+
+### 2. Setup ###
+Edit configs for your env
 
 Edit server side setting  for your environment
 
 ```json
-// src/server/config/config.json
-{
-  "port": 8080,
-  "session": {
-    "secretKey": "secret-key",
-    "cookie": {
-      "maxAgeHours": 24,
-      "secure": false
-    }
-  },
-  "dbs": {
-    "mysql": {
-      "host": "localhost",
-      "port": "3306",
-      "user": "username",
-      "password": "password",
-      "database": "db-name",
-      "logging": false
-    }
-  },
+// instance/config.py
 ```
-
-
 
 Edit client side setting  for your environment
 
@@ -79,272 +57,41 @@ Edit client side setting  for your environment
 ```
 
 
-
-#### Create DB
-
-```bash
-echo "CREATE DATABASE DB-name DEFAULT CHARACTER SET utf8" | mysql -u user-name -p
-mysql -u user-name -p DB-name < data/sql/setup.sql
-```
-
-
-
-#### Firebase setting
-
-You need register and sign in to [Firebase](https://firebase.google.com/), before below settings
-
-##### Create FIrebase Project
-
-* Set project name
-* Set to use GoogleAnalytics, if you need
-
-##### Add web app
-
-Choose icon for "Add Web App" ![firebase_config_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_01.png)
-
-
-
-Input app-nickname and push "Register app" button
-
-![firebase_config_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_02.png)
-
-
-
-After registered, push "Next" button
-
-And press "Continue to  console" button, then you go back to the project top
-
-
-
-##### Set web app config to client side setting
-
-Press "1 app" label, and press the cog icon of registered Web App ![firebase_config_03](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_03.png)
-
- ![firebase_config_04](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_04.png)
-
-
-
-Scroll to "Firebase SDK snippet" section, and select "config" radio button ![firebase_config_05](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_05.png)
-
-
-
-Copy rows in "const firebaseConfig" object on the source code, and paste to src/client/js/config/firebase_config.js
-
-```  json
-// src/client/js/config/config.json
-
-const firebaseConfig = {
-  // Paste Here!
-}
-```
-
-
-
-##### Set web app config to server side setting
-
-Press "Service account" tab on "Settings" page, and press "Generate new private key" button
-
-![firebase_config_06](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_06.jpg)
-
-
-
-After downloaded, move the file to "src/server/config/" and rename "firebase-admin-credentials.json"
-
-```bash
-mv /path-to-downloaded-file src/server/config/firebase-admin-credentials.json
-```
-
-
-
-##### Authentication setting
-
-Open Authentication page.
-
-![firebase_config_07](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_07.png)
-
-
-
-Register "Email/Password" and "Anonymous" for "Sign-in providers"
-
-![firebase_config_08](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_08.png)
-
-![firebase_config_09](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/firebase_config_09.png)
-
-
-
-#### For Lambda
-
-##### Create Lambda function for chat bot on AWS Console
-
-Create new function.
-
-![lambda_setting_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_01.png)
-
-Select "Auter from scrach", input "Function name" and select "Node.js 10.x" for Runtime" 
-And push "Create function"
-
-![lambda_setting_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lambda_setting_02.png)
-
-
-
-##### Upload function from local
-
-Before execute this section, you have to setup [AWS CLI](https://docs.aws.amazon.com/cli/) on your env. 
-Refer to [AWS Document](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
-
-Clone Lex Bot Function from [Github](https://github.com/uzura8/gc-support-chat-lex-bot), and execute deploy command.
-
-```bash
-cd /path-to-your-dir
-git clone git@github.com:uzura8/gc-support-chat-lex-bot.git
-cd gc-support-chat-lex-bot
-cp setup.conf.sample setup.conf
-vi setup.conf
-# Edit for your env
-sh deploy.sh
-```
-
-
-
-#### For Amazon Lex
-
-##### Create Chat Bot
-
-Singn in AWS console, and move to Amazon Lex page.
-
-Put create bot button
-
-![lex_config_01](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_01.png)
-
-
-
-Select "Custom bot", and input Bot name, Output voice and COPPA, then push "Create" button.
-
-![lex_config_02](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_02.png)
-
-
-
-##### Create Intent
-
-Push "Create Intent" button
-
-![lex_config_03](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_03.png)
-
-
-
-Create Slot to select number like below.
-
-###### Example
-
-* Name: "SelectNum"
-* Slot type: AMZAON.NUMBER
-* Prompt: Which number?
-
-![lex_config_04](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_04.png)
-
-
-
-Register sample utterance.
-
-![lex_config_05](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_05.png)
-
-
-
-In "Fulfillment" section, select "Lambda function" and select your lambda function.  
-And Build and test.   
-And publish.
-
-![lex_config_06](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_06.png)
-
-![lex_config_07](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_07.png)
-
-
-
-##### Create IAM User for Amazon Lex
-
-Open AIM page on AWS console and press "Users" link.
-
-![lex_config_08](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_08.png)
-
-
-
-Press "Add User" button.
-
-![lex_config_09](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_09.png)
-
-
-
-Input "User name" and select "Programatic access" for access type.
-
-![lex_config_10](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_10.png)
-
-
-
-Select "Attach existing policies directly", and Check "AmazonLexRunBotsOnly" forPollicy name
-
-![lex_config_11](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_11.png)
-
-
-
-Press "Create user" button.
-
-![lex_config_12](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_12.png)
-
-
-
-Copy "Access key ID" and "Secret access key" on complete page.
-
-![lex_config_13](https://raw.githubusercontent.com/uzura8/expressbird/dev_gc/src/doc/assets/img/lex_config_13.png)
-
-
-
-##### Setup config for AWS
-
-Copy from sample file.
-
-```bash
-cp src/server/config/aws-config.json.sample src/server/config/aws-config.json
-vi src/server/config/aws-config.json
-```
-
-Edit config.  
-Paste accessKeyId and secretAccessKey.
-
-```json
-{
-  "lex": {
-    "credential": {
-      "accessKeyId": "Paste here!",
-      "secretAccessKey": "Paste here!",
-      "region": "us-west-2"
-    },
-    "bots": {
-      "initialSupport": "GCSupportBot"
-    }
-  }
-}
-```
-
-
-
 #### Build source
 
 ```bash
 npm run build
 ```
 
-
-
 #### Create Admin User
 
 ```bash
-node server/create_admin_user.js admin@example.com password 'AdminUser'
+// TODO: implement
 ```
 
 
+### WEB Server Setting ###
 
-### Start server ###
+If use Apache, Edit config file like below.
 
-```bash
-npm run start
+```
+sudo vim /etc/httpd/conf.d/virtual.conf
+
+LoadModule wsgi_module /PATH-TO-SITE_PACKAGES/site-packages/mod_wsgi/server/mod_wsgi-py************.so
+<VirtualHost *:80>
+  ServerName example.com
+  DocumentRoot /var/www/sites/example.com
+  WSGIScriptAlias / /var/www/sites/example.com/adapter.wsgi
+  <Directory "/var/www/sites/example.com/">
+    Order deny,allow
+    Allow from all
+    #options Indexes FollowSymLinks +ExecCGI
+  </Directory>
+</VirtualHost>
+```
+
+And start web server.
+
+```
+sudo systemctl start httpd
 ```

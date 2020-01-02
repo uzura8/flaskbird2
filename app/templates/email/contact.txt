@@ -1,0 +1,35 @@
+[[ inputs.name ]] 様
+
+この度は、弊社ウェブサイトよりお問い合わせいただき、ありがとうございます。
+内容を確認の上、追ってご連絡いたします。
+いましばらくお待ちください。
+
+受け付け内容
+----------
+[受付番号]
+[[ inputs.code ]]
+
+[受付時間]
+[[ inputs.created_at_formatted ]]
+
+[種別]
+[[ inputs.contact_type_label ]]
+
+[名前]
+[[ inputs.name ]]
+
+[フリガナ]
+[[ inputs.name_phonetic ]]
+
+[メールアドレス]
+[[ email_to ]]
+
+[電話番号]
+[[ inputs.tel ]]
+
+[内容]
+[[ inputs.content ]]
+----------
+
+* [[ company_name ]]
+* [[ company_site_url ]]

@@ -13,15 +13,30 @@ Thumbs.db
 desktop.ini
 tags
 
+*.pyc
+/venv/*
+__pycache__
+tags
+
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+/instance/
+adapter.wsgi
+
 package-lock.json
 /node_modules/*
 
-/src/server/config/config.json
 /src/client/js/config/config.json
 /src/client/js/config/firebase_config.js
-/src/server/config/firebase-admin-credentials.json
-/src/server/config/aws-config.json
+/app/statics/js/*
+/app/statics/css/*
 
-/server/*
-/public/assets/js/*
-/public/assets/css/*
+/var/*

@@ -3,83 +3,25 @@ const webpack = require('webpack');
 const path = require('path');
 const root = path.join(__dirname, './');
 
-const nodeExternals = require('webpack-node-externals')
-//const HtmlWebPackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = [
   {
-    entry: {
-      app: './src/server/app.js',
-      create_admin_user: './src/server/create_admin_user.js',
-    },
-    output: {
-      path: path.join(__dirname, 'server'),
-      publicPath: '/',
-      filename: '[name].js'
-    },
-    target: 'node',
-    node: {
-      // Need this when working with express, otherwise the build fails
-      __dirname: false,   // if you don't put this is, __dirname
-      __filename: false,  // and __filename return blank or /
-    },
-    externals: [nodeExternals()], // Need this to avoid error when working with Express
-    module: {
-      rules: [
-        {
-          // Transpiles ES6-8 into ES5
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
-        },
-        {
-          // Loads the javacript into html template provided.
-          // Entry point is set below in HtmlWebPackPlugin in Plugins
-          test: /\.html$/,
-          use: [
-            {
-              loader: 'html-loader',
-              //options: { minimize: true }
-            }
-          ]
-        }
-      ]
-    },
-    resolve: {
-      extensions: ['.js', '.json'],
-      alias: {
-        '@': path.join(root, 'src/server'),
-      }
-    },
-    plugins: [
-      //new HtmlWebPackPlugin({
-      //  template: './src/server/views/index.html',
-      //  filename: './views/index.html',
-      //  excludeChunks: [ 'app' ]
-      //})
-    ]
-  },
-  {
     devtool: 'source-map',
     entry: {
       index: path.join(root, 'src/client/js/index.js'),
-      include: path.join(root, 'src/client/js/include.js'),
-      chat_frame: path.join(root, 'src/client/js/chat_frame.js'),
     },
     output: {
-      path: path.join(root, 'public/assets/js'),
+      path: path.join(root, 'app/statics/js'),
       filename: '[name].js'
     },
     optimization: {
-      //splitChunks: {
-      //  name: 'vendor',
-      //  chunks: 'initial'
-      //},
+      splitChunks: {
+        name: 'vendor',
+        chunks: 'initial'
+      },
       minimizer: [
         new TerserPlugin()
       ],
@@ -104,7 +46,6 @@ module.exports = [
                           // Add vendor prefix
                           require('autoprefixer')({
                             grid: true, // use CSS Grid Layout
-                            //browsers: ['Android >= 4.4', "IE 11"],
                           })
                         ],
                         sourceMap: true
@@ -150,7 +91,6 @@ module.exports = [
                   // Add vendor prefix
                   require('autoprefixer')({
                     grid: true, // use CSS Grid Layout
-                    //browsers: ['Android >= 4.4', "IE 11"],
                   })
                 ],
                 sourceMap: true
@@ -191,10 +131,9 @@ module.exports = [
     devtool: 'source-map',
     entry: {
       style: path.join(root, 'src/client/scss/style.scss'),
-      include: path.join(root, 'src/client/scss/include.scss'),
     },
     output: {
-      path: path.join(root, 'public/assets/css'),
+      path: path.join(root, 'app/statics/css'),
       filename: '[name].css'
     },
     module: {
@@ -220,7 +159,6 @@ module.exports = [
                   // Add vendor prefix
                   require('autoprefixer')({
                     grid: true, // use CSS Grid Layout
-                    //browsers: ['Android >= 4.4', "IE 11"],
                   })
                 ],
                 sourceMap: true
