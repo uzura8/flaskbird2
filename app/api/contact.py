@@ -4,7 +4,7 @@ from pprint import pprint
 from urllib.parse import unquote_plus
 from flask import current_app, jsonify, request
 from flask_cors import cross_origin
-from . import bp
+from app.api import bp
 from app.forms import Contact as ContactForm
 from app.models import Contact
 from app.email import send_contact_email

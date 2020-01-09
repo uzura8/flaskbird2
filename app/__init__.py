@@ -43,7 +43,8 @@ def create_app():
             resources=app.config['CORS_RESOURCES'],
             support_credentials=True)
 
-    modules = ('site', 'api')
+    modules = app.config['FBD_MODULES']
+    modules.extend(app.config['FBD_OPTIONAL_MODULES'])
     for module_name in modules:
         m = importlib.import_module('app.' + module_name)
         app.register_blueprint(m.bp)

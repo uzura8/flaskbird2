@@ -1,7 +1,8 @@
-from flask import jsonify
+from flask import jsonify, Blueprint
 from flask import Blueprint
 from app.common.helper import url_static
 
+bp = Blueprint('api', __name__, url_prefix='/api')
 
 class InvalidUsage(Exception):
     status_code = 400
@@ -30,4 +31,6 @@ def handle_invalid_usage(error):
     response.status_code = error.status_code
     return response
 
-from . import routes
+from . import contact
+from . import users
+

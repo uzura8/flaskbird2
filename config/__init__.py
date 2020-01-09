@@ -24,7 +24,8 @@ class BaseConfig(object):
     #IS_SEND_ERROR_REPORT_MAIL = False
     ## Modules
     #FBD_MODULES = ['error', 'site', 'media', 'member', 'api']
-    #FBD_OPTIONAL_MODULES = []
+    FBD_MODULES = ['site', 'api']
+    FBD_OPTIONAL_MODULES = []
 
     # Mail
     MAIL_AWS_SES_ENABLED = False
@@ -39,11 +40,11 @@ class BaseConfig(object):
     #ADMINS = None
     IS_LOGGING_MAIL = False
 
-    ## Request params
-    #PARAMS_LIST_DEFAULT = {
-    #    'per_page': 10,
-    #    'per_page_max': 100,
-    #}
+    # Request params
+    PARAMS_LIST_DEFAULT = {
+        'per_page': 10,
+        'per_page_max': 100,
+    }
 
     ## Upload
     #MAX_CONTENT_LENGTH = 3 * 1024 * 1024
