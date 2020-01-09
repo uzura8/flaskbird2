@@ -14,6 +14,7 @@ import AdminChatCreate from '@/templates/AdminChatCreate'
 import AdminChatEdit from '@/templates/AdminChatEdit'
 import AdminChatDetail from '@/templates/AdminChatDetail'
 import AdminSignIn from '@/templates/AdminSignIn'
+import TestAnime from '@/templates/TestAnime'
 
 export default [
   {
@@ -35,6 +36,11 @@ export default [
     name: 'UserTop',
     component: UserTop,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/anime',
+    name: 'TestAnime',
+    component: TestAnime,
   },
   {
     path: '/chats',
