@@ -17,7 +17,6 @@
   <div  class="navbar-menu" v-bind:class="{'is-active': isHeaderMenuOpen}">
     <div class="navbar-start">
       <router-link to="/" class="navbar-item">{{ $t('common.top') }}</router-link>
-      <router-link to="/chats" class="navbar-item">{{ $t('page.chatRooms') }}</router-link>
       <router-link v-if="!isAuth" to="/signup" class="navbar-item">{{ $t('common.signUp') }}</router-link>
       <router-link v-if="!isAuth" to="/signin" class="navbar-item">{{ $t('common.signIn') }}</router-link>
       <router-link v-if="isAuth" to="/user" class="navbar-item">{{ $t('page.userTop') }}</router-link>
