@@ -1,23 +1,20 @@
-#from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.dialects.mysql import ENUM
 from datetime import datetime
 from time import time
-#import jwt
 from flask import current_app, url_for
 from app import db
-from app.models.base import Base, PaginatedAPIMixin
-#from app.models.base import TimestampMixin, PaginatedAPIMixin
+from app.models.base import Base
 
-class User(Base, PaginatedAPIMixin, db.Model):
+class User(Base, db.Model):
     """
     user model
     """
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    type = db.Column(ENUM('normal', 'anonymous', 'admin'), \
+                        nullable=False, default='normal')
     name = db.Column(db.String(64), nullable=False, index=True, unique=True)
-    email = db.Column(db.String(128), nullable=False, index=True, unique=True)
-    password = db.Column(db.String(128), nullable=False)
-    self_introduction = db.Column(db.Text)
-    #file_name = db.Column(db.String(64))
+    file_name = db.Column(db.String(64))
     last_login = db.Column(db.DateTime, default=datetime.utcnow)
     last_access = db.Column(db.DateTime, default=datetime.utcnow)
 
