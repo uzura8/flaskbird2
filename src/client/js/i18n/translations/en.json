@@ -31,11 +31,9 @@
     "Signed out": "Signed out",
     "Sign Out failed": "Sign Out failed",
     "Sign Anonymously is failed": "Sign Anonymously is failed",
-    "Send comment failed": "Send comment failed",
     "Correct inputs": "Correct inputs",
     "Name is required": "Name is required",
     "UserName is required": "Name is required",
-    "Description is required": "Description is required",
     "Sign Up failed": "Sign Up failed",
     "Sign In failed": "Sign In failed",
     "Email is required": "Email is required",
@@ -53,19 +51,11 @@
     "404": "404: Not Found"
   },
   "form": {
-    "Used for Sign In": "Used for Sign In",
-    "Room Name": "Room Name",
-    "Description for room": "Description for room",
-    "Used for display room name": "Used for display room name",
-    "Used for room description": "Used for room description",
-    "Used for display user name": "Used for display user name",
-    "Add a comment...": "Add a comment..."
+    "Used for Sign In": "Used for Sign In"
   },
   "term": {
     "userName": "Nickname",
-    "guestUser": "GuestUser",
-    "Support Chat": "Support",
-    "Group Chat": "Group"
+    "guestUser": "GuestUser"
   },
   "page": {
     "top": "Top",
@@ -73,8 +63,6 @@
     "adminTop": "Admin Top",
     "adminSignIn": "Admin Sign In",
     "userTop": "User Top",
-    "about": "About",
-    "chatRooms": "Chat Rooms",
-    "createChatRoom": "Create Chat Room"
+    "about": "About"
   }
 }
