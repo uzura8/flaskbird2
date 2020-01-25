@@ -6,8 +6,5 @@
   "siteName": "Sample Site",
   "firebase": {
     "isEnabled": true
-  },
-  "greatefulChat": {
-    "isEnabled": true
   }
 }

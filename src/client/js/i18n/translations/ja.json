@@ -31,11 +31,9 @@
     "Signed out": "ログアウトしました",
     "Sign Out failed": "ログアウトに失敗しました",
     "Sign Anonymously is failed": "ゲストログインに失敗しました",
-    "Send comment failed": "コメントの送信に失敗しました",
     "Correct inputs": "入力に誤りがあります",
     "Name is required": "名称が未入力です",
     "UserName is required": "ユーザ名が未入力です",
-    "Description is required": "説明が未入力です",
     "Sign Up failed": "登録に失敗しました",
     "Sign In failed": "ログインに失敗しました",
     "Email is required": "メールアドレスが未入力です",
@@ -53,27 +51,17 @@
     "404": "404: ページが見つかりません"
   },
   "form": {
-    "Used for Sign In": "ログインに使用されます",
-    "Room Name": "チャットルーム名",
-    "Description for room": "ルームの説明",
-    "Used for display room name": "ルームの表示名に使用されます",
-    "Used for room description": "ルームの説明に使用されます",
-    "Used for display user name": "表示されるユーザ名として使用されます",
-    "Add a comment...": "メッセージを入力してください"
+    "Used for Sign In": "ログインに使用されます"
   },
   "term": {
     "userName": "ニックネーム",
-    "guestUser": "ゲストユーザ",
-    "Support Chat": "サポート",
-    "Group Chat": "グループ"
+    "guestUser": "ゲストユーザ"
   },
   "page": {
     "siteTop": "サイトトップ",
     "adminTop": "管理画面トップ",
     "adminSignIn": "管理画面ログイン",
     "userTop": "ユーザトップ",
-    "about": "このサイトについて",
-    "chatRooms": "チャットルーム",
-    "createChatRoom": "チャットルーム作成"
+    "about": "このサイトについて"
   }
 }
