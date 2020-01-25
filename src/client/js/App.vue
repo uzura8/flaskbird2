@@ -1,23 +1,21 @@
 <template>
 <div>
-  <eb-navbar />
+  <fb-navbar />
   <div class="container" v-cloak>
-    <main class="section">
-      <b-loading :active="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
-      <router-view></router-view>
-    </main>
+    <b-loading :active="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
+    <router-view></router-view>
   </div>
 </div>
 </template>
 
 <script>
-import EbNavbar from '@/components/organisms/EbNavbar'
+import FbNavbar from '@/components/organisms/FbNavbar'
 
 export default {
   name: 'App',
 
   components: {
-    EbNavbar,
+    FbNavbar,
   },
 
   computed: {

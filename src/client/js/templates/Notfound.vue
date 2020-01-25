@@ -1,5 +1,7 @@
 <template lang="html">
-  <h1 class="title">{{ $t('error.404') }}</h1>
+  <div>
+    <h1>{{ $t('error.404') }}</h1>
+  </div>
 </template>
 
 <script>

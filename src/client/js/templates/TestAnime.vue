@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1 class="title">テストアニメ</h1>
+    <h1>テストアニメ</h1>
     <div>
-      <button class="button" @click="runAnimation">Start</button>
+      <b-button @click="runAnimation">Start</b-button>
     </div>
     <section>
       <figure v-if="activeNo > 0" class="image">
-        <img :src="activeImage">
+        <b-img :src="activeImage" fluid></b-img>
       </figure>
     </section>
   </div>
