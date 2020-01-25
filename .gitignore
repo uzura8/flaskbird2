@@ -4,7 +4,6 @@
 .project
 .settings
 *.tmproj
-build
 .idea
 nbproject/
 tags
