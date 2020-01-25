@@ -46,6 +46,11 @@ module.exports = [
                           // Add vendor prefix
                           require('autoprefixer')({
                             grid: true, // use CSS Grid Layout
+                            flexbox: true,
+                            //browsers: [
+                            //  'last 2 versions',
+                            //  'ie >= 11'
+                            //]
                           })
                         ],
                         sourceMap: true
@@ -91,6 +96,11 @@ module.exports = [
                   // Add vendor prefix
                   require('autoprefixer')({
                     grid: true, // use CSS Grid Layout
+                    flexbox: true,
+                    //browsers: [
+                    //  'last 2 versions',
+                    //  'ie >= 11'
+                    //]
                   })
                 ],
                 sourceMap: true
@@ -159,6 +169,11 @@ module.exports = [
                   // Add vendor prefix
                   require('autoprefixer')({
                     grid: true, // use CSS Grid Layout
+                    flexbox: true,
+                    //browsers: [
+                    //  'last 2 versions',
+                    //  'ie >= 11'
+                    //]
                   })
                 ],
                 sourceMap: true
@@ -167,12 +182,65 @@ module.exports = [
             {
               loader: 'sass-loader',
               options: {
-                outputStyle: 'compressed',
+                //outputStyle: 'compressed',
                 sourceMap: true
               }
             },
           ]
         }
+      ]
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        // prefix is output.path
+        filename: '[name].min.css'
+      })
+    ]
+  },
+  {
+    devtool: 'source-map',
+    entry: {
+      style2: path.join(root, 'src/client/styl/style2.styl'),
+    },
+    output: {
+      path: path.join(root, 'app/statics/css'),
+      filename: '[name].css'
+    },
+    module: {
+      rules: [
+        {
+          test: /\.styl$/,
+          exclude: /node_modules/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                url: false,
+                sourceMap: true,
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: (loader) => [
+                  // Enable Autoprefixer
+                  // Add vendor prefix
+                  require('autoprefixer')({
+                    grid: true,
+                    flexbox: true,
+                    //browsers: [
+                    //  'last 2 versions',
+                    //  'ie >= 11'
+                    //]
+                  })
+                ],
+                sourceMap: true
+              }
+            },
+            'stylus-loader',
+          ]
+        },
       ]
     },
     plugins: [
