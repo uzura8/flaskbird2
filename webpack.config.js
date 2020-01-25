@@ -182,9 +182,14 @@ module.exports = [
             {
               loader: 'sass-loader',
               options: {
-                //outputStyle: 'compressed',
-                sourceMap: true
-              }
+                sourceMap: true,
+                sassOptions: {
+                  includePaths: [
+                    path.join(root, 'src/client/scss/'),
+                    path.join(root, 'node_modules/'),
+                  ],
+                }
+              },
             },
           ]
         }

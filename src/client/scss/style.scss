@@ -1,6 +1,6 @@
-@import '../../../node_modules/bootstrap/scss/bootstrap';
-@import '../../../node_modules/bootstrap-vue/src/index.scss';
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
 
-@import "./customize.scss";
+@import "customize.scss";
 
 [v-cloak] { display: none !important; }
