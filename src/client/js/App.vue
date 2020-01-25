@@ -1,7 +1,6 @@
 <template>
 <div>
-  <eb-admin-navbar v-if="isAdminPath" />
-  <eb-navbar v-else />
+  <eb-navbar />
   <div class="container" v-cloak>
     <main class="section">
       <b-loading :active="isLoading" :is-full-page="true" :canCancel="true"></b-loading>
@@ -13,14 +12,12 @@
 
 <script>
 import EbNavbar from '@/components/organisms/EbNavbar'
-import EbAdminNavbar from '@/components/organisms/EbAdminNavbar'
 
 export default {
   name: 'App',
 
   components: {
     EbNavbar,
-    EbAdminNavbar,
   },
 
   computed: {

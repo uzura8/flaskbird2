@@ -1,38 +1,9 @@
 import store from '@/store'
-import router from '@/router'
 import listener from '@/listener'
 import util from '@/util'
-import config from '@/config/config'
 
 export default {
   computed: {
-    isFirebaseEnabled: function () {
-      return config.firebase.isEnabled
-    },
-
-    isAuth: function () {
-      return this.$store.state.auth.state
-    },
-
-    isAnonymous: function () {
-      return this.$store.getters.checkUserType('anonymous')
-    },
-
-    isAdmin: function () {
-      return this.$store.getters.checkUserType('admin')
-    },
-
-    isAdminPath: function () {
-      return this.$route.path.startsWith('/admin')
-    },
-
-    authUserId: function () {
-      return this.$store.state.auth.state ? this.$store.state.auth.user.id : 0
-    },
-
-    authUserToken: function () {
-      return config.firebase.isEnabled ? this.$store.state.auth.token : null
-    },
   },
 
   methods: {
@@ -75,28 +46,6 @@ export default {
       } else {
         this.showGlobalMessage(this.$t('msg["Server error"]'))
       }
-    },
-
-    signOut: function () {
-      store.dispatch('signOut')
-        .then(() => {
-          router.push({ path: '/signin' })
-        })
-        .catch(err => {
-          this.handleApiError(err, this.$t('msg["Sign Out failed"]'))
-        })
-    },
-
-    dispChatName: function (chatType, chat = {}, isAdmin = false) {
-      if (chatType == 'support') {
-        let name = this.$t('term["Support Chat"]')
-        if (isAdmin) name += ` | userId: ${chat.userId}`
-        return name
-      } else if (chatType == 'public') {
-        return chat.name != null && chat.name ?
-          chat.name : this.$t('term["Group Chat"]')
-      }
-      return chat.name
     },
 
     usableTextSanitized: function (text) {

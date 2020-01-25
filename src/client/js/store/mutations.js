@@ -21,49 +21,6 @@ export default {
     state.common.isHeaderMenuOpen = isOpen
   },
 
-  [types.SET_CHAT] (state, payload) {
-    state.chat = payload
-  },
-
-  [types.SET_CHAT_COMMENT_CHAT_ID] (state, payload) {
-    state.chatComment.chatId = payload
-  },
-
-  [types.RESET_CHAT_COMMENT_LIST] (state) {
-    state.chatComment.list = []
-  },
-
-  [types.FETCH_CHAT_COMMENT_LIST] (state, payload) {
-    payload.map(item => {
-      state.chatComment.list.unshift(item)
-    })
-  },
-
-  [types.SET_CHAT_COMMENT_NEXT_ID] (state, payload) {
-    state.chatComment.nextId = payload
-  },
-
-  [types.CREATE_CHAT_COMMENT] (state, payload) {
-    //state.chatComment.list.push(payload)
-  },
-
-  [types.ADD_CHAT_COMMENT] (state, payload) {
-    if (state.chatComment.chatId != payload.chatId) return
-    const index = state.chatComment.list.findIndex(item => item.id === payload.id)
-    if (index > -1) return
-    state.chatComment.list.push(payload)
-  },
-
-  [types.DELETE_CHAT_COMMENT] (state, payload) {
-    const id = payload.chatCommentId
-    for (let i = 0, n = state.chatComment.list.length; i < n; i++) {
-      const chatComment = state.chatComment.list[i]
-      if (chatComment.id !== id) continue
-      state.chatComment.list.splice(i, 1)
-      break
-    }
-  },
-
   [types.FETCH_EXAMPLES_LIST] (state, payload) {
     state.example.list = payload
   },
