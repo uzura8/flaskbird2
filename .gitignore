@@ -28,7 +28,7 @@ tags
 pyvenv.cfg
 .venv
 pip-selfcheck.json
-/instance/
+/instance/config.py
 adapter.wsgi
 
 package-lock.json
