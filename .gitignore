@@ -4,7 +4,6 @@
 .project
 .settings
 *.tmproj
-build
 .idea
 nbproject/
 tags
@@ -18,18 +17,19 @@ tags
 __pycache__
 tags
 
-.Python
-[Bb]in
-[Ii]nclude
-[Ll]ib
-[Ll]ib64
-[Ll]ocal
-[Ss]cripts
-pyvenv.cfg
-.venv
-pip-selfcheck.json
-/instance/config.py
-adapter.wsgi
+/server/.Python
+/server/[Bb]in
+/server/[Ii]nclude
+/server/[Ll]ib
+/server/[Ll]ib64
+/server/[Ll]ocal
+/server/[Ss]cripts
+/server/pyvenv.cfg
+/server/.venv
+/server/pip-selfcheck.json
+/server/instance/config.py
+/server/adapter.wsgi
+/server/build
 
 package-lock.json
 /node_modules/*
@@ -40,4 +40,4 @@ package-lock.json
 /public/assets/js/*
 /public/assets/css/*
 
-/var/*
+/server/var/*

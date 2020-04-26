@@ -15,8 +15,8 @@ def create_app():
         __name__,
         instance_relative_config=True,
         instance_path=os.path.dirname(os.path.abspath(__file__)) + '/../instance',
-        static_folder='../public/assets',
-        template_folder='../public')
+        static_folder='../../public/assets',
+        template_folder='../../public')
 
     jinja_options = app.jinja_options.copy()
     jinja_options.update({
