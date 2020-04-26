@@ -27,10 +27,10 @@ npm install
 Edit configs for your env, after copy from sample.
 
 ```bash
-chmod -R 777 var
-cp adapter.wsgi.sample adapter.wsgi
-vim adapter.wsgi
-cp instance/config.py.sample instance/config.py
+chmod -R 777 server/var
+cp server/adapter.wsgi.sample server/adapter.wsgi
+vim server/adapter.wsgi
+cp server/instance/config.py.sample server/instance/config.py
 cp src/client/js/config/config.json.sample src/client/js/config/config.json
 ```
 
@@ -81,7 +81,7 @@ LoadModule wsgi_module /PATH-TO-SITE_PACKAGES/site-packages/mod_wsgi/server/mod_
 <VirtualHost *:80>
   ServerName example.com
   DocumentRoot /var/www/sites/example.com
-  WSGIScriptAlias / /var/www/sites/example.com/adapter.wsgi
+  WSGIScriptAlias / /var/www/sites/example.com/server/adapter.wsgi
   <Directory "/var/www/sites/example.com/">
     Order deny,allow
     Allow from all
