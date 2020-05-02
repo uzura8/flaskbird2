@@ -1,6 +1,4 @@
 class BaseConfig(object):
-    FLASKBIRD_VERSION = '1.0.0'
-    FLASKBIRD_ENV = 'local'
 
     # instance
     SECRET_KEY = None
@@ -79,11 +77,4 @@ class BaseConfig(object):
         ('2', '不具合について'),
         ('3', 'その他')
     ]
-
-    GIT_COMMON = {
-        'domain': 'example.com',
-        'work_dir': '/var/www/work',
-        'path': '/var/www/sites',
-    }
-    GIT_REPOS = {}
 

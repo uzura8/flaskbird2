@@ -17,6 +17,7 @@ Jinja2
 jmespath
 MarkupSafe
 PyMySQL
+python-dotenv
 python-dateutil
 pytz
 requests

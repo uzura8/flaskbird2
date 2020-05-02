@@ -29,13 +29,14 @@ def create_app():
     })
     app.jinja_options = jinja_options
 
-    from instance.config import FLASKBIRD_ENV
-    env = FLASKBIRD_ENV
+    #from instance.config import FLASKBIRD_ENV
+    #env = FLASKBIRD_ENV
+    env = os.environ.get("FLASK_ENV")
     
     print(app.instance_path)
     app.config.from_object('config.{}.{}Config'.format(env, env.capitalize()))
-    app.config.from_pyfile('config.py') #from instance dir
-    app.config['ENV'] = env
+    #app.config.from_pyfile('config.py') #from instance dir
+    #app.config['ENV'] = env
 
     db.init_app(app)
     mail.init_app(app)

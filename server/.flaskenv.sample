@@ -1,0 +1,14 @@
+export FLASK_ENV=production
+export FLASK_APP=run.py
+
+# Set unguessable random string for encrypting db settings and session info
+export SECRET_KEY="input-your-secret_key"
+
+# Set database connection info
+export SQLALCHEMY_DATABASE_URI="mysql+pymysql://user-name:password@localhost:3306/db-name?charset=utf8"
+
+# Set site info
+export FBD_SITE_NAME="Sample Site"
+export FBD_ADMIN_MAIL="admin@example.com"
+export FBD_ADMIN_COMPANY_NAME="Sample Site Administrator"
+export FBD_ADMIN_COMPANY_SITE_URL="https://www.example.com/"

@@ -6,16 +6,15 @@
 *.tmproj
 .idea
 nbproject/
-tags
 .DS_Store
 Thumbs.db
 desktop.ini
-tags
 
 *.pyc
-/venv/*
+/server//venv/*
 __pycache__
-tags
+/tags
+/server/tags
 
 /server/.Python
 /server/[Bb]in
@@ -26,8 +25,8 @@ tags
 /server/[Ss]cripts
 /server/pyvenv.cfg
 /server/.venv
+/server/.flaskenv
 /server/pip-selfcheck.json
-/server/instance/config.py
 /server/adapter.wsgi
 /server/build
 

@@ -6,7 +6,7 @@ WEB application platform of the general-purpose created by Python, Flask, VueJS 
 
 ### Prerequisites
 
-* Python >= ver3.7.x
+* Python >= ver3.6.x
 * MySQL >= ver5.7
 
 
@@ -18,8 +18,9 @@ Before installing, you need to setup MySQL and Web server.
 #### Install required libraries
 
 ```bash
-pip install -r requirements.txt
 npm install
+cd server
+pip install -r requirements.txt
 ```
 
 #### Copy and edit config files
@@ -30,7 +31,7 @@ Edit configs for your env, after copy from sample.
 chmod -R 777 server/var
 cp server/adapter.wsgi.sample server/adapter.wsgi
 vim server/adapter.wsgi
-cp server/instance/config.py.sample server/instance/config.py
+cp server/.flaskenv.sample server/.flaskenv
 cp src/client/js/config/config.json.sample src/client/js/config/config.json
 ```
 
@@ -38,22 +39,16 @@ cp src/client/js/config/config.json.sample src/client/js/config/config.json
 ### 2. Setup ###
 Edit configs for your env
 
-Edit server side setting  for your environment
+Edit server side setting for your environment
 
 ```json
-// instance/config.py
+vim server/.flaskenv
 ```
 
 Edit client side setting  for your environment
 
 ```json
-// src/client/js/config/config.json
-{
-  "domain": "localhost",
-  "port": 8080,
-  "baseUrl": "/",
-  "isSSL": false,
-  "siteName": "Sample Site",
+vim src/client/js/config/config.json
 ```
 
 

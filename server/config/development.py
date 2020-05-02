@@ -1,8 +1,6 @@
 from config import BaseConfig
 
-class DevConfig(BaseConfig):
-    TESTING = False
-    DEBUG = True
+class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ECHO = True
 
