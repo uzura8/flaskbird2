@@ -1,8 +1,10 @@
+import os
+
 class BaseConfig(object):
 
-    # instance
-    SECRET_KEY = None
-    SQLALCHEMY_DATABASE_URI = None
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    if not SECRET_KEY:
+        raise ValueError('No SECRET_KEY set for Flask application')
 
     # Flask
     TESTING = False
@@ -14,10 +16,17 @@ class BaseConfig(object):
     DEFAULT_TIMEZONE = 'UTC'
 
     # Flaskbird
-    FBD_SITE_NAME = 'Sample Site'
-    FBD_ADMIN_MAIL = 'admin@example.com'
-    FBD_ADMIN_COMPANY_NAME = 'Sample Site Administrator'
-    FBD_ADMIN_COMPANY_SITE_URL = 'https://www.example.com/'
+    FBD_SITE_NAME = os.environ.get('FBD_SITE_NAME', 'Sample Site')
+    FBD_ADMIN_MAIL = os.environ.get('FBD_ADMIN_MAIL', 'admin@example.com')
+    FBD_ADMIN_COMPANY_NAME = os.environ.get(
+        'FBD_ADMIN_COMPANY_NAME',
+        'Sample Site Administrator'
+    )
+    FBD_ADMIN_COMPANY_SITE_URL = os.environ.get(
+        'FBD_ADMIN_COMPANY_SITE_URL',
+        'https://www.example.com/'
+    )
+
     IS_DEBUG_LOGGING = False
     #IS_SEND_ERROR_REPORT_MAIL = False
     ## Modules

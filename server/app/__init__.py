@@ -29,14 +29,17 @@ def create_app():
     })
     app.jinja_options = jinja_options
 
-    #from instance.config import FLASKBIRD_ENV
-    #env = FLASKBIRD_ENV
-    env = os.environ.get("FLASK_ENV")
-    
-    print(app.instance_path)
+    env = os.environ.get('FLASK_ENV', 'production')
     app.config.from_object('config.{}.{}Config'.format(env, env.capitalize()))
-    #app.config.from_pyfile('config.py') #from instance dir
-    #app.config['ENV'] = env
+
+    db_uri = 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(
+        os.environ.get('DB_USER', 'root'),
+        os.environ.get('DB_PASSWORD', ''),
+        os.environ.get('DB_HOST', 'localhost'),
+        os.environ.get('DB_PORT', '3306'),
+        os.environ.get('DB_DBNAME', 'flaskbird2_db')
+    )
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 
     db.init_app(app)
     mail.init_app(app)
@@ -52,6 +55,7 @@ def create_app():
     return app
 
 import app.models
+
 
 class InvalidArgumentException(HTTPException):
     code = 400
