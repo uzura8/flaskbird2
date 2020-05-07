@@ -1,6 +1,7 @@
 from sqlalchemy.orm.exc import NoResultFound
 from app import db
-from .base import Base
+from . import Base
+
 
 class SiteConfig(Base):
     """
@@ -11,13 +12,25 @@ class SiteConfig(Base):
     name = db.Column(db.String(50), index=True, unique=True)
     value = db.Column('value', db.Text)
 
+
+    def to_dict(self):
+        data = {
+            'name': self.name,
+            'value': self.value,
+        }
+        return data
+
+
+    @classmethod
+    def get_one_by_name(self, name):
+        return self.get_one_by_ukey(name, 'name')
+
+
     @classmethod
     def get_value_by_name(self, name):
-        try:
-            config = self.query.filter(self.name == name).one()
-            return config.value
-        except NoResultFound:
-            return None
+        config = self.get_one_by_name(name)
+        return config.value if config else None
+
 
     @classmethod
     def get_dict(self):
@@ -31,18 +44,23 @@ class SiteConfig(Base):
         except NoResultFound:
             return None
 
+
     @classmethod
-    def save(self, name, value):
-        try:
-            config = self.query.filter(self.name == name).one()
-            if value == config.value:
-                return
-            config.value = value
-        except KeyError:
+    def save_by_name(self, name, value):
+        config = self.get_one_by_name(name)
+
+        if config and config.value == value:
+            return config
+
+        elif not config:
             config = self(
                 name=name,
                 value=value
             )
+
+        else:
+            config.value = value
+
         db.session.add(config)
         db.session.commit()
         return config

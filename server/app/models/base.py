@@ -11,7 +11,7 @@ class Base(db.Model):
 
 
     @classmethod
-    def get_one_by_pk(self, value, prop='id'):
+    def get_one_by_ukey(self, value, prop='id'):
         try:
             return self.query.filter(getattr(self, prop) == value).one()
         except NoResultFound:
@@ -20,18 +20,32 @@ class Base(db.Model):
 
     @classmethod
     def get_one_by_id(self, id):
-        return self.get_one_by_pk(id)
+        return self.get_one_by_ukey(id)
 
 
     @classmethod
-    def delete(self, pk_value, pk_prop='id'):
-        if not pk_value:
-            raise ValueError('{} is invalid'.format(pk_prop))
+    def get_all(self, is_dict=False):
         try:
-            item = self.get_one_by_pk(pk_value, pk_prop)
+            res = self.query.all()
+
+            if is_dict:
+                return [r.to_dict() for r in res]
+            else:
+                return res
+
+        except NoResultFound:
+            return []
+
+
+    @classmethod
+    def delete(self, pk_value, prop='id'):
+        if not pk_value:
+            raise ValueError('{} is invalid'.format(prop))
+        try:
+            item = self.get_one_by_ukey(pk_value, prop)
             item_dict = item.to_dict()
         except NoResultFound:
-            raise ValueError('{} is invalid'.format(pk_prop))
+            raise ValueError('{} is invalid'.format(prop))
 
         db.session.delete(item)
         db.session.commit()

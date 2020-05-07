@@ -1,5 +1,6 @@
-from flask import render_template
+from flask import render_template, current_app
 from . import bp
+from app.models import SiteConfig
 
 
 @bp.before_request
@@ -10,7 +11,12 @@ def before_request():
 @bp.route('/', defaults={'path': ''})
 @bp.route('/<path:path>')
 def catch_all(path):
-    return render_template('index.html')
+    version = SiteConfig.get_value_by_name('version')
+    return render_template(
+        'index.html',
+        site_name=current_app.config['FBD_SITE_NAME'],
+        version=version
+    )
 
 
 ## For Let's encrypt confirmation
