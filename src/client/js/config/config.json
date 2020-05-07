@@ -5,6 +5,6 @@
   "isSSL": null,
   "siteName": "Sample Site",
   "firebase": {
-    "isEnabled": true
+    "isEnabled": false
   }
 }

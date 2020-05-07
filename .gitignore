@@ -11,10 +11,14 @@ Thumbs.db
 desktop.ini
 
 *.pyc
-/server//venv/*
+/server/venv/*
 __pycache__
 /tags
 /server/tags
+
+/docker-compose.yml
+
+/mysql/mysql_data/*
 
 /server/.Python
 /server/[Bb]in
@@ -33,7 +37,6 @@ __pycache__
 package-lock.json
 /node_modules/*
 
-/src/client/js/config/config.json
 /src/client/js/config/firebase_config.js
 /src/client/js/config/site.json
 /public/assets/js/*

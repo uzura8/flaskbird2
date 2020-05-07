@@ -9,11 +9,26 @@ WEB application platform of the general-purpose created by Python, Flask, VueJS 
 * Python >= ver3.6.x
 * MySQL >= ver5.7
 
+### Installing on Docker Container on your machine
+
+Before installing, you need to setup Docker.
+
+````bash
+cp docker-compose.yml.sample docker-compose.yml
+vim docker-compose.yml
+# set values for your env
+
+docker-compose build
+docker-compose up -d
+````
+
+You can access http://0.0.0.0:5000/ on browser.
 
 
-### Installing
 
-Before installing, you need to setup MySQL and Web server.
+### Installing for WEB Server by Apache
+
+Before installing, you need to setup MySQL and Apache2.4.
 
 #### Install required libraries
 
@@ -31,24 +46,35 @@ Edit configs for your env, after copy from sample.
 chmod -R 777 server/var
 cp server/adapter.wsgi.sample server/adapter.wsgi
 vim server/adapter.wsgi
-cp server/.flaskenv.sample server/.flaskenv
-cp src/client/js/config/config.json.sample src/client/js/config/config.json
 ```
 
+````python
+# server/adapter.wsgi
+
+import sys
+sys.path.insert(0, '/path-to-project-dir')
+
+from run import app as application
+````
 
 ### 2. Setup ###
+
 Edit configs for your env
 
-Edit server side setting for your environment
+Set server side setting  by environment variable for your environment
 
-```json
-vim server/.flaskenv
-```
+```bash
+export FLASK_ENV=production # available production / development
 
-Edit client side setting  for your environment
+# Set unguessable random string for encrypting db settings and session info
+export SECRET_KEY="input-your-secret_key"
 
-```json
-vim src/client/js/config/config.json
+# Set database connection info
+export DB_HOST="localhost"
+export DB_PORT="3306"
+export DB_USER="root"
+export DB_PASSWORD="set-your-password"
+#export DB_DBNAME="flaskbird2_db"
 ```
 
 
@@ -80,7 +106,6 @@ LoadModule wsgi_module /PATH-TO-SITE_PACKAGES/site-packages/mod_wsgi/server/mod_
   <Directory "/var/www/sites/example.com/">
     Order deny,allow
     Allow from all
-    #options Indexes FollowSymLinks +ExecCGI
   </Directory>
 </VirtualHost>
 ```
@@ -90,3 +115,4 @@ And start web server.
 ```
 sudo systemctl start httpd
 ```
+
