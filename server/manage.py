@@ -1,6 +1,7 @@
 from flask_script import Manager
 from app import create_app, db
 from app.email import send_email
+from app.models.site_config import setup_fixurtes as setup_fixture_site_config
 
 app = create_app()
 manager = Manager(app)
@@ -24,10 +25,8 @@ def db_create():
 @manager.command
 def db_fixture():
     '''Import default data to DB'''
-    pass
-    #from app.models.brand import setup_fixurtes as setup_fixture_brand
-    #setup_fixture_brand()
-    #print('Imported default data to DB')
+    setup_fixture_site_config()
+    print('Imported default data to DB')
 
 
 @manager.command

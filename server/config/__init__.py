@@ -1,6 +1,7 @@
 import os
 
 class BaseConfig(object):
+    FBD_VERSION = '2.0.0'
 
     SECRET_KEY = os.environ.get('SECRET_KEY')
     if not SECRET_KEY:

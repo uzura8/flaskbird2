@@ -1,3 +1,4 @@
+from flask import current_app
 from sqlalchemy.orm.exc import NoResultFound
 from app import db
 from . import Base
@@ -64,3 +65,8 @@ class SiteConfig(Base):
         db.session.add(config)
         db.session.commit()
         return config
+
+def setup_fixurtes():
+    version = current_app.config['FBD_VERSION']
+    SiteConfig.save_by_name('version', version)
+
