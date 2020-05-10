@@ -11,35 +11,38 @@ Thumbs.db
 desktop.ini
 
 *.pyc
-/server/venv/*
+/api/venv/*
 __pycache__
 /tags
-/server/tags
+/api/tags
 
 /docker-compose.yml
 
 /mysql/mysql_data/*
 
-/server/.Python
-/server/[Bb]in
-/server/[Ii]nclude
-/server/[Ll]ib
-/server/[Ll]ib64
-/server/[Ll]ocal
-/server/[Ss]cripts
-/server/pyvenv.cfg
-/server/.venv
-/server/.flaskenv
-/server/pip-selfcheck.json
-/server/adapter.wsgi
-/server/build
+/api/.Python
+/api/[Bb]in
+/api/[Ii]nclude
+/api/[Ll]ib
+/api/[Ll]ib64
+/api/[Ll]ocal
+/api/[Ss]cripts
+/api/pyvenv.cfg
+/api/.venv
+/api/.flaskenv
+/api/pip-selfcheck.json
+/api/adapter.wsgi
+/api/build
 
-package-lock.json
-/node_modules/*
+/api/var/*
 
-/src/client/js/config/firebase_config.js
-/src/client/js/config/site.json
-/public/assets/js/*
-/public/assets/css/*
+/front/package-lock.json
+/front/node_modules/*
 
-/server/var/*
+/front/src/client/js/config/firebase_config.js
+/front/src/client/js/config/site.json
+/front/public/assets/js/*
+/front/public/assets/css/*
+/public
+
+/nginx/logs/*

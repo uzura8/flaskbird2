@@ -6,7 +6,7 @@ from flask import current_app, jsonify, request
 from flask_cors import cross_origin
 from . import bp
 from app.forms import Contact as ContactForm
-from app.models import Contact
+from app.models import Contact, SiteConfig
 from app.email import send_contact_email
 from app.common.date import conv_dt_from_utc
 from app.common.file import put_to_file
@@ -51,7 +51,8 @@ def contact():
             body = {'errors':form.errors}
             return jsonify(body), 400
     else:
-        body = {'hoge':'fuga'}
+        version = SiteConfig.get_value_by_name('version')
+        body = {'version': version}
 
     return jsonify(body), 200
 

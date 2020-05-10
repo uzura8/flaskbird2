@@ -26,5 +26,6 @@ simplejson
 six
 SQLAlchemy
 urllib3
+uWSGI
 Werkzeug
 WTForms

@@ -11,23 +11,24 @@ mail = Mail()
 
 
 def create_app():
-    app = Flask(
-        __name__,
-        instance_relative_config=True,
-        instance_path=os.path.dirname(os.path.abspath(__file__)) + '/../instance',
-        static_folder='../../public/assets',
-        template_folder='../../public')
+    app = Flask(__name__)
+    #app = Flask(
+    #    __name__,
+    #    instance_relative_config=True,
+    #    instance_path=os.path.dirname(os.path.abspath(__file__)) + '/../instance',
+    #    static_folder='../../public/assets',
+    #    template_folder='../../public')
 
-    jinja_options = app.jinja_options.copy()
-    jinja_options.update({
-        'block_start_string': '[%',
-        'block_end_string': '%]',
-        'variable_start_string': '[[',
-        'variable_end_string': ']]',
-        'comment_start_string': '[#',
-        'comment_end_string': '#]'
-    })
-    app.jinja_options = jinja_options
+    #jinja_options = app.jinja_options.copy()
+    #jinja_options.update({
+    #    'block_start_string': '[%',
+    #    'block_end_string': '%]',
+    #    'variable_start_string': '[[',
+    #    'variable_end_string': ']]',
+    #    'comment_start_string': '[#',
+    #    'comment_end_string': '#]'
+    #})
+    #app.jinja_options = jinja_options
 
     env = os.environ.get('FLASK_ENV', 'production')
     app.config.from_object('config.{}.{}Config'.format(env, env.capitalize()))

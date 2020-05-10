@@ -1,12 +1,21 @@
 version: '3'
 
 services:
-  app:
-    build: .
-    ports:
-      - '5000:5000'
+  db:
+    build: ./mysql
     volumes:
-      - '.:/flaskbird'
+      - ./mysql/mysql_data:/var/lib/mysql # mount local dir to mysql data dir on container
+      - ./mysql/sqls:/docker-entrypoint-initdb.d # import initial data
+    restart: always # Run container on OS start
+    environment:
+      - MYSQL_ROOT_PASSWORD='set-root-user-password'
+
+  api:
+    build: ./api
+    container_name: api
+    volumes:
+      - ./api:/app
+    restart: always # Run container on OS start
     tty: true
     environment:
       FLASK_ENV: 'production'
@@ -15,18 +24,31 @@ services:
       DB_USER: 'root'
       DB_PASSWORD: 'set-your-password'
       DB_DBNAME: 'flaskbird2_db'
-      TZ: Asia/Tokyo
-    command: python /flaskbird/server/run.py
+      TZ: 'Asia/Tokyo'
+    #command: python /app/run.py
+    depends_on:
+      - db
     links:
-      - 'db'
+      - db
+    expose:
+      - 5000
 
-  db:
-    build: ./mysql
-    environment:
-      TZ: Asia/Tokyo
+  front:
+    build: ./front
+    container_name: front
+    restart: always # Run container on OS start
+    expose:
+      - 80
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
     volumes:
-      - ./mysql/mysql_data:/var/lib/mysql
-      - ./mysql/sqls:/docker-entrypoint-initdb.d # import initiarize data
-    environment:
-      - MYSQL_ROOT_PASSWORD='set-root-user-password'
-
+      - ./nginx/logs:/var/log/nginx
+    restart: always # Run container on OS start
+    links:
+      - api
+      - front
+    ports:
+      - '8000:5000'
+      - '8001:80'
