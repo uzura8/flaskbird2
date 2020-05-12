@@ -22,4 +22,4 @@ docker-compose build
 docker-compose up -d
 ````
 
-You can access http://0.0.0.0:8001/ on browser.
+You can access http://localhost:8000/ on browser.
