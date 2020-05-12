@@ -10,15 +10,15 @@ nbproject/
 Thumbs.db
 desktop.ini
 
+.git
+.gitignore
+README.md
+
 *.pyc
 /server/venv/*
 __pycache__
 /tags
 /server/tags
-
-/docker-compose.yml
-
-/mysql/mysql_data/*
 
 /server/.Python
 /server/[Bb]in
@@ -34,10 +34,11 @@ __pycache__
 /server/adapter.wsgi
 /server/build
 
+/docker-compose.yml*
+/mysql/mysql_data/*
 package-lock.json
 /node_modules/*
 
 /public/assets/js/*
 /public/assets/css/*
 
-/server/var/*
