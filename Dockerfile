@@ -8,7 +8,7 @@ RUN apt-get -y install software-properties-common
 RUN apt-get -y install python3.6-dev
 RUN apt-get -y install python3-pip
 RUN pip3 install --upgrade pip
-#RUN apt-get install -y curl
+RUN apt-get install -y curl
 
 RUN apt-get -y install nodejs npm
 RUN npm install n -g
