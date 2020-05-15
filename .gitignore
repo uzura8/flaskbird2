@@ -33,6 +33,7 @@ __pycache__
 /server/pip-selfcheck.json
 /server/adapter.wsgi
 /server/build
+/server/var/*
 
 package-lock.json
 /node_modules/*
@@ -40,4 +41,5 @@ package-lock.json
 /public/assets/js/*
 /public/assets/css/*
 
-/server/var/*
+/nginx/logs/*
+
