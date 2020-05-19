@@ -14,18 +14,22 @@ RUN apt-get -y install nodejs npm
 RUN npm install n -g
 RUN n stable
 
-RUN apt-get -y install nginx
+#RUN apt-get -y install nginx
 
 ADD . /flaskbird
 WORKDIR /flaskbird
 
-RUN rm /etc/nginx/sites-enabled/default
-COPY ./nginx/default.conf /etc/nginx/conf.d/
+#RUN rm /etc/nginx/sites-enabled/default
+#COPY ./nginx/default.conf /etc/nginx/conf.d/
 
 RUN pip3 install -r /flaskbird/server/requirements.txt
 RUN chmod -R 777 /flaskbird/server/var
+#RUN python3 /flaskbird/server/manage.py setup_db
 
 RUN npm install
 RUN npm run build
 
-CMD ["/bin/bash", "/flaskbird/server/startup.sh"]
+EXPOSE 80
+
+#CMD ["/bin/bash", "/flaskbird/server/startup.sh"]
+CMD ["python3", "/flaskbird/server/run.py"]

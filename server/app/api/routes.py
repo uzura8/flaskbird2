@@ -52,6 +52,7 @@ def contact():
             return jsonify(body), 400
     else:
         version = SiteConfig.get_value_by_name('version')
+        #version = '2.0.0'
         body = {'version':version}
 
     return jsonify(body), 200

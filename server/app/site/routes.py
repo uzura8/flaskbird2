@@ -12,6 +12,7 @@ def before_request():
 @bp.route('/<path:path>')
 def catch_all(path):
     version = SiteConfig.get_value_by_name('version')
+    #version = '2.0.0'
     return render_template(
         'index.html',
         site_name=current_app.config['FBD_SITE_NAME'],
