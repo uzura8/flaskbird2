@@ -4,12 +4,11 @@ WEB application platform of the general-purpose created by Python, Flask, VueJS 
 
 ## Getting Started
 
-### Prerequisites
-
-* Python >= ver3.6.x
-* MySQL >= ver5.7
-
 ### Installing on Docker Container on your machine
+
+#### Prerequisites
+
+* Docker >= ver19.03.X
 
 Before installing, you need to setup Docker.
 
@@ -22,13 +21,17 @@ docker-compose build
 docker-compose up -d
 ````
 
-You can access http://0.0.0.0:5000/ on browser.
+You can access http://0.0.0.0:8000/ on browser.
 
 
 
 ### Installing for WEB Server by Apache
 
-Before installing, you need to setup MySQL and Apache2.4.
+#### Prerequisites
+
+* Python >= ver3.6.x
+* MySQL >= ver5.7
+* Apache >= ver2.4.X
 
 #### Install required libraries
 
@@ -67,7 +70,7 @@ Set server side setting  by environment variable for your environment
 export FLASK_ENV=production # available production / development
 
 # Set unguessable random string for encrypting db settings and session info
-export SECRET_KEY="input-your-secret_key"
+export SECRET_KEY="your-secret_key"
 
 # Set database connection info
 export DB_HOST="localhost"
